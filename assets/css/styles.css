@@ -1,0 +1,80 @@
+.navbar {
+    min-height: 50px;
+    margin-bottom: 20px;
+}
+
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+body {
+    padding-top: 70px;
+}
+
+.table {
+    font-size: 82% !important;
+}
+
+ul.sidebar2 {
+    padding: 10px 10px;
+}
+
+.sidebar .nav-item .nav-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    margin: 5px 5px;
+    width: 5.4rem
+}
+
+@media (min-width:768px) {
+    .sidebar .nav-item .nav-link {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem;
+        margin: 5px 5px;
+        width: 12rem
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar.toggled .nav-item .nav-link {
+        text-align: center;
+        padding: 0.55rem 0.55rem;
+        width: 5.4rem;
+    }
+}
+
+.nav-item.active a.nav-link {
+    background-color: rgba(242, 242, 242, 0.2);
+    border-radius: 10px;
+}
+
+/* Make Select2 boxes match Bootstrap3 as well as Bootstrap4 heights: */
+.select2-selection__rendered {
+    line-height: 32px !important;
+}
+
+.select2-selection {
+    height: 34px !important;
+}
+
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: #888 !important;
+}
+
+.carousel-indicators li.active {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: #666 !important;
+}

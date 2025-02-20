@@ -152,5 +152,30 @@
 				<span>Tiket Saya</span>
 			</a>
 		</li>
+		<!-- Menu Untuk Spv Dept-->
+	<?php 
+	} else if ($this->session->userdata('level') == "SPV") { ?>
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_teknisi/index_approve' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_approve') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Tiket Ditugaskan</span>
+			</a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_teknisi/index_tugas' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_tugas') ?>">
+				<i class="fas fa-fw fa-tasks"></i>
+				<span>Daftar Tugas</span>
+			</a>
+		</li>
 	<?php } ?>
 </ul>

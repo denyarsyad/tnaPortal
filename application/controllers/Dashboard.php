@@ -41,6 +41,9 @@ class Dashboard extends CI_Controller
         //Dashboard User
         } else if ($this->session->userdata('level') == "User") {
             $data['body']         = "dashboard/dashboard_user";
+        //Dashboard Spv Dept
+        } else if ($this->session->userdata('level') == "SPV") {
+            $data['body']         = "dashboard/dashboard_spv_dept";
         }
 
         //Session
@@ -125,6 +128,30 @@ class Dashboard extends CI_Controller
 
         //Resume ticket User
         $data['dataticketuser']         = $this->model->myticket($id_user)->result();
+
+
+        //Dashboard SPV
+        //Jumlah Tiket
+        $data['jml_ticket']         = $this->model->getTicket()->num_rows();
+        //Jumlah tiket yang ditolak SPV
+        $data['jml_reject']         = $this->model->getStatusTicket(0)->num_rows();
+        //Jumlah tiket yang butuh persetujuan SPV
+        $jmlnew = $this->db->query("SELECT COUNT(id_ticket) AS jml_new FROM ticket WHERE status IN (1,2)")->row();
+        $data['jml_new']           = $jmlnew->jml_new;
+        //Jumlah tiket yang belum memilih teknisi
+        $data['jml_choose']         = $this->model->getStatusTicket(1)->num_rows();
+        //Jumlah tiket yang butuh persetujuan teknisi
+        $data['jml_approve_tek']    = $this->model->getStatusTicket(3)->num_rows();
+        //Jumlah tiket yang sedang dikerjakan
+        $data['jml_process']        = $this->model->getStatusTicket(4)->num_rows();
+        //Jumlah tiket yang sedang dipending
+        $data['jml_pending']        = $this->model->getStatusTicket(5)->num_rows();
+        //Jumlah tiket selesai
+        $jmldone = $this->db->query("SELECT COUNT(id_ticket) AS jml_done FROM ticket WHERE status IN (6,7)")->row();
+        $data['jml_done']           = $jmldone->jml_done;
+
+        //Resume ticket Baru SPV
+        $data['ticket']        = $this->model->dept_ticket()->result();
 
         $this->load->view('template', $data);
     }

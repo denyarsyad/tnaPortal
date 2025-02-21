@@ -132,12 +132,11 @@ class Dashboard extends CI_Controller
 
         //Dashboard SPV
         //Jumlah Tiket
-        $data['jml_ticket']         = $this->model->getTicket()->num_rows();
+        $data['jml_ticket']         = $this->model->getTicketSpvDept($id_user)->num_rows();
         //Jumlah tiket yang ditolak SPV
-        $data['jml_reject']         = $this->model->getStatusTicket(0)->num_rows();
+        $data['jml_reject']         = $this->model->getRejectTicketSpvDept($id_user)->num_rows();
         //Jumlah tiket yang butuh persetujuan SPV
-        $jmlnew = $this->db->query("SELECT COUNT(id_ticket) AS jml_new FROM ticket WHERE status IN (1,2)")->row();
-        $data['jml_new']           = $jmlnew->jml_new;
+        $data['jml_new']           = $this->model->getNewTicketSpvDept($id_user)->num_rows();
         //Jumlah tiket yang belum memilih teknisi
         $data['jml_choose']         = $this->model->getStatusTicket(1)->num_rows();
         //Jumlah tiket yang butuh persetujuan teknisi
@@ -151,7 +150,7 @@ class Dashboard extends CI_Controller
         $data['jml_done']           = $jmldone->jml_done;
 
         //Resume ticket Baru SPV
-        $data['ticket']        = $this->model->dept_ticket()->result();
+        $data['ticket']             = $this->model->dept_ticket($id_user)->result();
 
         $this->load->view('template', $data);
     }

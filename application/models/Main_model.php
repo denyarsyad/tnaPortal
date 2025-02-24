@@ -2014,7 +2014,7 @@ class Main_model extends CI_Model
 
   //NEW ONE
   //Method untuk mendapatkan semua ticket pada dept masing-masing yang belum dilakukan approval 2025-02-20
-  public function dept_ticket($id)
+  public function deptTicket($id)
   {
     //Query untuk mendapatkan semua ticket dengan status 1 (submitted) atau 2 (Belum di approve) dengan diurutkan berdasarkan tanggal ticket dibuat
     $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
@@ -2031,16 +2031,17 @@ class Main_model extends CI_Model
                 INNER JOIN jabatan j ON P.id_jabatan = J.id_jabatan 
                 INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
                 INNER JOIN departemen d ON DB.id_dept = D.id_dept 
-                WHERE nik  = $id) as Z ON F.id_dept = Z.id_dept
+                WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
     WHERE A.status IN (1,2)
     ORDER BY A.tanggal DESC");
+    // $query = $this->db->query($sql, array($id));
     return $query;
   }
 
   //Method untuk mendapatkan semua ticket dari user dept masing-masing berdasarkan id dept
   public function getTicketSpvDept($id)
   {
-    $query = $this->db->query("SELECT count(*)
+    $query = $this->db->query("SELECT count(*) AS total
     FROM ticket t 
     INNER JOIN pegawai p ON t.reported = p.nik 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
@@ -2049,14 +2050,14 @@ class Main_model extends CI_Model
     (select d.id_dept AS dept_cd from pegawai p 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
     INNER JOIN departemen d ON db.id_dept = d.id_dept
-    WHERE p.nik = $id) AS x ON d.id_dept = x.dept_cd");
-    return $query;
+    WHERE p.nik = '$id') AS x ON d.id_dept = x.dept_cd");
+    return $query->row();
   }
 
   //Method untuk mendapatkan ticket baru submitterd (1) dan belum di approve (2) dari user dept masing-masing berdasarkan id dept
   public function getNewTicketSpvDept($id)
   {
-    $query = $this->db->query("SELECT count(*)
+    $query = $this->db->query("SELECT count(*) AS total
     FROM ticket t 
     INNER JOIN pegawai p ON t.reported = p.nik 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
@@ -2065,15 +2066,15 @@ class Main_model extends CI_Model
     (select d.id_dept AS dept_cd from pegawai p 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
     INNER JOIN departemen d ON db.id_dept = d.id_dept
-    WHERE p.nik = $id) AS x ON d.id_dept = x.dept_cd
+    WHERE p.nik = '$id') AS x ON d.id_dept = x.dept_cd
     WHERE t.status IN (1,2)");
-    return $query;
+    return $query->row();
   }
 
   //Method untuk mendapatkan ticket reject (0) dari user dept masing-masing berdasarkan id dept
-  public function getRejectTicketSpvDept($id) //belum beres gaes, masih 1 yah harusnya 0
+  public function getRejectTicketSpvDept($id) 
   {
-    $query = $this->db->query("SELECT count(*)
+    $query = $this->db->query("SELECT count(*) AS total
     FROM ticket t 
     INNER JOIN pegawai p ON t.reported = p.nik 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
@@ -2082,8 +2083,19 @@ class Main_model extends CI_Model
     (select d.id_dept AS dept_cd from pegawai p 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
     INNER JOIN departemen d ON db.id_dept = d.id_dept
-    WHERE p.nik = $id) AS x ON d.id_dept = x.dept_cd
+    WHERE p.nik = '$id') AS x ON d.id_dept = x.dept_cd
     WHERE t.status = 0");
-    return $query;
+    return $query->row();
   }
+
+  public function getDept($id)
+  {
+    //Query untuk mendapatkan dept
+    $query = $this->db->query("SELECT nama_dept FROM pegawai p 
+    INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept 
+    INNER JOIN departemen d ON d.id_dept = db.id_bagian_dept 
+    WHERE p.nik = '$id'");
+    return $query->row();
+  }
+
 }

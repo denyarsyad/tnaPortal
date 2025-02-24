@@ -1,15 +1,15 @@
 <div class="container-fluid">
-	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard</h1>
+	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard Supervisor <?= $dept ?></h1>
 
 	<div class="row">
 		<!--Need Approve-->
-		<div class="col-xl-3 col-md-6 mb-4">
+		<div class="col-xl-6 col-md-6 mb-4">
 			<div class="card bg-light text-dark shadow h-100 py-2">
 				<div class="card-body">
 					<div class="row no-gutters align-items-center">
 						<div class="col mr-2">
 							<div class="text-xs font-weight-bold text-uppercase mb-1">Tiket Baru</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_new ?></div>
+							<div class="h3 mb-0 font-weight-bold"><?= $jml_new_spv ?></div>
 							<h4 class="small font-weight-bold">&nbsp;<span></span></h4>
 						</div>
 						<div class="col-auto">
@@ -21,14 +21,14 @@
 		</div>
 
 		<!--Semua Tiket-->
-		<div class="col-xl-3 col-md-6 mb-4">
+		<div class="col-xl-6 col-md-6 mb-4">
 			<div class="card bg-light text-dark shadow h-100 py-2">
 				<div class="card-body">
 					<div class="row no-gutters align-items-center">
 						<div class="col mr-2">
 							<div class="text-xs font-weight-bold text-uppercase mb-1">Semua Tiket</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_ticket ?></div>
-							<h4 class="small font-weight-bold">Ditolak: <span><?= $jml_reject ?></span></h4>
+							<div class="h3 mb-0 font-weight-bold"><?= $jml_ticket_spv ?></div>
+							<h4 class="small font-weight-bold">Ditolak: <span><?= $jml_reject_spv ?></span></h4>
 						</div>
 						<div class="col-auto">
 							<i class="fas fa-ticket-alt fa-2x text-primary"></i>
@@ -38,48 +38,13 @@
 			</div>
 		</div>
 
-		<!--Process-->
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card bg-light text-dark shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-uppercase mb-1">On Process</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_process ?></div>
-							<h4 class="small font-weight-bold">On Hold: <span><?= $jml_pending ?></span></h4>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-circle-notch fa-2x text-warning"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!--Done-->
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card bg-light text-dark shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-uppercase mb-1">Selesai</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_done ?></div>
-							<h4 class="small font-weight-bold">&nbsp;<span></span></h4>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-check-circle fa-2x text-secondary"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-xl-12 col-lg-12">
 			<div class="card shadow mb-4">
 				<div class="card-header font-weight-bold text-primary">
-					Tiket Baru (<?= $jml_new ?>)
+					Tiket Baru (<?= $jml_new_spv ?>)
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -97,7 +62,7 @@
 							</thead>
 							<tbody>
 								<?php $no = 1;
-								foreach ($ticket as $row) { ?>
+								foreach ($ticket_spv as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
 										<td><a href="<?= site_url('ticket/detail_approve/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>

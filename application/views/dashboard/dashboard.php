@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard</h1>
+	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard Admin</h1>
 
 	<div class="row">
 		<!--Need Approve-->

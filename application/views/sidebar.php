@@ -164,17 +164,10 @@
 				<span>Dashboard</span></a>
 		</li>
 
-		<li class="nav-item <?= (uri_string() == 'ticket_teknisi/index_approve' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_approve') ?>">
+		<li class="nav-item <?= (uri_string() == 'ticket_spv/index_tugas' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_spv/index_tugas') ?>">
 				<i class="fas fa-fw fa-ticket-alt"></i>
-				<span>Tiket Ditugaskan</span>
-			</a>
-		</li>
-
-		<li class="nav-item <?= (uri_string() == 'ticket_teknisi/index_tugas' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('ticket_teknisi/index_tugas') ?>">
-				<i class="fas fa-fw fa-tasks"></i>
-				<span>Daftar Tugas</span>
+				<span>Daftar Tiket</span>
 			</a>
 		</li>
 	<?php } ?>

@@ -94,6 +94,11 @@ class Login extends CI_Controller
 					//Semua variabel session yang diatas akan ditampung ke dalam variabel session yang akan dipakai pada controller lain
 					$this->session->set_userdata($session);
 					//Dialihkan ke halaman Dashboard
+					// var_dump($this->session->userdata('level'));
+					// var_dump($this->session->userdata('id_user'));
+					// die;
+					// var_dump($this->session->userdata());
+					// die;
 					redirect('dashboard');
 				}
 			} else {

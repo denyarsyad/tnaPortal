@@ -75,7 +75,9 @@ Modified: 06-2023
 
 				<section class="mt-4">
 					<?php
+					//var_dump($body);
 					$this->load->view($body);
+					//$this->load->view("dashboard/dashboard");
 					?>
 				</section>
 			</div>

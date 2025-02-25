@@ -274,7 +274,7 @@ class Ticket_spv extends CI_Controller
 		if ($this->session->userdata('level') == "SPV") {
 			//Menyusun template List Assignment
 			$data['title'] 	  = "Daftar Ticket";
-			$data['desc'] = "Daftar semua tiket yang Ditugaskan untuk Anda.";
+			$data['desc'] = "Daftar semua tiket yang diajukan untuk Anda.";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
 			$data['body']     = "ticketSpvDept/listtugas";
@@ -283,8 +283,8 @@ class Ticket_spv extends CI_Controller
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
-			//Daftar semua ticket yang ditugaskan kepada teknisi, get dari model (daftar_tugas) berdasarkan id_user teknisi, data akan ditampung dalam parameter 'tugas'
-			$data['tugas'] = $this->model->daftar_tugas($id_user)->result();
+			//get data
+			$data['tugas'] = $this->model->list_ticket_spv($id_user)->result();
 
 			//Load template
 			$this->load->view('template', $data);

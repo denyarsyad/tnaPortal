@@ -30,7 +30,7 @@
 								foreach ($tugas as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
-										<td><a href="<?= site_url('ticket/detail_approve/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
+										<td><a href="<?= site_url('ticket_spv/detail_approve/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>
@@ -70,6 +70,10 @@
 										<?php } else if ($row->status == 7) { ?>
 											<td>
 												<strong style="color: #C13018;">Late Finished</strong>
+											</td>
+										<?php } else if ($row->status == 8) { ?>
+											<td>
+												<strong style="color: #36454F;">Approved Supervisor</strong>
 											</td>
 										<?php } ?>
 									</tr>

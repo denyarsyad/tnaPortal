@@ -86,6 +86,10 @@
 									<td>
 										<strong style="color: #C13018;">Late Finished</strong>
 									</td>
+								<?php } else if ($row->status == 8) { ?>
+									<td>
+										<strong style="color: #36454F;">Approved Supervisor</strong>
+									</td>
 								<?php } ?>
 								<td>
 									<a href="<?= site_url('ticket_user/detail/'.$row->id_ticket)?>" class="btn btn-primary btn-circle btn-sm" title="Detail">

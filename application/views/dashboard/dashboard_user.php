@@ -166,7 +166,11 @@
                                             <td>
                                                 <strong style="color: #C13018;">Late Finished</strong>
                                             </td>
-                                        <?php } ?>
+                                        <?php } else if ($row->status == 8) { ?>
+											<td>
+												<strong style="color: #36454F;">Approved Supervisor</strong>
+											</td>
+										<?php } ?>
                                     </tr>
                                 <?php $no++;
                                 } ?>

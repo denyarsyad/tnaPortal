@@ -41,9 +41,12 @@ class Dashboard extends CI_Controller
         //Dashboard User
         } else if ($this->session->userdata('level') == "User") {
             $data['body']         = "dashboard/dashboard_user";
-        //Dashboard Spv Dept
+        //Dashboard Supervisor Dept
         } else if ($this->session->userdata('level') == "SPV") {
             $data['body']         = "dashboard/dashboard_spv_dept";
+        //Dashboard Manager    
+        } else if ($this->session->userdata('level') == "MGR") {
+            $data['body']         = "dashboard/dashboard_mgr";
         } else {
             show_error("Unauthorized access", 403);
             return;
@@ -151,6 +154,18 @@ class Dashboard extends CI_Controller
 
         //Resume ticket Baru SPV
         $data['ticket_spv']         = $this->model->deptTicket($id_user)->result();
+
+        //Dashboard MGR
+        // //Jumlah Tiket 
+        // $resultAllTicket            = $this->model->getTicketMgr($id_user);
+        // $data['jml_ticket_mgr']     = ($resultAllTicket) ? $resultAllTicket->total : 0;
+        // //Jumlah tiket yang butuh persetujuan MGR Dept
+        // $resultNewTicket            = $this->model->getNewTicketMgr($id_user);
+        // $data['jml_new_mgr']        = ($resultNewTicket) ? $resultNewTicket->total : 0;
+
+        //Resume ticket Baru MGR
+        $data['ticket_mgr']         = $this->model->mgrTicket($id_user)->result();    
+
 
         $this->load->view('template', $data);
     }

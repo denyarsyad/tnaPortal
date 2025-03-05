@@ -416,6 +416,7 @@ class Main_model extends CI_Model
     $value['Technician'] = 'Technician';
     $value['User'] = 'User';
     $value['SPV'] = 'Supervisor Dept';
+    $value['MGR'] = 'Manager';
 
     return $value;
   }
@@ -2150,6 +2151,32 @@ class Main_model extends CI_Model
 
     //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
     $this->db->insert('tracking', $datatracking);
+  }
+
+
+  //MGR
+  public function mgrTicket($id)
+  {
+    //Query untuk mendapatkan semua ticket dengan status 8 (diajukan ke MGR) dengan diurutkan berdasarkan tanggal ticket dibuat
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
+    LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
+    LEFT JOIN pegawai D ON D.nik = A.reported 
+    LEFT JOIN departemen_bagian E ON E.id_bagian_dept = D.id_bagian_dept 
+    LEFT JOIN departemen F ON F.id_dept = E.id_dept
+    LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
+    LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
+    LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
+    INNER JOIN (SELECT db.id_dept 
+                FROM pegawai p 
+                INNER JOIN jabatan j ON P.id_jabatan = J.id_jabatan 
+                INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
+                INNER JOIN departemen d ON DB.id_dept = D.id_dept 
+                WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
+    WHERE A.status IN (8)
+    ORDER BY A.tanggal DESC");
+    // $query = $this->db->query($sql, array($id));
+    return $query;
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard Supervisor <?= $dept ?></h1>
+	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard Manager</h1>
 
 	<div class="row">
 		<!--Need Approve-->
@@ -27,8 +27,7 @@
 					<div class="row no-gutters align-items-center">
 						<div class="col mr-2">
 							<div class="text-xs font-weight-bold text-uppercase mb-1">Semua Tiket</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_ticket_spv ?></div>
-							<h4 class="small font-weight-bold">Ditolak: <span><?= $jml_reject_spv ?></span></h4>
+							<div class="h3 mb-0 font-weight-bold"><?= $jml_ticket_mgr?></div>
 						</div>
 						<div class="col-auto">
 							<i class="fas fa-ticket-alt fa-2x text-primary"></i>
@@ -44,7 +43,7 @@
 		<div class="col-xl-12 col-lg-12">
 			<div class="card shadow mb-4">
 				<div class="card-header font-weight-bold text-primary">
-					Tiket Baru (<?= $jml_new_spv ?>)
+					Tiket Baru (<?= $jml_new_mgr ?>)
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -62,10 +61,10 @@
 							</thead>
 							<tbody>
 								<?php $no = 1;
-								foreach ($ticket_spv as $row) { ?>
+								foreach ($ticket_mgr as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
-										<td><a href="<?= site_url('ticket_spv/detail_approve/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
+										<td><a href="<?= site_url('ticket_mgr/detail_approve/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>

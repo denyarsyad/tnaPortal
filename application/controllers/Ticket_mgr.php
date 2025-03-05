@@ -2,11 +2,11 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 /*
 Dibuat oleh: Deny Arsyad, S.Kom
-Created: 02-2025
-Modified: 02-2025
+Created: 03-2025
+Modified: 03-2025
 */
 
-class Ticket_spv extends CI_Controller
+class Ticket_mgr extends CI_Controller
 {
 	public function __construct()
 	{
@@ -24,13 +24,13 @@ class Ticket_spv extends CI_Controller
 
 	public function detail_approve($id)
     {
-        //User harus SPV, tidak boleh role user lain
-        if ($this->session->userdata('level') == "SPV") {
+        //User harus MGR, tidak boleh role user lain
+        if ($this->session->userdata('level') == "MGR") {
             //Menyusun template Detail Ticket yang belum di-approve
             $data['title']    = "Detail Tiket";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketSpvDept/detailapprove";
+            $data['body']     = "ticketMgr/detailapprove";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -57,21 +57,21 @@ class Ticket_spv extends CI_Controller
 	//List Assignment
 	public function index_tugas()
 	{
-		//User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
+		//User harus MGR, tidak boleh role user lain
+		if ($this->session->userdata('level') == "MGR") {
 			//Menyusun template List Assignment
 			$data['title'] 	  = "Daftar Ticket";
-			$data['desc']     = "Daftar semua tiket yang diajukan untuk Anda.";
+			$data['desc']     = "Daftar semua tiket yang diajukan.";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "ticketSpvDept/listtugas";
+			$data['body']     = "ticketMgr/listtugas";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
 			//get data
-			$data['tugas'] = $this->model->list_ticket_spv($id_user)->result();
+			$data['tugas'] = $this->model->list_ticket_mgr($id_user)->result();
 
 			//Load template
 			$this->load->view('template', $data);
@@ -84,12 +84,12 @@ class Ticket_spv extends CI_Controller
 
 	public function set_prioritas($id)
     {
-        if ($this->session->userdata('level') == "SPV") {
+        if ($this->session->userdata('level') == "MGR") {
             //Menyusun template Detail Ticket yang belum di-approve
             $data['title']    = "Set Prioritas Pengajuan";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketSpvDept/setprioritas";
+            $data['body']     = "ticketMgr/setprioritas";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -122,18 +122,18 @@ class Ticket_spv extends CI_Controller
         }
     }
 
-	public function approveSpv($id)
+	public function approveMgr($id)
     {
-        //User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
+        //User harus MGR, tidak boleh role user lain
+		if ($this->session->userdata('level') == "MGR") {
 			//Proses me-approve ticket, menggunakan model (approve) dengan parameter id_ticket yang akan di-approve
-			$this->model->approveSpv($id);
+			$this->model->approveMgr($id);
             //Set pemberitahuan bahwa tiket berhasil ditugaskan ke teknisi
             $this->session->set_flashdata('status', 'Ditugaskan');
 			//Kembali ke halaman List approvel ticket (list_approve)
-			redirect('ticket_spv/index_tugas');
+			redirect('ticket_mgr/index_tugas');
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
+			//Bagian ini jika role yang mengakses tidak sama dengan MGR
 			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}
@@ -142,13 +142,13 @@ class Ticket_spv extends CI_Controller
 
     public function detail_reject($id)
     {
-        //User harus SPV, tidak boleh role user lain
-        if ($this->session->userdata('level') == "SPV") {
+        //User harus MGR, tidak boleh role user lain
+        if ($this->session->userdata('level') == "MGR") {
             //Menyusun template Detail Ticket yang akan di-reject
             $data['title']    = "Tolak Tiket";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketSpvDept/detailreject";
+            $data['body']     = "ticketMgr/detailreject";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');

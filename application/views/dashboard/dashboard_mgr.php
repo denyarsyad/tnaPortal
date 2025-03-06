@@ -9,7 +9,7 @@
 					<div class="row no-gutters align-items-center">
 						<div class="col mr-2">
 							<div class="text-xs font-weight-bold text-uppercase mb-1">Tiket Baru</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_new_spv ?></div>
+							<div class="h3 mb-0 font-weight-bold"><?= $jml_new_mgr ?></div>
 							<h4 class="small font-weight-bold">&nbsp;<span></span></h4>
 						</div>
 						<div class="col-auto">

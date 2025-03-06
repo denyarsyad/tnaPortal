@@ -156,12 +156,12 @@ class Dashboard extends CI_Controller
         $data['ticket_spv']         = $this->model->deptTicket($id_user)->result();
 
         //Dashboard MGR
-        // //Jumlah Tiket 
-        // $resultAllTicket            = $this->model->getTicketMgr($id_user);
-        // $data['jml_ticket_mgr']     = ($resultAllTicket) ? $resultAllTicket->total : 0;
-        // //Jumlah tiket yang butuh persetujuan MGR Dept
-        // $resultNewTicket            = $this->model->getNewTicketMgr($id_user);
-        // $data['jml_new_mgr']        = ($resultNewTicket) ? $resultNewTicket->total : 0;
+        //Jumlah Tiket 
+        $resultAllTicketMgr         = $this->model->getTicketMgr($id_user);
+        $data['jml_ticket_mgr']     = ($resultAllTicketMgr) ? $resultAllTicketMgr->total : 0;
+        //Jumlah tiket yang butuh persetujuan MGR
+        $resultNewTicketMgr         = $this->model->getNewTicketMgr($id_user);
+        $data['jml_new_mgr']        = ($resultNewTicketMgr) ? $resultNewTicketMgr->total : 0;
 
         //Resume ticket Baru MGR
         $data['ticket_mgr']         = $this->model->mgrTicket($id_user)->result();    

@@ -55,7 +55,7 @@ class Ticket_mgr extends CI_Controller
     }
 
 	//List Assignment
-	public function index_tugas()
+	public function lits_tugas_mgr()
 	{
 		//User harus MGR, tidak boleh role user lain
 		if ($this->session->userdata('level') == "MGR") {

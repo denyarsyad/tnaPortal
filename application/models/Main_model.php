@@ -2167,16 +2167,32 @@ class Main_model extends CI_Model
     LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
     LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
     LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
-    INNER JOIN (SELECT db.id_dept 
-                FROM pegawai p 
-                INNER JOIN jabatan j ON P.id_jabatan = J.id_jabatan 
-                INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
-                INNER JOIN departemen d ON DB.id_dept = D.id_dept 
-                WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
     WHERE A.status IN (8)
     ORDER BY A.tanggal DESC");
     // $query = $this->db->query($sql, array($id));
     return $query;
+  }
+
+  public function getTicketMgr($id)
+  {
+    $query = $this->db->query("SELECT count(*) AS total
+    FROM ticket t 
+    INNER JOIN pegawai p ON t.reported = p.nik 
+    INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
+    INNER JOIN departemen d ON db.id_dept = d.id_dept
+    WHERE t.status IN (8, 9)");
+    return $query->row();
+  }
+
+  public function getNewTicketMgr($id)
+  {
+    $query = $this->db->query("SELECT count(*) AS total
+    FROM ticket t 
+    INNER JOIN pegawai p ON t.reported = p.nik 
+    INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
+    INNER JOIN departemen d ON db.id_dept = d.id_dept
+    WHERE t.status = 8");
+    return $query->row();
   }
 
 }

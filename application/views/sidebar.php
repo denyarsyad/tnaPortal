@@ -170,5 +170,21 @@
 				<span>Daftar Tiket</span>
 			</a>
 		</li>
+	<?php } else if ($this->session->userdata('level') == "MGR") { ?>
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_mgr/list_tugas_mgr' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_mgr/list_tugas_mgr') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Daftar Tiket</span>
+			</a>
+		</li>
 	<?php } ?>
 </ul>

@@ -54,12 +54,12 @@ class Ticket_spv extends CI_Controller
         }
     }
 
-	//List Assignment
+	//List Approve
 	public function index_tugas()
 	{
 		//User harus SPV, tidak boleh role user lain
 		if ($this->session->userdata('level') == "SPV") {
-			//Menyusun template List Assignment
+			//Menyusun template List Approve
 			$data['title'] 	  = "Daftar Ticket";
 			$data['desc']     = "Daftar semua tiket yang diajukan untuk Anda.";
 			$data['navbar']   = "navbar";
@@ -76,7 +76,7 @@ class Ticket_spv extends CI_Controller
 			//Load template
 			$this->load->view('template', $data);
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan Teknisi
+			//Bagian ini jika role yang mengakses tidak sama dengan SPV
 			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}

@@ -22,7 +22,7 @@ class Ticket_mgr extends CI_Controller
 		}
 	}
 
-	public function detail_approve($id)
+	public function detail_approve_mgr($id)
     {
         //User harus MGR, tidak boleh role user lain
         if ($this->session->userdata('level') == "MGR") {
@@ -30,7 +30,7 @@ class Ticket_mgr extends CI_Controller
             $data['title']    = "Detail Tiket";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketMgr/detailapprove";
+            $data['body']     = "ticketMgr/detailApproveMgr";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -55,7 +55,7 @@ class Ticket_mgr extends CI_Controller
     }
 
 	//List Assignment
-	public function lits_tugas_mgr()
+	public function list_tugas_mgr()
 	{
 		//User harus MGR, tidak boleh role user lain
 		if ($this->session->userdata('level') == "MGR") {
@@ -64,14 +64,15 @@ class Ticket_mgr extends CI_Controller
 			$data['desc']     = "Daftar semua tiket yang diajukan.";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "ticketMgr/listtugas";
+			$data['body']     = "ticketMgr/listTugasMgr";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
 			//get data
-			$data['tugas'] = $this->model->list_ticket_mgr($id_user)->result();
+			$data['tugasMgr'] = $this->model->list_ticket_mgr($id_user)->result();
+            //var_dump($data['tugasMgr']);
 
 			//Load template
 			$this->load->view('template', $data);

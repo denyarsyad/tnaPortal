@@ -83,14 +83,14 @@ class Ticket_mgr extends CI_Controller
 		}
 	}
 
-	public function set_prioritas($id)
+	public function assign_to_mgr($id)
     {
         if ($this->session->userdata('level') == "MGR") {
             //Menyusun template Detail Ticket yang belum di-approve
-            $data['title']    = "Set Prioritas Pengajuan";
+            $data['title']    = "Set Assign To";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketMgr/setprioritas";
+            $data['body']     = "ticketMgr/assignto";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -106,9 +106,9 @@ class Ticket_mgr extends CI_Controller
             $data['tracking'] = $this->model->tracking_ticket($id)->result();
 
             $row = $this->model->detail_ticket($id)->row();
-            //Dropdown pilih prioritas, menggunakan model (dropdown_prioritas), nama prioritas ditampung pada 'dd_prioritas', data yang akan di simpan adalah id_prioritas dan akan ditampung pada 'id_prioritas'
-            $data['dd_prioritas'] = $this->model->dropdown_prioritas();
-            $data['id_prioritas'] = "";
+            ////Dropdown pilih prioritas, menggunakan model (dropdown_prioritas), nama prioritas ditampung pada 'dd_prioritas', data yang akan di simpan adalah id_prioritas dan akan ditampung pada 'id_prioritas'
+            //$data['dd_prioritas'] = $this->model->dropdown_prioritas();
+            //$data['id_prioritas'] = "";
 
             //Dropdown pilih Teknisi, menggunakan model (dropdown_teknisi), nama teknisi ditampung pada 'dd_teknisi', dan data yang akan di simpan adalah id_user dengan level teknisi, data akan ditampung pada 'id_teknisi'
             $data['dd_teknisi'] = $this->model->dropdown_teknisi();

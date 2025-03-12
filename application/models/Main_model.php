@@ -417,6 +417,8 @@ class Main_model extends CI_Model
     $value['User'] = 'User';
     $value['SPV'] = 'Supervisor Dept';
     $value['MGR'] = 'Manager';
+    $value['SPVU'] = 'Supervisor Utility';
+    $value['SPVM'] = 'Supervisor Maintenance';
 
     return $value;
   }
@@ -2212,6 +2214,21 @@ class Main_model extends CI_Model
     return $query;
   }
 
- 
+ //Method untuk menaruh data user spv tech sesuai dengan kategori yang dipilih pada dropdown
+ function dropdown_spv_tech()
+ {
+   //Query untuk mengambil data user yang memiliki level 'Technician'
+   $query = $this->db->query("SELECT 'SPVU' AS username, 'Supervisor Utility' AS nama FROM dual
+                              UNION ALL
+                              SELECT 'SPVM' AS username, 'Supervisor Maintenance' AS nama FROM dual");
+
+   //Value default pada dropdown
+   $value[''] = '-- Pilih --';
+   //Menaruh data user teknisi ke dalam dropdown, value yang akan diambil adalah value id_user yang memiliki level 'Technician'
+   foreach ($query->result() as $row) {
+     $value[$row->username] = $row->nama;
+   }
+   return $value;
+ }
 
 }

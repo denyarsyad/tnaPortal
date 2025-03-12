@@ -64,9 +64,9 @@
 
 						<div class="form-group mb-3">
 							<label class="mb-2 font-weight-bold text-primary">PIC</label>
-							<?= form_dropdown('id_teknisi', $dd_teknisi, set_value('id_teknisi'), 'id="id_teknisi" class="form-control select2 ' . (form_error('id_teknisi') ? "is-invalid" : "") . '" style="width: 100% !important"'); ?>
+							<?= form_dropdown('id_spv_tech', $dd_spv_tech, set_value('id_spv_tech'), 'id="id_spv_tech" class="form-control select2 ' . (form_error('id_spv_tech') ? "is-invalid" : "") . '" style="width: 100% !important"'); ?>
 							<div class="invalid-feedback">
-								<?= form_error('id_teknisi'); ?>
+								<?= form_error('id_spv_tech'); ?>
 							</div>
 						</div>
 

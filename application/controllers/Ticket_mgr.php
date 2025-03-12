@@ -111,8 +111,8 @@ class Ticket_mgr extends CI_Controller
             //$data['id_prioritas'] = "";
 
             //Dropdown pilih Teknisi, menggunakan model (dropdown_teknisi), nama teknisi ditampung pada 'dd_teknisi', dan data yang akan di simpan adalah id_user dengan level teknisi, data akan ditampung pada 'id_teknisi'
-            $data['dd_teknisi'] = $this->model->dropdown_teknisi();
-            $data['id_teknisi'] = "";
+            $data['dd_spv_tech'] = $this->model->dropdown_spv_tech();
+            $data['id_spv_tech'] = "";
 
             //Load template
             $this->load->view('template', $data);

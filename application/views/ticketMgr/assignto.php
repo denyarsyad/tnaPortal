@@ -57,7 +57,7 @@
 					<h5 class="mb-4 font-weight-bold text-dark">
 						Form Assign To
 					</h5>
-					<form method="post" action="<?= site_url('ticket/approve/' . $detail['id_ticket']) ?>" enctype="multipart/form-data">
+					<form method="post" action="<?= site_url('ticket_mgr/approveMgr/' . $detail['id_ticket']) ?>" enctype="multipart/form-data">
 						<div class="form-group">
 							<div id="div-order"></div>
 						</div>
@@ -77,7 +77,7 @@
 						<br />
 
 						<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-						<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket/list_approve') ?>'">Batal</button>
+						<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket_mgr/list_tugas_mgr') ?>'">Batal</button>
 					</form>
 				</div>
 			</div>

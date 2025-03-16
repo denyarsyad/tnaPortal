@@ -839,7 +839,12 @@ class Main_model extends CI_Model
   public function detail_ticket($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_summary, A.problem_detail, A.filefoto, A.id_prioritas, A.id_sub_kategori, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas, J.warna, J.waktu_respon, K.nama_jabatan, A.assign_to FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_summary, A.problem_detail, A.filefoto, A.id_prioritas, A.id_sub_kategori, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas, J.warna, J.waktu_respon, K.nama_jabatan, 
+    CASE WHEN A.assign_to = 'SPVU' THEN 'Supervisor Utility' 
+	  WHEN A.assign_to = 'SPVM' THEN 'Supervisor Maintenance'
+	  ELSE A.assign_to
+    END AS assign_to
+    FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2133,7 +2138,6 @@ class Main_model extends CI_Model
 
     //Melakukan update data ticket dengan mengubah status ticket menjadi 2, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
     $data = array(
-      //'deadline'   => date('Y-m-d H:i:s', strtotime($date . ' + ' . $date2 . ' days')),
       'status'     => 8,
       'last_update' => date("Y-m-d  H:i:s"),
     );
@@ -2230,5 +2234,39 @@ class Main_model extends CI_Model
    }
    return $value;
  }
+
+
+  //Method yang digunakan untuk proses approve ticket dengan parameter (id_ticket)
+  public function approveMgr($id)
+  {
+    $sql        = $this->db->query("SELECT tanggal FROM ticket WHERE id_ticket = '$id'")->row();
+    $date       = $sql->tanggal;
+    $date2      = $this->input->post('waktu_respon');
+    //Mengambil session MGR
+    $id_user    = $this->session->userdata('id_user');
+
+    //Melakukan update data ticket dengan mengubah status ticket menjadi 9, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
+    $data = array(
+      'status'     => 9,
+      'last_update' => date("Y-m-d  H:i:s"),
+      'assign_to'    => $this->input->post('id_spv_tech')
+    );
+
+    //Melakukan insert data tracking ticket bahwa ticket di-approve oleh MGR, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
+    $datatracking = array(
+      'id_ticket'  => $id,
+      'tanggal'    => date("Y-m-d  H:i:s"),
+      'status'     => "Ticket Assign To",
+      'deskripsi'  => "Ticket Assign to " . $this->input->post('id_spv_tech'),
+      'id_user'    => $id_user
+    );
+
+    //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
+    $this->db->where('id_ticket', $id);
+    $this->db->update('ticket', $data);
+
+    //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+    $this->db->insert('tracking', $datatracking);
+  }
 
 }

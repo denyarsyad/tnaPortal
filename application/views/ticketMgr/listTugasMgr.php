@@ -75,6 +75,10 @@
 											<td>
 												<strong style="color: #36454F;">Approved Supervisor</strong>
 											</td>
+										<?php } else if ($row->status == 9) { ?>
+											<td>
+												<strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
+											</td>
 										<?php } ?>
 									</tr>
 								<?php $no++;

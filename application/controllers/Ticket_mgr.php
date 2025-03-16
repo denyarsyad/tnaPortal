@@ -132,7 +132,7 @@ class Ticket_mgr extends CI_Controller
             //Set pemberitahuan bahwa tiket berhasil ditugaskan ke teknisi
             $this->session->set_flashdata('status', 'Ditugaskan');
 			//Kembali ke halaman List approvel ticket (list_approve)
-			redirect('ticket_mgr/index_tugas');
+			redirect('ticket_mgr/list_tugas_mgr');
 		} else {
 			//Bagian ini jika role yang mengakses tidak sama dengan MGR
 			//Akan dibawa ke Controller Errorpage

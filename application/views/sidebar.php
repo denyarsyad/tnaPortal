@@ -186,5 +186,37 @@
 				<span>Daftar Tiket</span>
 			</a>
 		</li>
-	<?php } ?>
+	<?php } else if ($this->session->userdata('level') == "SPVU") { ?>
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_spvu/list_tugas_spvu' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_spvu/list_tugas_spvu') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Daftar Tiket</span>
+			</a>
+		</li>
+	<?php } else if ($this->session->userdata('level') == "SPVM") { ?>
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_spvm/list_tugas_spvm' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_spvm/list_tugas_spvm') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Daftar Tiket</span>
+			</a>
+		</li>
+	<?php }  ?>
 </ul>

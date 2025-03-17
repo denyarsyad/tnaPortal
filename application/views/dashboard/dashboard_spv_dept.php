@@ -110,6 +110,10 @@
 											<td>
 												<strong style="color: #36454F;">Approved Supervisor</strong>
 											</td>
+										<?php } else if ($row->status == 9) { ?>
+											<td>
+												<strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
+											</td>
 										<?php } ?>
 									</tr>
 								<?php $no++;
@@ -196,7 +200,10 @@ foreach ($lbl_status as $data) {
 	} else if ($data->status == 8) {
 		$stat = "Approved Supervisor";
 		$bg = "#36454F";
-	}
+	} else if ($data->status == 9) {
+		$stat = "Assign by Manager";
+		$bg = "rgb(11, 167, 57)";
+	} 
 	$Tstat  .= "'$stat'" . ", ";
 	$BGstat .= "'$bg'" . ", ";
 	$jstat   = $data->jumstat;

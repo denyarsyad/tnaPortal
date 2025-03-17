@@ -2173,9 +2173,8 @@ class Main_model extends CI_Model
     LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
     LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
     LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
-    WHERE A.status IN (8)
+    WHERE A.status = 8
     ORDER BY A.tanggal DESC");
-    // $query = $this->db->query($sql, array($id));
     return $query;
   }
 
@@ -2221,14 +2220,14 @@ class Main_model extends CI_Model
  //Method untuk menaruh data user spv tech sesuai dengan kategori yang dipilih pada dropdown
  function dropdown_spv_tech()
  {
-   //Query untuk mengambil data user yang memiliki level 'Technician'
+   //Query untuk mengambil data user yang memiliki level 'MGR'
    $query = $this->db->query("SELECT 'SPVU' AS username, 'Supervisor Utility' AS nama FROM dual
                               UNION ALL
                               SELECT 'SPVM' AS username, 'Supervisor Maintenance' AS nama FROM dual");
 
    //Value default pada dropdown
    $value[''] = '-- Pilih --';
-   //Menaruh data user teknisi ke dalam dropdown, value yang akan diambil adalah value id_user yang memiliki level 'Technician'
+   //Menaruh data user spvu dan spvm ke dalam dropdown, value yang akan diambil adalah value id_user yang memiliki level 'Technician'
    foreach ($query->result() as $row) {
      $value[$row->username] = $row->nama;
    }
@@ -2247,8 +2246,8 @@ class Main_model extends CI_Model
 
     //Melakukan update data ticket dengan mengubah status ticket menjadi 9, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
     $data = array(
-      'status'     => 9,
-      'last_update' => date("Y-m-d  H:i:s"),
+      'status'       => 9,
+      'last_update'  => date("Y-m-d  H:i:s"),
       'assign_to'    => $this->input->post('id_spv_tech')
     );
 
@@ -2267,6 +2266,50 @@ class Main_model extends CI_Model
 
     //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
     $this->db->insert('tracking', $datatracking);
+  }
+
+
+  //SPVU
+  public function spvuTicket($id)
+  {
+    //Query untuk mendapatkan semua ticket dengan status 8 (diajukan ke MGR) dengan diurutkan berdasarkan tanggal ticket dibuat
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
+    LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
+    LEFT JOIN pegawai D ON D.nik = A.reported 
+    LEFT JOIN departemen_bagian E ON E.id_bagian_dept = D.id_bagian_dept 
+    LEFT JOIN departemen F ON F.id_dept = E.id_dept
+    LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
+    LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
+    LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
+    WHERE A.status = 9
+    AND A.assign_to  = 'SPVU'
+    ORDER BY A.tanggal DESC");
+    return $query;
+  }
+
+  public function getTicketSpvu($id)
+  {
+    $query = $this->db->query("SELECT count(*) AS total
+    FROM ticket t 
+    INNER JOIN pegawai p ON t.reported = p.nik 
+    INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
+    INNER JOIN departemen d ON db.id_dept = d.id_dept
+    WHERE t.status = 9
+    AND t.assign_to = 'SPVU'");
+    return $query->row();
+  }
+
+  public function getNewTicketSpvu($id)
+  {
+    $query = $this->db->query("SELECT count(*) AS total
+    FROM ticket t 
+    INNER JOIN pegawai p ON t.reported = p.nik 
+    INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
+    INNER JOIN departemen d ON db.id_dept = d.id_dept
+    WHERE t.status = 9
+    AND t.assign_to = 'SPVU'");
+    return $query->row();
   }
 
 }

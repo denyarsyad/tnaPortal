@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard Manager</h1>
+	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Dashboard Supervisor Utility</h1>
 
 	<div class="row">
 		<!--Need Approve-->
@@ -9,7 +9,7 @@
 					<div class="row no-gutters align-items-center">
 						<div class="col mr-2">
 							<div class="text-xs font-weight-bold text-uppercase mb-1">Tiket Baru</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_new_mgr ?></div>
+							<div class="h3 mb-0 font-weight-bold"><?= $jml_new_spvu ?></div>
 							<h4 class="small font-weight-bold">&nbsp;<span></span></h4>
 						</div>
 						<div class="col-auto">
@@ -27,7 +27,7 @@
 					<div class="row no-gutters align-items-center">
 						<div class="col mr-2">
 							<div class="text-xs font-weight-bold text-uppercase mb-1">Semua Tiket</div>
-							<div class="h3 mb-0 font-weight-bold"><?= $jml_ticket_mgr?></div>
+							<div class="h3 mb-0 font-weight-bold"><?= $jml_ticket_spvu?></div>
 						</div>
 						<div class="col-auto">
 							<i class="fas fa-ticket-alt fa-2x text-primary"></i>
@@ -43,7 +43,7 @@
 		<div class="col-xl-12 col-lg-12">
 			<div class="card shadow mb-4">
 				<div class="card-header font-weight-bold text-primary">
-					Tiket Baru (<?= $jml_new_mgr ?>)
+					Tiket Baru (<?= $jml_new_spvu ?>)
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -61,10 +61,10 @@
 							</thead>
 							<tbody>
 								<?php $no = 1;
-								foreach ($ticket_mgr as $row) { ?>
+								foreach ($ticket_spvu as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
-										<td><a href="<?= site_url('ticket_mgr/assign_to_mgr/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
+										<td><a href="<?= site_url('ticket_spvu/assign_to_spvu/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>
@@ -113,7 +113,7 @@
 											<td>
 												<strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
 											</td>
-										<?php } ?>
+										<?php }  ?>
 									</tr>
 								<?php $no++;
 								} ?>

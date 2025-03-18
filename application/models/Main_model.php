@@ -2295,7 +2295,7 @@ class Main_model extends CI_Model
     INNER JOIN pegawai p ON t.reported = p.nik 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
     INNER JOIN departemen d ON db.id_dept = d.id_dept
-    WHERE t.status = 9
+    WHERE t.status IN (9,3)
     AND t.assign_to = 'SPVU'");
     return $query->row();
   }
@@ -2310,6 +2310,23 @@ class Main_model extends CI_Model
     WHERE t.status = 9
     AND t.assign_to = 'SPVU'");
     return $query->row();
+  }
+
+  public function list_ticket_spvu()
+  {
+    //Query untuk mendapatkan semua ticket dengan status 1 (submitted) atau 2 (Belum di approve) dengan diurutkan berdasarkan tanggal ticket dibuat
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
+    LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
+    LEFT JOIN pegawai D ON D.nik = A.reported 
+    LEFT JOIN departemen_bagian E ON E.id_bagian_dept = D.id_bagian_dept 
+    LEFT JOIN departemen F ON F.id_dept = E.id_dept
+    LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
+    LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
+    LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
+    WHERE A.status IN (3,9)
+    ORDER BY A.tanggal DESC");
+    return $query;
   }
 
 }

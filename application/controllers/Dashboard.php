@@ -185,6 +185,17 @@ class Dashboard extends CI_Controller
         $data['ticket_spvu']         = $this->model->spvuTicket($id_user)->result();   
         
 
+        //Dashboard SPVM
+        //Jumlah Tiket 
+        $resultAllTicketSpvm         = $this->model->getTicketSpvm($id_user);
+        $data['jml_ticket_spvm']     = ($resultAllTicketSpvm) ? $resultAllTicketSpvm->total : 0;
+        //Jumlah tiket yang butuh persetujuan SPVM
+        $resultNewTicketSpvm         = $this->model->getNewTicketSpvm($id_user);
+        $data['jml_new_spvm']        = ($resultNewTicketSpvm) ? $resultNewTicketSpvm->total : 0;
+
+        //Resume ticket Baru SPVM
+        $data['ticket_spvm']         = $this->model->spvmTicket($id_user)->result(); 
+
         $this->load->view('template', $data);
     }
 

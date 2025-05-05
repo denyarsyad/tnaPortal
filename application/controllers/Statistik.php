@@ -1,12 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-PT. ITSHOP BISNIS DIGITAL
-Toko Online: ITSHOP Purwokerto (Tokopedia.com/itshoppwt, Shopee.co.id/itshoppwt, Bukalapak.com/itshoppwt)
-Dibuat oleh: Hari Wicaksono, S.Kom
-Created: 12-2022
-Modified: 06-2023
-*/
+
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -30,7 +24,8 @@ class Statistik extends CI_Controller
 	public function index()
 	{
 		//User harus admin, tidak boleh role user lain
-		if ($this->session->userdata('level') == "Admin") {
+		//if ($this->session->userdata('level') == "Admin") {
+		if (in_array($this->session->userdata('level'), ["Admin", "MGR", "SPVU", "SPVM"])) {
 			//Menyusul template dashboard
 			$data['title'] 		= "Statistik &amp; Laporan";
 			$data['navbar']     = "navbar";

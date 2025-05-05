@@ -186,6 +186,13 @@
 				<span>Daftar Tiket</span>
 			</a>
 		</li>
+
+		<li class="nav-item <?= (uri_string() == 'statistik' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('statistik') ?>">
+				<i class="fas fa-fw fa-chart-bar"></i>
+				<span>Laporan</span>
+			</a>
+		</li>
 	<?php } else if ($this->session->userdata('level') == "SPVU") { ?>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
@@ -202,6 +209,13 @@
 				<span>Daftar Tiket</span>
 			</a>
 		</li>
+
+		<li class="nav-item <?= (uri_string() == 'statistik' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('statistik') ?>">
+				<i class="fas fa-fw fa-chart-bar"></i>
+				<span>Laporan</span>
+			</a>
+		</li>
 	<?php } else if ($this->session->userdata('level') == "SPVM") { ?>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
@@ -216,6 +230,13 @@
 			<a class="nav-link" href="<?= site_url('ticket_spvm/list_tugas_spvm') ?>">
 				<i class="fas fa-fw fa-ticket-alt"></i>
 				<span>Daftar Tiket</span>
+			</a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'statistik' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('statistik') ?>">
+				<i class="fas fa-fw fa-chart-bar"></i>
+				<span>Laporan</span>
 			</a>
 		</li>
 	<?php }  ?>

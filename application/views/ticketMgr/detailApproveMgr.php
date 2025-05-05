@@ -8,7 +8,7 @@
 				<div class="card shadow mb-4">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<h5 class="mb-3 font-weight-bold text-dark">
 									Ticket Information
 								</h5>
@@ -17,15 +17,21 @@
 										Aksi:
 										<?php if ($detail['status'] == 0) { ?>
 											No Action
-										<?php } else if ($detail['status'] == 1) { ?>
+										<?php } else if ($detail['status'] == 8) { ?>
 											<!-- Form untuk Approve -->
-											<form method="post" action="<?= site_url('ticket_spv/approveSpv/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
+											<form method="post" action="<?= site_url('ticket_mgr/assign_to_mgr/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
 												<input type="hidden" name="id_ticket" value="<?= $detail['id_ticket'] ?>">
 												<button type="submit" class="btn btn-success approve" title="Approve">
 													<i class="fas fa-check"></i> Terima
 												</button>
 											</form>
-											<a href="<?= site_url('ticket_spv/detail_reject/' . $detail['id_ticket']) ?>" class="btn btn-danger reject" title="Reject">
+											<form method="post" action="<?= site_url('ticket_mgr/detail_noted/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
+												<input type="hidden" name="id_ticket" value="<?= $detail['id_ticket'] ?>">
+												<button type="submit" class="btn btn-primary note" title="Note">
+													<i class="fas fa-pen"></i> Catatan
+												</button>
+											</form>
+											<a href="<?= site_url('ticket_mgr/detail_reject/' . $detail['id_ticket']) ?>" class="btn btn-danger reject" title="Reject">
 												<i class="fas fa-times"></i> Tolak
 											</a>
 										<?php } else if ($detail['status'] == 2) { ?>
@@ -75,6 +81,11 @@
 											<?= $detail['assign_to'] ?><br>
 										</div>
 										<hr>
+									<h6 class="m-0 text-primary">Due date</h6>
+									<div class="font-weight-bold">
+										<?= $detail['due_date']  ?><br>
+									</div>
+										<hr>
 										<h6 class="m-0 text-primary">Prioritas</h6>
 										<div class="font-weight-bold">
 											<?php if ($detail['id_prioritas'] == 0) { ?>
@@ -112,7 +123,7 @@
 									Click image to zoom <i class="fas fa-search-plus"></i>
 								<?php } ?>
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-6">
 								<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
 								<div class="accordion mb-3" id="accordionReply">
 									<div class="card">

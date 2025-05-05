@@ -1,11 +1,11 @@
 <div class="container-fluid">
 	<? //= var_dump($detail);die; 
 	?>
-	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Detail Ticket #<?= $detail['id_ticket'] ?></h1>
+	<h1 class="h3 mb-3 text-gray-800 font-weight-bold">Detail Work Order's #<?= $detail['id_ticket'] ?></h1>
 
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item" role="presentation">
-			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Detail Ticket</a>
+			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Detail Work Order's</a>
 		</li>
 		<li class="nav-item" role="presentation">
 			<a class="nav-link" id="lacak-tab" data-toggle="tab" href="#lacak" role="tab" aria-controls="lacak" aria-selected="false">Sistem Lacak</a>
@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<h5 class="mb-3 font-weight-bold text-dark">
-								Ticket Information
+								Work Order's Information
 							</h5>
 							<div class="card">
 								<div class="card-body">
@@ -58,6 +58,11 @@
 									<h6 class="m-0 text-primary">Kategori</h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama_kategori'] . " (" . $detail['nama_sub_kategori'] . ")" ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Due date</h6>
+									<div class="font-weight-bold">
+										<?= $detail['due_date']  ?><br>
 									</div>
 									<hr>
 									<h6 class="m-0 text-primary">Prioritas</h6>

@@ -21,6 +21,8 @@
 									<th>Tanggal</th>
 									<th>Nama</th>
 									<th>Sub Kategori</th>
+									<th>Due date</th>
+									<th>Lokasi</th>
 									<th>Prioritas</th>
 									<th>Status</th>
 								</tr>
@@ -34,6 +36,8 @@
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>
+										<td><?= $row->due_date ?></td>
+										<td><?= $row->lokasi ?></td>
 										<?php if ($row->id_prioritas == 0) { ?>
 											<td>Not set yet</td>
 										<?php } else { ?>

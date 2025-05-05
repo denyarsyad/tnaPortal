@@ -11,8 +11,8 @@ Modified: 06-2023
 class TicketData_model extends CI_Model
 {
     var $table = 'ticket';
-    var $column_order = array('id_ticket', 'status', 'tanggal', 'problem_summary', 'problem_detail', 'D.nama', 'H.lokasi', 'C.nama_kategori', 'B.nama_sub_kategori');
-    var $column_search = array('id_ticket', 'status', 'tanggal', 'problem_summary', 'problem_detail', 'D.nama', 'H.lokasi', 'C.nama_kategori', 'B.nama_sub_kategori');
+    var $column_order = array('id_ticket', 'status', 'tanggal','due_date', 'problem_summary', 'problem_detail', 'D.nama', 'H.lokasi', 'C.nama_kategori', 'B.nama_sub_kategori');
+    var $column_search = array('id_ticket', 'status', 'tanggal', 'due_date','problem_summary', 'problem_detail', 'D.nama', 'H.lokasi', 'C.nama_kategori', 'B.nama_sub_kategori');
     var $order = array('tanggal' => 'desc');
 
     public function __construct()
@@ -24,7 +24,7 @@ class TicketData_model extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select("{$this->table}.id_ticket, {$this->table}.status, {$this->table}.tanggal, {$this->table}.last_update, {$this->table}.id_prioritas, {$this->table}.deadline, {$this->table}.teknisi, {$this->table}.problem_summary, {$this->table}.problem_detail,{$this->table}.filefoto, C.nama_kategori, B.nama_sub_kategori, D.nama, F.nama_dept, G.nama_prioritas, G.warna, G.waktu_respon, H.lokasi, I.nama_jabatan, K.nama AS nama_teknisi");
+        $this->db->select("{$this->table}.id_ticket, {$this->table}.status, {$this->table}.tanggal, {$this->table}.last_update, {$this->table}.id_prioritas, {$this->table}.deadline, {$this->table}.teknisi, {$this->table}.due_date, {$this->table}.problem_summary, {$this->table}.problem_detail,{$this->table}.filefoto, C.nama_kategori, B.nama_sub_kategori, D.nama, F.nama_dept, G.nama_prioritas, G.warna, G.waktu_respon, H.lokasi, I.nama_jabatan, K.nama AS nama_teknisi");
         $this->db->from($this->table);
         $this->db->join("kategori_sub B", "B.id_sub_kategori = {$this->table}.id_sub_kategori", "left");
         $this->db->join("kategori C", "C.id_kategori = B.id_kategori", "left");

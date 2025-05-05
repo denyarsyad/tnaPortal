@@ -20,6 +20,7 @@
 							<th>Nama</th>
 							<th>Kategori</th>
 							<th>Lokasi</th>
+							<th>Due date pemohon</th>
 							<th>Subjek</th>
 							<th width="60">Aksi</th>
 						</tr>
@@ -36,6 +37,7 @@
 								<td><?= $row->nama ?></td>
 								<td><?= $row->nama_kategori ?> (<?= $row->nama_sub_kategori ?>)</td>
 								<td><?= $row->lokasi ?></td>
+								<td><?= $row->due_date ?></td>
 								<td><?= $row->problem_summary ?></td>
 								<td>
 									<?php if ($row->status == 3) { ?>

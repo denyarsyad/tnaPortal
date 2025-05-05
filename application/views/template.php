@@ -1,10 +1,3 @@
-<!--
-PT. ITSHOP BISNIS DIGITAL
-Toko Online: ITSHOP Purwokerto (Tokopedia.com/itshoppwt, Shopee.co.id/itshoppwt, Bukalapak.com/itshoppwt)
-Dibuat oleh: Hari Wicaksono, S.Kom
-Created: 12-2022
-Modified: 06-2023
--->
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +5,7 @@ Modified: 06-2023
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="IT Helpdesk <?= $this->settings->info['perusahaan']; ?>">
+	<meta name="description" content="TNA PORTAL <?= $this->settings->info['perusahaan']; ?>">
 	<meta name="author" content="<?= $this->config->item('site_company'); ?>">
 	<title><?= $title ?> | <?= $this->settings->info['aplikasi']; ?> <?= $this->settings->info['perusahaan']; ?></title>
 	<link rel="icon" type="image/png" href="<?= base_url('assets/img/') . $this->settings->info['logo']; ?>">

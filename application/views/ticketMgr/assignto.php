@@ -122,6 +122,11 @@
 										<?= $detail['nama_kategori'] . " (" . $detail['nama_sub_kategori'] . ")" ?><br>
 									</div>
 									<hr>
+									<h6 class="m-0 text-primary">Due date</h6>
+									<div class="font-weight-bold">
+										<?= $detail['due_date']  ?><br>
+									</div>
+									<hr>
 									<h6 class="m-0 text-primary">Prioritas</h6>
 									<div class="font-weight-bold">
 										<?php if ($detail['id_prioritas'] == 0) { ?>

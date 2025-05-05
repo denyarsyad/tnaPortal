@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<h1 class="h3 mb-0 text-gray-800 font-weight-bold"><?= $title; ?></h1>
-	<p class="mb-4">Daftar semua tiket yang sudah kamu submit.</p>
+	<p class="mb-4">Daftar semua Work Order's yang sudah kamu submit.</p>
 
 	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status')?>"></div>
 
@@ -14,6 +14,7 @@
 							<th>#</th>
 							<th>No Ticket</th>
 							<th>Prioritas</th>
+							<th>Due date</th>
 							<th>Tanggal</th>
 							<th>Kategori</th>
 							<th>Lokasi</th>
@@ -38,6 +39,7 @@
 										<td class="font-weight-bold" style="color: <?= $row->warna?>; text-align: center"><?= $row->nama_prioritas?></td>
 									<?php } ?>
 								<?php }?>
+								<td><?= $row->due_date?></td>
 								<td><?= $row->tanggal?></td>
 								<td><?= $row->nama_kategori?> (<?= $row->nama_sub_kategori?>)</td>
 								<td><?= $row->lokasi?></td>
@@ -110,7 +112,7 @@
 	if (flashData){
 		Swal.fire(
 			'Sukses!',
-			'Tiket Helpdesk anda berhasil ' + flashData,
+			'Work Order's Maintenance anda berhasil ' + flashData,
 			'success'
 			)
 	}

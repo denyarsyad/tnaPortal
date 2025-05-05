@@ -23,6 +23,7 @@
 							<th>Nama</th>
 							<th>Kategori</th>
 							<th>Lokasi</th>
+							<th>due date</th>
 							<th>Subjek</th>
 						</tr>
 					</thead>
@@ -55,6 +56,7 @@
 								<td><?= $row->nama?></td>
 								<td><?= $row->nama_kategori?> (<?= $row->nama_sub_kategori?>)</td>
 								<td><?= $row->lokasi?></td>
+								<td><?= $row->due_date?></td>
 								<td><?= $row->problem_summary?></td>
 							</tr>
 						<?php $no++;}?>

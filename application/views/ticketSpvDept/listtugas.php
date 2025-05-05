@@ -21,6 +21,8 @@
 									<th>Tanggal</th>
 									<th>Nama</th>
 									<th>Sub Kategori</th>
+									<th>Due date</th>
+									<th>Lokasi</th>
 									<th>Prioritas</th>
 									<th>Status</th>
 								</tr>
@@ -34,6 +36,8 @@
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>
+										<td><?= $row->due_date ?></td>
+										<td><?= $row->lokasi ?></td>
 										<?php if ($row->id_prioritas == 0) { ?>
 											<td>Not set yet</td>
 										<?php } else { ?>
@@ -74,6 +78,14 @@
 										<?php } else if ($row->status == 8) { ?>
 											<td>
 												<strong style="color: #36454F;">Approved Supervisor</strong>
+											</td>
+										<?php } else if ($row->status == 9) { ?>
+											<td>
+												<strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
+											</td>
+										<?php } else if ($row->status == 10) { ?>
+											<td>
+												<strong style="color:rgb(106, 3, 99);">Ticket Returned</strong>
 											</td>
 										<?php } ?>
 									</tr>

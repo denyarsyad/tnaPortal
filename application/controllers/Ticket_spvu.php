@@ -1,12 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-PT. ITSHOP BISNIS DIGITAL
-Toko Online: ITSHOP Purwokerto (Tokopedia.com/itshoppwt, Shopee.co.id/itshoppwt, Bukalapak.com/itshoppwt)
-Dibuat oleh: Hari Wicaksono, S.Kom
-Created: 12-2022
-Modified: 06-2023
-*/
+
 
 class Ticket_spvu extends CI_Controller
 {
@@ -107,6 +101,7 @@ class Ticket_spvu extends CI_Controller
             $row[] = $value->nama;
             $row[] = $value->nama_kategori . '(' . $value->nama_sub_kategori . ')';
             $row[] = $value->lokasi;
+			$row[] = $value->due_date;
             $row[] = $value->problem_summary;
             $row[] = $value->last_update;
             $row[] = $teknisi;

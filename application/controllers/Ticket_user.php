@@ -1,12 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-PT. ITSHOP BISNIS DIGITAL
-Toko Online: ITSHOP Purwokerto (Tokopedia.com/itshoppwt, Shopee.co.id/itshoppwt, Bukalapak.com/itshoppwt)
-Dibuat oleh: Hari Wicaksono, S.Kom
-Created: 12-2022
-Modified: 06-2023
-*/
+
 
 class Ticket_user extends CI_Controller
 {
@@ -135,7 +129,24 @@ class Ticket_user extends CI_Controller
 				'required' => '<strong>Failed!</strong> Lokasi Harus dipilih.'
 			)
 		);
-
+		//Form validasi untuk subject dengan nama validasi = due_date
+		$this->form_validation->set_rules(
+	'due_date',
+	'due_date',
+	'required',
+	array(
+		'required' => '<strong>Failed!</strong> Field Harus diisi.'
+	)
+		);
+		//Form validasi untuk subject dengan nama validasi = due_date
+		$this->form_validation->set_rules(
+			'due_date',
+			'due_date',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Field Harus diisi.'
+			)
+		);
 		//Form validasi untuk subject dengan nama validasi = problem_summary
 		$this->form_validation->set_rules(
 			'problem_summary',
@@ -265,6 +276,7 @@ class Ticket_user extends CI_Controller
 						'last_update'		=> date("Y-m-d H:i:s"),
 						'reported'			=> $id_user,
 						'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
+						'due_date'			=> ucfirst($this->input->post('due_date')),
 						'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
 						'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
 						'status'    		=> 1,
@@ -312,6 +324,7 @@ class Ticket_user extends CI_Controller
 					'last_update'		=> date("Y-m-d H:i:s"),
 					'reported'			=> $id_user,
 					'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
+					'due_date'			=> ucfirst($this->input->post('due_date')),
 					'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
 					'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
 					'status'    		=> 1,

@@ -1,12 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-/*
-PT. ITSHOP BISNIS DIGITAL
-Toko Online: ITSHOP Purwokerto (Tokopedia.com/itshoppwt, Shopee.co.id/itshoppwt, Bukalapak.com/itshoppwt)
-Dibuat oleh: Hari Wicaksono, S.Kom
-Created: 12-2022
-Modified: 06-2023
-*/
+
 
 //Controller ini sebagai controller bantu untuk dropdown teknisi, sub kategori, dan sub departemen
 class Select extends CI_Controller

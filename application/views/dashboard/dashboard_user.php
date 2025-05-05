@@ -122,6 +122,8 @@
                                     <th>Tanggal</th>
                                     <th>Nama</th>
                                     <th>Sub Kategori</th>
+									<th><i class="fas fa-exclamation-triangle"></i><strong style="color: #C13018;">due date</th>
+									<th>lokasi</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -134,6 +136,8 @@
                                         <td><?= $row->tanggal ?></td>
                                         <td><?= $row->nama ?></td>
                                         <td><?= $row->nama_sub_kategori ?></td>
+										<td><strong style="color: #C13018;"><?= $row->due_date ?></strong></td>
+										<td><?= $row->lokasi ?></td>
                                         <?php if ($row->status == 0) { ?>
                                             <td>
                                                 <strong style="color: #F36F13;">Ticket Rejected</strong>

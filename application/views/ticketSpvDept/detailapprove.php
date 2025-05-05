@@ -17,7 +17,7 @@
 										Aksi:
 										<?php if ($detail['status'] == 0) { ?>
 											No Action
-										<?php } else if ($detail['status'] == 1) { ?>
+										<?php } else if (in_array($detail['status'], [1, 10])) { ?>
 											<!-- Form untuk Approve -->
 											<form method="post" action="<?= site_url('ticket_spv/approveSpv/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
 												<input type="hidden" name="id_ticket" value="<?= $detail['id_ticket'] ?>">
@@ -68,6 +68,11 @@
 										<h6 class="m-0 text-primary">Kategori</h6>
 										<div class="font-weight-bold">
 											<?= $detail['nama_kategori'] . " (" . $detail['nama_sub_kategori'] . ")" ?><br>
+										</div>
+										<hr>
+										<h6 class="m-0 text-primary">Due date</h6>
+										<div class="font-weight-bold">
+											<?= $detail['due_date'] . " (" . $detail['due_date'] . ")" ?><br>
 										</div>
 										<hr>
 										<h6 class="m-0 text-primary">Prioritas</h6>
@@ -157,6 +162,19 @@
 									<div class="card-body">
 										<h5 class="card-title"><?= $detail['problem_summary'] ?></h5>
 										<p class="card-text"><?= nl2br($detail['problem_detail']) ?></p>
+									</div>
+								</div>
+								<!-- -->
+
+								<!-- Subjek dan Deskripsi dari MGR -->
+								<div class="card" style="margin-top: 16px;">
+									<div class="card-header">
+										<i class="fas fa-fw fa-user"></i> <span class="font-weight-bold text-dark"><?= $detail['manager_name'] ?></span><br />
+										Noted From Manager
+										<span class="float-right"><?= $detail['tanggal_reason'] ?></span>
+									</div>
+									<div class="card-body">
+										<p class="card-text"><?= nl2br($detail['returned_reason']) ?></p>
 									</div>
 								</div>
 								<!-- -->

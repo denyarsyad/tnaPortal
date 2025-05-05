@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 12, 2025 at 08:02 AM
--- Server version: 5.7.36
--- PHP Version: 7.4.33
+-- Generation Time: May 02, 2025 at 10:32 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `backup` (
-  `id_backup` int(11) NOT NULL,
+  `id_backup` int NOT NULL,
   `file_name` varchar(255) DEFAULT NULL,
   `file_path` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
@@ -41,19 +41,25 @@ CREATE TABLE `backup` (
 --
 
 CREATE TABLE `departemen` (
-  `id_dept` int(11) NOT NULL,
+  `id_dept` int NOT NULL,
   `nama_dept` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `departemen`
 --
 
 INSERT INTO `departemen` (`id_dept`, `nama_dept`) VALUES
-(1, 'Super Administrator'),
+(1, 'Purchasing'),
 (2, 'Information Technology'),
-(3, 'Software Tester'),
-(4, 'Staf Umum');
+(3, 'Maintenance'),
+(4, 'Produksi'),
+(5, 'QC/QA'),
+(6, 'Marketing'),
+(7, 'Engineering'),
+(8, 'HRGA'),
+(9, 'WH/PPIC'),
+(10, 'Finance');
 
 -- --------------------------------------------------------
 
@@ -62,20 +68,29 @@ INSERT INTO `departemen` (`id_dept`, `nama_dept`) VALUES
 --
 
 CREATE TABLE `departemen_bagian` (
-  `id_bagian_dept` int(11) NOT NULL,
+  `id_bagian_dept` int NOT NULL,
   `nama_bagian_dept` varchar(100) NOT NULL,
-  `id_dept` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_dept` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `departemen_bagian`
 --
 
 INSERT INTO `departemen_bagian` (`id_bagian_dept`, `nama_bagian_dept`, `id_dept`) VALUES
-(1, 'Administrator', 1),
-(2, 'IT Support', 2),
+(1, 'QA', 5),
+(2, 'IT', 2),
 (3, 'Tester', 3),
-(4, 'Staf', 4);
+(4, 'Produksi', 4),
+(5, 'QC', 5),
+(6, 'PPIC', 9),
+(7, 'General affair', 8),
+(8, 'Warehouse', 9),
+(9, 'Marketing', 6),
+(10, 'Purchasing', 1),
+(11, 'Maintenance', 3),
+(12, 'Engineering', 7),
+(13, 'Finance', 10);
 
 -- --------------------------------------------------------
 
@@ -84,12 +99,12 @@ INSERT INTO `departemen_bagian` (`id_bagian_dept`, `nama_bagian_dept`, `id_dept`
 --
 
 CREATE TABLE `informasi` (
-  `id_informasi` int(11) NOT NULL,
+  `id_informasi` int NOT NULL,
   `tanggal` datetime NOT NULL,
   `subject` varchar(35) NOT NULL,
   `pesan` varchar(250) NOT NULL,
   `id_user` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `informasi`
@@ -105,9 +120,9 @@ INSERT INTO `informasi` (`id_informasi`, `tanggal`, `subject`, `pesan`, `id_user
 --
 
 CREATE TABLE `jabatan` (
-  `id_jabatan` int(11) NOT NULL,
+  `id_jabatan` int NOT NULL,
   `nama_jabatan` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `jabatan`
@@ -116,8 +131,11 @@ CREATE TABLE `jabatan` (
 INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`) VALUES
 (1, 'Administrator'),
 (2, 'Staf IT'),
-(3, 'Staf Tester'),
-(4, 'Staf');
+(3, 'Leader'),
+(4, 'Staf'),
+(5, 'Supervisor'),
+(6, 'Manager'),
+(7, 'Operator');
 
 -- --------------------------------------------------------
 
@@ -126,19 +144,19 @@ INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`) VALUES
 --
 
 CREATE TABLE `kategori` (
-  `id_kategori` int(11) NOT NULL,
+  `id_kategori` int NOT NULL,
   `nama_kategori` varchar(35) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `kategori`
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-(1, 'Hardware'),
-(2, 'Software'),
-(3, 'Request'),
-(4, 'Service');
+(1, 'Repair'),
+(2, 'Request'),
+(3, 'Fabrikasi'),
+(4, 'Other');
 
 -- --------------------------------------------------------
 
@@ -147,40 +165,27 @@ INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 --
 
 CREATE TABLE `kategori_sub` (
-  `id_sub_kategori` int(11) NOT NULL,
+  `id_sub_kategori` int NOT NULL,
   `nama_sub_kategori` varchar(35) NOT NULL,
-  `id_kategori` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_kategori` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `kategori_sub`
 --
 
 INSERT INTO `kategori_sub` (`id_sub_kategori`, `nama_sub_kategori`, `id_kategori`) VALUES
-(1, 'Server', 1),
-(2, 'Desktop', 1),
-(3, 'Laptop', 1),
-(4, 'Printer', 1),
-(5, 'SAP', 2),
-(6, 'Office \\ Productivity', 2),
-(7, 'Nisoft', 2),
-(8, 'PI', 2),
-(9, 'GDMS', 2),
+(2, 'Desktop', 2),
+(3, 'Laptop', 2),
 (10, 'Email Outlook', 2),
-(11, 'Others', 2),
-(12, 'Data Restore', 3),
-(13, 'Password Reset', 3),
-(14, 'New User / User Leaving', 3),
-(15, 'User / equipment Move or Change', 3),
-(16, 'New Software Request', 3),
-(17, 'Email', 4),
-(18, 'File Storage', 4),
-(19, 'Printing', 4),
-(20, 'Internet', 4),
-(21, 'Intranet', 4),
-(22, 'Document Management', 4),
-(23, 'Telecommunications', 4),
-(24, 'Networking', 4);
+(15, 'Dies', 3),
+(16, 'Jig', 3),
+(17, 'Building', 3),
+(19, 'Repair Mesin', 1),
+(26, 'Mesin', 3),
+(27, 'Repair dies', 1),
+(28, 'Repair jig', 1),
+(29, 'Repair building', 1);
 
 -- --------------------------------------------------------
 
@@ -189,18 +194,25 @@ INSERT INTO `kategori_sub` (`id_sub_kategori`, `nama_sub_kategori`, `id_kategori
 --
 
 CREATE TABLE `lokasi` (
-  `id_lokasi` int(11) NOT NULL,
+  `id_lokasi` int NOT NULL,
   `lokasi` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `lokasi`
 --
 
 INSERT INTO `lokasi` (`id_lokasi`, `lokasi`) VALUES
-(1, 'Lokasi 01'),
-(2, 'Lokasi 02'),
-(3, 'Lokasi 03');
+(1, 'Rull'),
+(2, 'Carpet'),
+(3, 'NVH'),
+(4, 'Office lt 2'),
+(5, 'Office Finance'),
+(6, 'Aspalt'),
+(7, 'Warehouse'),
+(8, 'Office warehouse'),
+(9, 'Office QC/QA'),
+(10, 'Office Produksi');
 
 -- --------------------------------------------------------
 
@@ -213,19 +225,32 @@ CREATE TABLE `pegawai` (
   `nama` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) DEFAULT NULL,
   `telp` char(25) DEFAULT NULL,
-  `id_bagian_dept` int(11) NOT NULL,
-  `id_jabatan` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_bagian_dept` int NOT NULL,
+  `id_jabatan` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `pegawai`
 --
 
 INSERT INTO `pegawai` (`nik`, `nama`, `email`, `telp`, `id_bagian_dept`, `id_jabatan`) VALUES
-('admin', 'Administrator', 'admin@gmail.com', '082123456789', 1, 1),
-('aksara', 'Aksara Delana', '-', NULL, 4, 4),
-('teknisi', 'Teknisi', '-', NULL, 2, 2),
-('tester', 'User Tester', '-', '081234567890', 3, 3);
+('001', 'Marcell', 'tna_maintenance@outlook.com', '085156290937', 11, 6),
+('002', 'Yulius ', 'tna_hrga@outlook.com', '085156290937', 11, 5),
+('003', 'Afiatin', 'tna_ppic@outlook.co.id', '081234567899', 11, 4),
+('004', 'Wawan Darmawan', '-', '-', 11, 3),
+('005', 'Yanto', '-', '-', 11, 3),
+('006', 'Husyen', '-', '-', 11, 7),
+('007', 'Faiq', 'tna_marketing@outlook.com', '-', 11, 7),
+('020', 'Luthfi', 'luthfinaufalrusdiyanto@gmail.com', '081389156224', 2, 2),
+('021', 'Teguh', 'tna_qc@outlook.com', '-', 5, 7),
+('022', 'Julio', 'tna_produksi@outlook.com', '-', 5, 5),
+('024', 'Hafiz', '-', '08997286166', 4, 5),
+('025', 'Imelda', 'produksi@tna.co.id', '081389156224', 4, 7),
+('026', 'Irdam', 'produksi@tna.co.id', '081389156224', 4, 7),
+('admin', 'Efedi', '-', '-', 11, 7),
+('aksara', 'Bahri', '-', '-', 11, 4),
+('it', 'It', 'it@tna.co.id', '', 2, 1),
+('tester', 'Eko', '-', '-', 11, 7);
 
 -- --------------------------------------------------------
 
@@ -234,20 +259,20 @@ INSERT INTO `pegawai` (`nik`, `nama`, `email`, `telp`, `id_bagian_dept`, `id_jab
 --
 
 CREATE TABLE `prioritas` (
-  `id_prioritas` int(11) NOT NULL,
+  `id_prioritas` int NOT NULL,
   `nama_prioritas` varchar(30) NOT NULL,
-  `waktu_respon` int(11) NOT NULL,
+  `waktu_respon` int NOT NULL,
   `warna` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `prioritas`
 --
 
 INSERT INTO `prioritas` (`id_prioritas`, `nama_prioritas`, `waktu_respon`, `warna`) VALUES
-(1, 'High', 1, '#B14145'),
-(2, 'Medium', 3, '#FC8500'),
-(3, 'Low', 5, '#FFB701');
+(1, 'High', 2, '#F50A12'),
+(2, 'Medium', 5, '#FC8500'),
+(3, 'Low', 14, '#FFB701');
 
 -- --------------------------------------------------------
 
@@ -256,20 +281,20 @@ INSERT INTO `prioritas` (`id_prioritas`, `nama_prioritas`, `waktu_respon`, `warn
 --
 
 CREATE TABLE `settings` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `group_setting` varchar(100) NOT NULL,
   `variable_setting` varchar(255) NOT NULL,
   `value_setting` text NOT NULL,
   `deskripsi_setting` varchar(255) NOT NULL,
   `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`id`, `group_setting`, `variable_setting`, `value_setting`, `deskripsi_setting`, `updated_at`) VALUES
-(1, 'app', 'aplikasi', 'TNA Portal', 'Nama Aplikasi', '2025-02-12 14:24:27'),
+(1, 'app', 'aplikasi', 'Portal', 'Nama Aplikasi', '2025-03-21 09:14:07'),
 (2, 'app', 'developer', 'IT TNA 2025', 'Pengembang Aplikasi', '2023-06-17 15:21:28'),
 (3, 'app', 'versi', '1.0', 'Versi Aplikasi', '2022-05-19 09:42:25'),
 (4, 'general', 'perusahaan', 'PT Tuffindo Nittoku Autoneum', 'Nama Instansi', '2025-02-12 14:24:40'),
@@ -294,8 +319,8 @@ INSERT INTO `settings` (`id`, `group_setting`, `variable_setting`, `value_settin
 CREATE TABLE `teknisi` (
   `id_teknisi` varchar(50) NOT NULL DEFAULT '',
   `nik` varchar(50) NOT NULL DEFAULT '',
-  `id_kategori` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_kategori` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -311,16 +336,32 @@ CREATE TABLE `ticket` (
   `tanggal_proses` datetime DEFAULT NULL,
   `tanggal_solved` datetime DEFAULT NULL,
   `reported` varchar(50) NOT NULL DEFAULT '',
-  `id_sub_kategori` int(11) NOT NULL,
+  `id_sub_kategori` int NOT NULL,
+  `due_date` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `problem_summary` varchar(50) NOT NULL DEFAULT '',
   `problem_detail` text NOT NULL,
   `teknisi` varchar(50) NOT NULL DEFAULT '',
-  `status` int(11) NOT NULL,
+  `status` int NOT NULL,
   `progress` decimal(10,0) NOT NULL,
   `filefoto` text NOT NULL,
-  `id_lokasi` int(11) NOT NULL,
-  `id_prioritas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_lokasi` int NOT NULL,
+  `id_prioritas` int NOT NULL,
+  `assign_to` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `ticket`
+--
+
+INSERT INTO `ticket` (`id_ticket`, `tanggal`, `deadline`, `last_update`, `tanggal_proses`, `tanggal_solved`, `reported`, `id_sub_kategori`, `due_date`, `problem_summary`, `problem_detail`, `teknisi`, `status`, `progress`, `filefoto`, `id_lokasi`, `id_prioritas`, `assign_to`) VALUES
+('7OoB2jYIM', '2025-04-22 15:57:07', '2025-04-24 15:57:07', '2025-04-22 16:36:44', '2025-04-22 16:36:44', NULL, '021', 17, '1 jam', 'Perbaikan apa aja deh', 'Perbaikan mesin nvh', '007', 4, '0', 'Screenshot_2025-03-17_0814566.png', 3, 1, 'SPVM'),
+('eu10dof2Y', '2025-03-21 14:54:20', '2025-03-23 14:54:20', '2025-04-22 14:35:56', '2025-03-21 15:01:19', '2025-04-22 14:35:56', '021', 17, '1 jam', 'Perbaikan mesin', 'Perbaikan mesin nvh', '007', 7, '100', 'OIP.jpg', 6, 1, 'SPVU'),
+('HpKtiPshG', '2025-04-09 23:13:07', '2025-04-11 23:13:07', '2025-04-09 23:20:54', '2025-04-09 23:19:00', '2025-04-09 23:20:54', '021', 19, '24 jam', 'Repair mesin aspalt', 'Repair mesin aspalt', '007', 6, '100', '6.png', 6, 1, 'SPVU'),
+('JcgaQ1W3d', '2025-04-17 13:13:46', '2025-04-19 13:13:46', '2025-04-17 13:25:21', '2025-04-17 13:25:21', NULL, '021', 17, '1 hari', 'Perbaikan dies', 'Perbaikan dies aspalt', '007', 4, '0', '17224068635282.jpg', 6, 1, 'SPVU'),
+('PfABgOce8', '2025-04-17 14:09:41', '2025-04-19 14:09:41', '2025-04-17 14:23:08', '2025-04-17 14:23:08', NULL, '021', 17, '2 hari', 'Perbaikan dies  nvh', 'Perbaikan dies  nvh', '007', 4, '0', 'Pink_Biru_Ilustrasi_Privasi_Aksesibilitas_Presentasi2.jpg', 3, 1, 'SPVU'),
+('rC6GQMLpF', '2025-03-21 13:08:29', '1970-01-01 07:00:00', '2025-03-21 13:17:38', '2025-03-21 13:14:19', '2025-03-21 13:17:38', '021', 17, '7 hari', 'Fabrikasi machine', 'Fabrikasi machine nvh', '007', 7, '100', 'no-image.jpg', 6, 1, 'SPVU'),
+('tOe3wGupc', '2025-04-22 16:59:06', NULL, '2025-04-22 17:01:44', NULL, NULL, '026', 15, '1 jam', 'Perbaikan nvh', 'Perbaikan nvh', '', 8, '0', 'Pink_Biru_Ilustrasi_Privasi_Aksesibilitas_Presentasi7.jpg', 2, 0, NULL),
+('zG8Pr3h1y', '2025-04-16 13:15:05', '2025-04-21 13:15:05', '2025-04-16 13:31:37', '2025-04-16 13:29:04', '2025-04-16 13:31:37', '021', 15, '1 minggu', 'Perbaikan dies', 'Perbaikan dies aspalt', '007', 6, '100', 'Pink_Biru_Ilustrasi_Privasi_Aksesibilitas_Presentasi.jpg', 6, 2, 'SPVU');
 
 -- --------------------------------------------------------
 
@@ -329,14 +370,23 @@ CREATE TABLE `ticket` (
 --
 
 CREATE TABLE `ticket_message` (
-  `id_message` int(11) UNSIGNED NOT NULL,
+  `id_message` int UNSIGNED NOT NULL,
   `id_ticket` varchar(13) NOT NULL,
   `tanggal` datetime DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '0',
   `message` text NOT NULL,
   `id_user` varchar(50) NOT NULL DEFAULT '',
   `filefoto` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `ticket_message`
+--
+
+INSERT INTO `ticket_message` (`id_message`, `id_ticket`, `tanggal`, `status`, `message`, `id_user`, `filefoto`) VALUES
+(2, 'HpKtiPshG', '2025-04-09 23:17:25', 1, 'gas keun', '021', NULL),
+(3, 'HpKtiPshG', '2025-04-09 23:22:47', 1, 'bang ini belum selesai', '021', '1.png'),
+(4, 'zG8Pr3h1y', '2025-04-16 13:30:26', 1, 'eh salah', '007', 'Pink_Biru_Ilustrasi_Privasi_Aksesibilitas_Presentasi1.jpg');
 
 -- --------------------------------------------------------
 
@@ -345,7 +395,7 @@ CREATE TABLE `ticket_message` (
 --
 
 CREATE TABLE `tracking` (
-  `id_tracking` int(11) UNSIGNED NOT NULL,
+  `id_tracking` int UNSIGNED NOT NULL,
   `id_ticket` varchar(13) NOT NULL DEFAULT '',
   `tanggal` datetime DEFAULT NULL,
   `status` text NOT NULL,
@@ -353,7 +403,63 @@ CREATE TABLE `tracking` (
   `id_user` varchar(50) NOT NULL DEFAULT '',
   `filefoto` text NOT NULL,
   `signature` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tracking`
+--
+
+INSERT INTO `tracking` (`id_tracking`, `id_ticket`, `tanggal`, `status`, `deskripsi`, `id_user`, `filefoto`, `signature`) VALUES
+(61, 'rC6GQMLpF', '2025-03-21 13:08:29', 'Ticket Submited. Kategori: Fabrikasi(Building)', 'Fabrikasi machine nvh', '021', '', NULL),
+(62, 'rC6GQMLpF', '2025-03-21 13:09:48', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(63, 'rC6GQMLpF', '2025-03-21 13:11:54', 'Ticket Assign To', 'Ticket Assign to SPVU', '001', '', NULL),
+(64, 'rC6GQMLpF', '2025-03-21 13:13:17', 'Ticket Received', 'Priority of the ticket is set to High and assigned to technician.', '002', '', NULL),
+(65, 'rC6GQMLpF', '2025-03-21 13:14:19', 'On Process', '', '007', '', NULL),
+(66, 'rC6GQMLpF', '2025-03-21 13:17:38', 'Ticket Closed. Progress: 100 %', 'Done ', '007', 'OIP.jpg', '67dd048300265.png'),
+(67, 'eu10dof2Y', '2025-03-21 14:54:20', 'Ticket Submited. Kategori: Fabrikasi(Building)', 'Perbaikan mesin nvh', '021', '', NULL),
+(68, 'eu10dof2Y', '2025-03-21 14:55:43', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(69, 'eu10dof2Y', '2025-03-21 14:58:16', 'Ticket Assign To', 'Ticket Assign to SPVU', '001', '', NULL),
+(70, 'eu10dof2Y', '2025-03-21 14:59:43', 'Ticket Received', 'Priority of the ticket is set to High and assigned to technician.', '002', '', NULL),
+(71, 'eu10dof2Y', '2025-03-21 15:01:19', 'On Process', '', '007', '', NULL),
+(72, 'eu10dof2Y', '2025-03-21 15:02:02', 'Ticket Closed. Progress: 100 %', 'Oke sudah selesai', '007', 'OIP1.jpg', '67dd1cfa34b67.png'),
+(85, 'HpKtiPshG', '2025-04-09 23:13:07', 'Ticket Submited. Kategori: Repair(Repair Mesin)', 'Repair mesin aspalt', '021', '', NULL),
+(86, 'HpKtiPshG', '2025-04-09 23:13:33', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(87, 'HpKtiPshG', '2025-04-09 23:14:04', 'Ticket Assign To', 'Ticket Assign to SPVU', '001', '', NULL),
+(88, 'HpKtiPshG', '2025-04-09 23:14:44', 'Ticket Received', 'Priority of the ticket is set to High and assigned to technician.', '002', '', NULL),
+(89, 'HpKtiPshG', '2025-04-09 23:18:26', 'Pending', '', '007', '', NULL),
+(90, 'HpKtiPshG', '2025-04-09 23:19:00', 'On Process', '', '007', '', NULL),
+(91, 'HpKtiPshG', '2025-04-09 23:20:54', 'Ticket Closed. Progress: 100 %', 'Sudah selesai ya', '007', 'WhatsApp_Image_2025-04-09_at_22_37_12.jpeg', '67f69e660d198.png'),
+(100, 'zG8Pr3h1y', '2025-04-16 13:15:05', 'Ticket Submited. Kategori: Fabrikasi(Dies)', 'Perbaikan dies aspalt', '021', '', NULL),
+(101, 'zG8Pr3h1y', '2025-04-16 13:18:17', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(102, 'zG8Pr3h1y', '2025-04-16 13:21:12', 'Ticket Assign To', 'Ticket Assign to SPVU', '001', '', NULL),
+(103, 'zG8Pr3h1y', '2025-04-16 13:23:24', 'Ticket Received', 'Priority of the ticket is set to Medium and assigned to technician.', '002', '', NULL),
+(104, 'zG8Pr3h1y', '2025-04-16 13:29:04', 'On Process', '', '007', '', NULL),
+(105, 'zG8Pr3h1y', '2025-04-16 13:31:37', 'Ticket Closed. Progress: 100 %', 'Sudah selesai', '007', 'Pink_Biru_Ilustrasi_Privasi_Aksesibilitas_Presentasi.jpg', '67ff4ec9c241c.png'),
+(106, 'JcgaQ1W3d', '2025-04-17 13:13:47', 'Ticket Submited. Kategori: Fabrikasi(Building)', 'Perbaikan dies aspalt', '021', '', NULL),
+(107, 'JcgaQ1W3d', '2025-04-17 13:14:30', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(108, 'JcgaQ1W3d', '2025-04-17 13:19:48', 'Ticket Returned', 'cat nya tidak ada', '001', '', NULL),
+(109, 'JcgaQ1W3d', '2025-04-17 13:21:39', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(110, 'JcgaQ1W3d', '2025-04-17 13:22:24', 'Ticket Assign To', 'Ticket Assign to SPVU', '001', '', NULL),
+(111, 'JcgaQ1W3d', '2025-04-17 13:23:15', 'Ticket Received', 'Priority of the ticket is set to High and assigned to technician.', '002', '', NULL),
+(112, 'JcgaQ1W3d', '2025-04-17 13:25:21', 'On Process', '', '007', '', NULL),
+(113, 'eu10dof2Y', '2025-04-17 13:25:56', 'Ticket Closed. Progress: 100 %', 'Sudah selesai', '007', '1722406863528.jpg', '68009ef4e91c9.png'),
+(114, 'PfABgOce8', '2025-04-17 14:09:41', 'Ticket Submited. Kategori: Fabrikasi(Building)', 'Perbaikan dies  nvh', '021', '', NULL),
+(115, 'PfABgOce8', '2025-04-17 14:10:36', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(116, 'PfABgOce8', '2025-04-17 14:15:25', 'Ticket Returned', 'cat habis', '001', '', NULL),
+(117, 'PfABgOce8', '2025-04-17 14:16:14', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(118, 'PfABgOce8', '2025-04-17 14:17:21', 'Ticket Assign To', 'Ticket Assign to SPVU', '001', '', NULL),
+(119, 'PfABgOce8', '2025-04-17 14:20:41', 'Ticket Received', 'Priority of the ticket is set to High and assigned to technician.', '002', '', NULL),
+(120, 'PfABgOce8', '2025-04-17 14:23:08', 'On Process', '', '007', '', NULL),
+(121, 'eu10dof2Y', '2025-04-17 14:23:33', 'Ticket Closed. Progress: 100 %', 'Selesai', '007', '1734264497234.jpg', '6800ac75c8535.png'),
+(144, 'eu10dof2Y', '2025-04-22 14:35:56', 'Ticket Closed. Progress: 100 %', 'Sudah selesai', '007', '17342644972341.jpg', '680746dca0cf5.png'),
+(145, '7OoB2jYIM', '2025-04-22 15:57:07', 'Ticket Submited. Kategori: Fabrikasi(Building)', 'Perbaikan mesin nvh', '021', '', NULL),
+(146, '7OoB2jYIM', '2025-04-22 16:15:59', 'Ticket Approved', 'Approved by Supervisor Dept', '022', '', NULL),
+(147, '7OoB2jYIM', '2025-04-22 16:21:16', 'Ticket Assign To', 'Ticket Assign to SPVM', '001', '', NULL),
+(148, '7OoB2jYIM', '2025-04-22 16:32:16', 'Ticket Received', 'Priority of the ticket is set to High and assigned to technician.', '003', '', NULL),
+(149, '7OoB2jYIM', '2025-04-22 16:36:19', 'Pending', '', '007', '', NULL),
+(150, '7OoB2jYIM', '2025-04-22 16:36:44', 'On Process', '', '007', '', NULL),
+(151, 'tOe3wGupc', '2025-04-22 16:59:06', 'Ticket Submited. Kategori: Fabrikasi(Dies)', 'Perbaikan nvh', '026', '', NULL),
+(152, 'tOe3wGupc', '2025-04-22 17:01:44', 'Ticket Approved', 'Approved by Supervisor Dept', '025', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -362,21 +468,33 @@ CREATE TABLE `tracking` (
 --
 
 CREATE TABLE `user` (
-  `id_user` int(11) UNSIGNED NOT NULL,
+  `id_user` int UNSIGNED NOT NULL,
   `username` varchar(50) NOT NULL DEFAULT '',
   `password` varchar(32) NOT NULL DEFAULT '',
   `level` varchar(10) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `level`) VALUES
-(1, 'admin', '25d55ad283aa400af464c76d713c07ad', 'Admin'),
-(2, 'teknisi', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
-(3, 'tester', '25d55ad283aa400af464c76d713c07ad', 'User'),
-(4, 'aksara', '25d55ad283aa400af464c76d713c07ad', 'User');
+(1, 'admin', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(3, 'tester', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(4, 'aksara', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(5, '001', '25d55ad283aa400af464c76d713c07ad', 'MGR'),
+(6, '002', '25d55ad283aa400af464c76d713c07ad', 'SPVU'),
+(7, '003', '25d55ad283aa400af464c76d713c07ad', 'SPVM'),
+(8, '004', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(9, '005', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(10, '006', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(11, '007', '25d55ad283aa400af464c76d713c07ad', 'Technician'),
+(12, '021', '25d55ad283aa400af464c76d713c07ad', 'User'),
+(13, '022', '25d55ad283aa400af464c76d713c07ad', 'SPV'),
+(14, 'it', '25d55ad283aa400af464c76d713c07ad', 'Admin'),
+(15, '024', '25d55ad283aa400af464c76d713c07ad', 'SPV'),
+(17, '025', '25d55ad283aa400af464c76d713c07ad', 'SPV'),
+(18, '026', '25d55ad283aa400af464c76d713c07ad', 'User');
 
 --
 -- Indexes for dumped tables
@@ -499,79 +617,79 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `backup`
 --
 ALTER TABLE `backup`
-  MODIFY `id_backup` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_backup` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `departemen`
 --
 ALTER TABLE `departemen`
-  MODIFY `id_dept` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_dept` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `departemen_bagian`
 --
 ALTER TABLE `departemen_bagian`
-  MODIFY `id_bagian_dept` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_bagian_dept` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `informasi`
 --
 ALTER TABLE `informasi`
-  MODIFY `id_informasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_informasi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
-  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_jabatan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `kategori_sub`
 --
 ALTER TABLE `kategori_sub`
-  MODIFY `id_sub_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_sub_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_lokasi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `prioritas`
 --
 ALTER TABLE `prioritas`
-  MODIFY `id_prioritas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_prioritas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `ticket_message`
 --
 ALTER TABLE `ticket_message`
-  MODIFY `id_message` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_message` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tracking`
 --
 ALTER TABLE `tracking`
-  MODIFY `id_tracking` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tracking` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

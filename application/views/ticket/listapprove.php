@@ -32,6 +32,7 @@
 								<td><?= $row->nama_kategori ?> (<?= $row->nama_sub_kategori ?>)</td>
 								<td><?= $row->nama ?></td>
 								<td><?= $row->lokasi ?></td>
+								<td><?= $row->due_date ?></td>
 								<td><?= $row->problem_summary ?></td>
 								<?php if ($row->status == 0) { ?>
 									<td>

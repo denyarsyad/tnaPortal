@@ -73,7 +73,7 @@ class Main_model extends CI_Model
   public function all_ticket()
   {
     //Query untuk mendapatkan semua ticket dengan diurutkan berdasarkan tanggal tiket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.last_update, A.id_prioritas, A.deadline, A.teknisi, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, G.waktu_respon, H.lokasi, I.nama_jabatan, K.nama AS nama_teknisi FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.last_update, A.id_prioritas, A.deadline, A.due_date, A.teknisi, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, G.waktu_respon, H.lokasi, I.nama_jabatan, K.nama AS nama_teknisi FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported
@@ -91,7 +91,7 @@ class Main_model extends CI_Model
   public function approve_ticket()
   {
     //Query untuk mendapatkan semua ticket dengan status 1 (submitted) atau 2 (Belum di approve) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -109,7 +109,7 @@ class Main_model extends CI_Model
   public function new_ticket($limit)
   {
     //Query untuk mendapatkan semua ticket dengan status 1 (submitted) atau 2 (Belum di approve) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -521,7 +521,7 @@ class Main_model extends CI_Model
   public function approve_tugas($id)
   {
     //Query untuk mendapatkan semua ticket dengan status 3 (Technician selected) atau 5 (Pending) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported
@@ -539,7 +539,7 @@ class Main_model extends CI_Model
   public function daftar_tugas($id)
   {
     //Query untuk mendapatkan semua ticket dengan status 4 (On Process) atau 6 (Solve) dengan diurutkan berdasarkan tanggal tiket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept, K.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept, K.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported
@@ -820,7 +820,7 @@ class Main_model extends CI_Model
   public function myticket($id)
   {
     //Query untuk mendapatkan semua ticket yang dimiliki user dengan diurutkan berdasarkan tanggal
-    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.id_prioritas, A.deadline, A.last_update, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, A.teknisi, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept, K.nama AS nama_teknisi FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.id_prioritas, A.deadline, A.last_update, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, A.teknisi, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept, K.nama AS nama_teknisi FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported
@@ -839,11 +839,15 @@ class Main_model extends CI_Model
   public function detail_ticket($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_summary, A.problem_detail, A.filefoto, A.id_prioritas, A.id_sub_kategori, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas, J.warna, J.waktu_respon, K.nama_jabatan, 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, A.id_prioritas, A.id_sub_kategori, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas, J.warna, J.waktu_respon, K.nama_jabatan, 
     CASE WHEN A.assign_to = 'SPVU' THEN 'Supervisor Utility' 
 	  WHEN A.assign_to = 'SPVM' THEN 'Supervisor Maintenance'
 	  ELSE A.assign_to
-    END AS assign_to
+    END AS assign_to,
+    (SELECT MAX(z.email) FROM pegawai z WHERE z.id_jabatan = 5 AND z.id_bagian_dept = D.id_bagian_dept) AS mail,
+    z.deskripsi AS returned_reason,
+    z.nama AS manager_name,
+    z.tanggal AS tanggal_reason
     FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
@@ -855,6 +859,8 @@ class Main_model extends CI_Model
     LEFT JOIN departemen I ON I.id_dept = H.id_dept
     LEFT JOIN prioritas J ON J.id_prioritas = A.id_prioritas
     LEFT JOIN jabatan K ON K.id_jabatan = D.id_jabatan
+    LEFT JOIN (SELECT a.id_ticket, a.deskripsi, b.nama, a.tanggal FROM tracking a LEFT JOIN pegawai b ON a.id_user = b.nik  WHERE a.tanggal = (SELECT max(b.tanggal) FROM tracking b WHERE b.id_ticket = a.id_ticket) AND a.status = 'Ticket Returned') z
+    ON A.id_ticket = z.id_ticket
     WHERE A.id_ticket = '$id'");
     return $query;
   }
@@ -966,7 +972,7 @@ class Main_model extends CI_Model
 
   public function allassignment($id)
   {
-    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.progress, A.status, A.reported, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, G.nama_prioritas, G.warna, H.lokasi, J.nama_dept FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported
@@ -1075,7 +1081,7 @@ class Main_model extends CI_Model
 
   public function report($tgl1, $tgl2)
   {
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.last_update, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, A.id_prioritas, A.deadline, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.last_update, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, A.id_prioritas, A.deadline, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1093,7 +1099,7 @@ class Main_model extends CI_Model
   public function emailbuatticket($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1146,6 +1152,11 @@ class Main_model extends CI_Model
                               <td>:</td>
                               <td>Submited</td>
                             </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                             <tr>
                               <td>Problem</td>
                               <td>:</td>
@@ -1184,7 +1195,7 @@ class Main_model extends CI_Model
   public function emailapprove($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1242,6 +1253,11 @@ class Main_model extends CI_Model
                               <td>:</td>
                               <td>Received</td>
                             </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                             <tr>
                               <td>Problem</td>
                               <td>:</td>
@@ -1280,7 +1296,7 @@ class Main_model extends CI_Model
   {
     $message  = $this->input->post('message');
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1338,6 +1354,11 @@ class Main_model extends CI_Model
                               <td>:</td>
                               <td>Rejected</td>
                             </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                             <tr>
                               <td>Problem</td>
                               <td>:</td>
@@ -1375,7 +1396,7 @@ class Main_model extends CI_Model
   public function emailtugas($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1433,6 +1454,11 @@ class Main_model extends CI_Model
                               <td>:</td>
                               <td>Assigned to you</td>
                             </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                             <tr>
                               <td>Problem</td>
                               <td>:</td>
@@ -1470,7 +1496,7 @@ class Main_model extends CI_Model
   public function emaildiproses($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1528,6 +1554,11 @@ class Main_model extends CI_Model
                               <td>:</td>
                               <td>processed by ' . $query->nama_teknisi . '</td>
                             </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                             <tr>
                               <td>Problem</td>
                               <td>:</td>
@@ -1564,7 +1595,7 @@ class Main_model extends CI_Model
   public function emaildipending($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1622,6 +1653,11 @@ class Main_model extends CI_Model
                               <td>:</td>
                               <td>Pending by ' . $query->nama_teknisi . '</td>
                             </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                             <tr>
                               <td>Problem</td>
                               <td>:</td>
@@ -1659,7 +1695,7 @@ class Main_model extends CI_Model
   public function emailselesai($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1718,6 +1754,11 @@ class Main_model extends CI_Model
                                <td>:</td>
                                <td>On Process</td>
                              </tr>
+							 <tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                              <tr>
                                <td>Problem</td>
                                <td>:</td>
@@ -1797,6 +1838,11 @@ class Main_model extends CI_Model
                                   <td>:</td>
                                   <td>Ticket Closed</td>
                                 </tr>
+								<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
+                            </tr>
                                 <tr>
                                   <td>Problem</td>
                                   <td>:</td>
@@ -1835,7 +1881,7 @@ class Main_model extends CI_Model
   public function emailubah($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -1891,6 +1937,11 @@ class Main_model extends CI_Model
                               <td>Status</td>
                               <td>:</td>
                               <td>Category Changed</td>
+                            </tr>
+							<tr>
+                              <td>due date</td>
+                              <td>:</td>
+                              <td>' . $query->due_date . '</td>
                             </tr>
                             <tr>
                               <td>Problem</td>
@@ -1960,7 +2011,7 @@ class Main_model extends CI_Model
   public function pilih_teknisi()
   {
     //Query untuk mendapatkan semua ticket dengan status 2 (Ticket Received) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, D.nama, D.email, D.telp, F.nama_dept, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, D.nama, D.email, D.telp, F.nama_dept, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported
@@ -1977,7 +2028,7 @@ class Main_model extends CI_Model
   public function emailmessageticket($id)
   {
     //Query untuk mendapatkan data detail dari setiap ticket
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas, K.tanggal AS tanggal_message, K.status, K.message, K.id_user, K.filefoto AS filefoto_message FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.progress, A.tanggal, A.tanggal_proses, A.tanggal_solved, A.id_prioritas, A.deadline, A.due_date, A.problem_summary, A.problem_detail, A.filefoto, B.nama_sub_kategori, C.id_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama AS nama_teknisi, G.lokasi, H.nama_bagian_dept, I.nama_dept, J.nama_prioritas, K.tanggal AS tanggal_message, K.status, K.message, K.id_user, K.filefoto AS filefoto_message FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2025,7 +2076,7 @@ class Main_model extends CI_Model
   public function deptTicket($id)
   {
     //Query untuk mendapatkan semua ticket dengan status 1 (submitted) atau 2 (Belum di approve) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail,A.due_date,  A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2040,7 +2091,7 @@ class Main_model extends CI_Model
                 INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
                 INNER JOIN departemen d ON DB.id_dept = D.id_dept 
                 WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
-    WHERE A.status IN (1,2)
+    WHERE A.status IN (1,2,10)
     ORDER BY A.tanggal DESC");
     // $query = $this->db->query($sql, array($id));
     return $query;
@@ -2110,7 +2161,7 @@ class Main_model extends CI_Model
   //list daftar ticket spv dept
   public function list_ticket_spv($id)
   {
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2164,7 +2215,7 @@ class Main_model extends CI_Model
   public function mgrTicket($id)
   {
     //Query untuk mendapatkan semua ticket dengan status 8 (diajukan ke MGR) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2203,7 +2254,7 @@ class Main_model extends CI_Model
   //list daftar ticket manager
   public function list_ticket_mgr($id)
   {
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2212,7 +2263,7 @@ class Main_model extends CI_Model
     LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
     LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
     LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
-    WHERE A.status IN (8, 9, 3)
+    WHERE A.status IN (0, 8, 9, 3)
     ORDER BY A.tanggal DESC");
     return $query;
   }
@@ -2273,7 +2324,7 @@ class Main_model extends CI_Model
   public function spvuTicket($id)
   {
     //Query untuk mendapatkan semua ticket dengan status 8 (diajukan ke MGR) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2315,7 +2366,7 @@ class Main_model extends CI_Model
   public function list_ticket_spvu()
   {
     //Query untuk mendapatkan semua ticket dengan status 1 (submitted) atau 2 (Belum di approve) dengan diurutkan berdasarkan tanggal ticket dibuat
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2334,7 +2385,7 @@ class Main_model extends CI_Model
   //SPVM
   public function spvmTicket($id)
   {
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2375,7 +2426,7 @@ class Main_model extends CI_Model
 
   public function list_ticket_spvm()
   {
-    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
+    $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori 
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori
     LEFT JOIN pegawai D ON D.nik = A.reported 
@@ -2389,5 +2440,34 @@ class Main_model extends CI_Model
     ORDER BY A.tanggal DESC");
     return $query;
   }
+
+   //Method yang digunakan untuk proses noted ticket dengan parameter id_ticket
+   public function noted($id, $alasan = null)
+   {
+     //Mengambil session MGR
+     $id_user    = $this->session->userdata('id_user');
+ 
+     //Melakukan update data ticket dengan mengubah status ticket menjadi 1, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
+     $data = array(
+       'status'     => 10,
+       'last_update' => date("Y-m-d  H:i:s")
+     );
+ 
+     //Melakukan insert data tracking ticket bahwa ticket di-noted oleh MGR, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
+     $datatracking = array(
+       'id_ticket'  => $id,
+       'tanggal'    => date("Y-m-d  H:i:s"),
+       'status'     => "Ticket Returned",
+       'deskripsi'  => $alasan,
+       'id_user'    => $id_user
+     );
+ 
+     //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
+     $this->db->where('id_ticket', $id);
+     $this->db->update('ticket', $data);
+ 
+     //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+     $this->db->insert('tracking', $datatracking);
+   }
 
 }

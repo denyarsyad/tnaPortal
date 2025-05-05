@@ -1,10 +1,5 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-Dibuat oleh: Deny Arsyad, S.Kom
-Created: 03-2025
-Modified: 03-2025
-*/
 
 class Ticket_mgr extends CI_Controller
 {
@@ -167,6 +162,32 @@ class Ticket_mgr extends CI_Controller
         }
     }
 
+    public function detail_noted($id)
+    {
+        //User harus MGR, tidak boleh role user lain
+        if ($this->session->userdata('level') == "MGR") {
+            //Menyusun template Detail Ticket yang akan di-noted
+            $data['title']    = "Kembalikan Tiket";
+            $data['navbar']   = "navbar";
+            $data['sidebar']  = "sidebar";
+            $data['body']     = "ticketMgr/detailNote";
+
+            //Session
+            $id_dept = $this->session->userdata('id_dept');
+            $id_user = $this->session->userdata('id_user');
+
+            //Detail setiap tiket yang akan di-noted, get dari model (detail_ticket) dengan parameter id_ticket, data akan ditampung dalam parameter 'detail'
+            $data['detail'] = $this->model->detail_ticket($id)->row_array();
+
+            //Load template
+            $this->load->view('template', $data);
+        } else {
+            //Bagian ini jika role yang mengakses tidak sama dengan admin
+            //Akan dibawa ke Controller Errorpage
+            redirect('Errorpage');
+        }
+    }
+
     public function reject($id)
     {
         $alasan  = $this->input->post('message');
@@ -181,13 +202,13 @@ class Ticket_mgr extends CI_Controller
         );
 
         if ($this->form_validation->run() == FALSE) {
-            //User harus SPV, tidak boleh role user lain
-            if ($this->session->userdata('level') == "SPV") {
+            //User harus MGR, tidak boleh role user lain
+            if ($this->session->userdata('level') == "MGR") {
                 //Menyusun template Detail Ticket yang akan di-reject
                 $data['title']    = "Tolak Tiket";
                 $data['navbar']   = "navbar";
                 $data['sidebar']  = "sidebar";
-                $data['body']     = "ticketSpvDept/detailreject";
+                $data['body']     = "ticketMgr/detailreject";
 
                 //Session
                 $id_dept = $this->session->userdata('id_dept');
@@ -204,16 +225,16 @@ class Ticket_mgr extends CI_Controller
                 redirect('Errorpage');
             }
         } else {
-            //User harus SPV, tidak boleh role user lain
-            if ($this->session->userdata('level') == "SPV") {
+            //User harus MGR, tidak boleh role user lain
+            if ($this->session->userdata('level') == "MGR") {
                 //Proses me-reject ticket, menggunakan model (reject) dengan parameter id_ticket yang akan di-reject
                 $this->model->reject($id, $alasan);
-                //Memanggil fungsi kirim email dari SPV ke user
+                //Memanggil fungsi kirim email dari MGR ke user
                 //$this->model->emailreject($id);
                 //Set pemberitahuan bahwa ticket berhasil di-reject
                 $this->session->set_flashdata('status', 'Ditolak');
                 //Kembali ke halaman List approvel ticket (list_approve)
-                redirect('ticket_spv/index_tugas');
+                redirect('ticket_mgr/list_tugas_mgr');
             } else {
                 //Bagian ini jika role yang mengakses tidak sama dengan SPV
                 //Akan dibawa ke Controller Errorpage
@@ -222,5 +243,60 @@ class Ticket_mgr extends CI_Controller
         }
     }
 
-	
+	public function noted($id)
+    {
+        $alasan  = $this->input->post('message');
+        //Form validasi untuk message yang akan di kirim ke email user
+        $this->form_validation->set_rules(
+            'message',
+            'Message',
+            'required',
+            array(
+                'required' => '<strong>Failed!</strong> Alasan Harus diisi.'
+            )
+        );
+
+        if ($this->form_validation->run() == FALSE) {
+            //User harus MGR, tidak boleh role user lain
+            if ($this->session->userdata('level') == "MGR") {
+                //Menyusun template Detail Ticket yang akan di-noted
+                $data['title']    = "Kembalikan Tiket";
+                $data['navbar']   = "navbar";
+                $data['sidebar']  = "sidebar";
+                $data['body']     = "ticketMgr/detailnote";
+
+                //Session
+                $id_dept = $this->session->userdata('id_dept');
+                $id_user = $this->session->userdata('id_user');
+
+                //Detail setiap tiket yang akan di-noted, get dari model (detail_ticket) dengan parameter id_ticket, data akan ditampung dalam parameter 'detail'
+                $data['detail'] = $this->model->detail_ticket($id)->row_array();
+
+                //Load template
+                $this->load->view('template', $data);
+            } else {
+                //Bagian ini jika role yang mengakses tidak sama dengan admin
+                //Akan dibawa ke Controller Errorpage
+                redirect('Errorpage');
+            }
+        } else {
+            //User harus MGR, tidak boleh role user lain
+            if ($this->session->userdata('level') == "MGR") {
+                //Proses me-noted ticket, menggunakan model (noted) dengan parameter id_ticket yang akan di-noted
+                $this->model->noted($id, $alasan);
+                //Memanggil fungsi kirim email dari MGR ke user
+                //$this->model->emailnoted($id);
+                //Set pemberitahuan bahwa ticket berhasil di-noted
+                $this->session->set_flashdata('status', 'Dikembalikan');
+                //Kembali ke halaman List approvel ticket (list_approve)
+                redirect('ticket_mgr/list_tugas_mgr');
+            } else {
+                //Bagian ini jika role yang mengakses tidak sama dengan SPV
+                //Akan dibawa ke Controller Errorpage
+                redirect('Errorpage');
+            }
+        }
+    }
+
+
 }

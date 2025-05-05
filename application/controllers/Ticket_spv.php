@@ -1,10 +1,5 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-Dibuat oleh: Deny Arsyad, S.Kom
-Created: 02-2025
-Modified: 02-2025
-*/
 
 class Ticket_spv extends CI_Controller
 {

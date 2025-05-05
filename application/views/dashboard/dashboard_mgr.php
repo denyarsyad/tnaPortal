@@ -55,6 +55,8 @@
 									<th>Tanggal</th>
 									<th>Nama</th>
 									<th>Sub Kategori</th>
+									<th><i class="fas fa-exclamation-triangle"></i><strong style="color: #C13018;">due date</th>
+									<th>lokasi</th>
 									<th>Prioritas</th>
 									<th>Status</th>
 								</tr>
@@ -64,10 +66,12 @@
 								foreach ($ticket_mgr as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
-										<td><a href="<?= site_url('ticket_mgr/assign_to_mgr/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
+										<td><a href="<?= site_url('ticket_mgr/detail_approve_mgr/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>
+										<td><strong style="color: #C13018;"><?= $row->due_date ?></strong></td>
+										<td><?= $row->lokasi ?></td>
 										<?php if ($row->id_prioritas == 0) { ?>
 											<td>Not set yet</td>
 										<?php } else { ?>

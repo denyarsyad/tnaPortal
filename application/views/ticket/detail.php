@@ -163,6 +163,7 @@
 								</div>
 								<div class="card-body">
 									<h5 class="card-title"><?= $detail['problem_summary'] ?></h5>
+									<h5 class="card-title"><?= $detail['problem_summary'] ?></h5>
 									<p class="card-text"><?= nl2br($detail['problem_detail']) ?></p>
 								</div>
 							</div>

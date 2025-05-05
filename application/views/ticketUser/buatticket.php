@@ -19,13 +19,13 @@
 
 <div class="container-fluid">
 	<h1 class="h3 mb-0 text-gray-800 font-weight-bold"><?= $title; ?></h1>
-	<p class="mb-3">Kirim dan simpulkan masalah Anda kepada team Teknisi.</p>
+	<p class="mb-3">Kirim dan simpulkan masalah Anda kepada team Maintenance.</p>
 
 	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">Form Pengajuan Tiket</h6>
+			<h6 class="m-0 font-weight-bold text-primary">Form Pengajuan Work Order's</h6>
 		</div>
 		<div class="card-body">
 			<form method="post" action="<?= site_url('ticket_user/submit') ?>" enctype="multipart/form-data">
@@ -64,7 +64,14 @@
 						</div>
 					</div>
 				</div>
-
+				<div class="col-sm-5">
+					<label class="mb-1 font-weight-bold">Due date <span class="text-danger small">*Required</span></label>
+					<input class="form-control <?= (form_error('due_date') ? "is-invalid" : "") ?>" name="due_date" placeholder="Due date" value="<?= set_value('due_date'); ?>">
+					<p class="small mb-6">contoh : 1 jam/1hari/ '0' jika tidak ada target pengerjaan</p>
+					<div class="invalid-feedback">
+						<?= form_error('due_date'); ?>	
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="mb-1 font-weight-bold">Subjek <span class="text-danger small">*Required</span></label>
 					<input class="form-control <?= (form_error('problem_summary') ? "is-invalid" : "") ?>" name="problem_summary" placeholder="Judul" value="<?= set_value('problem_summary'); ?>">
@@ -72,7 +79,7 @@
 						<?= form_error('problem_summary'); ?>
 					</div>
 				</div>
-
+				
 				<div class="form-group">
 					<label class="mb-1 font-weight-bold">Deskripsi <span class="text-danger small">*Required</span></label>
 					<textarea name="problem_detail" placeholder="" class="form-control <?= (form_error('problem_detail') ? "is-invalid" : "") ?>" rows="6"><?= set_value('problem_detail'); ?></textarea>

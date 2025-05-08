@@ -13,14 +13,9 @@
 						<tr>
 							<th>#</th>
 							<th>No Ticket</th>
-							<th>Prioritas</th>
-							<th>Due date</th>
 							<th>Tanggal</th>
-							<th>Kategori</th>
-							<th>Lokasi</th>
-							<th>Subjek</th>
-							<th>Last Update</th>
-							<th>Teknisi</th>
+							<th>Target Dept</th>
+							<th>Problem</th>
 							<th>Status</th>
 							<th>Aksi</th>
 						</tr>
@@ -29,22 +24,10 @@
 						<?php $no = 1; foreach ($ticket as $row){?>
 							<tr>
 								<td><?= $no ?></td>
-								<td><a href="<?= site_url('ticket_user/detail/'.$row->id_ticket)?>" class="font-weight-bold" title="Detail"><?= $row->id_ticket?></a></td>
-								<?php if ($row->status == 0){?>
-									<td style="text-align: center">Ditolak</td>
-								<?php }else{?>
-									<?php if($row->id_prioritas == 0) {?>
-										<td style="text-align: center">Akan ditentukan</td>
-									<?php } else { ?>
-										<td class="font-weight-bold" style="color: <?= $row->warna?>; text-align: center"><?= $row->nama_prioritas?></td>
-									<?php } ?>
-								<?php }?>
-								<td><?= $row->due_date?></td>
-								<td><?= $row->tanggal?></td>
-								<td><?= $row->nama_kategori?> (<?= $row->nama_sub_kategori?>)</td>
-								<td><?= $row->lokasi?></td>
-								<td><?= $row->problem_summary?></td>
-								<td><?= $row->last_update?></td>
+								<td><a href="<?= site_url('ticket_user/detail/'.$row->id_incident)?>" class="font-weight-bold" title="Detail"><?= $row->id_incident?></a></td>
+								<td><?= $row->date_incident?></td>
+								<td><?= $row->target_dept?></td>
+								<td><?= $row->problem?></td>
 								<td style="text-align: center">
 								    <?php if($row->status == 0) {
 								    	echo "Ditolak";

@@ -2470,4 +2470,15 @@ class Main_model extends CI_Model
      $this->db->insert('tracking', $datatracking);
    }
 
+
+   //Incident
+  public function myIncident($id)
+  {
+    //Query untuk mengambil semua incident yang di input user dengan parameter id_user
+    $query = $this->db->query("SELECT id_incident, date_incident, target_dept, problem, status
+    FROM INCIDENT
+    WHERE id_input = '$id'");
+    return $query;
+  }
+
 }

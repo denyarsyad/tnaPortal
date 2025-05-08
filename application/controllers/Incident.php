@@ -27,12 +27,12 @@ class Incident extends CI_Controller
 		}
 	}
 
-	//My Ticket
+	//Incident
 	public function index()
 	{
 		//User harus User, tidak boleh role user lain
 		if ($this->session->userdata('level') == "User") {
-			//Menyusun template My Ticket
+			//Menyusun template Incident
 			$data['title'] 	  = "Daftar Incident";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
@@ -42,8 +42,8 @@ class Incident extends CI_Controller
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
-			//Daftar semua ticket user, get dari model (myticket) berdasarkan id_user masing-masing, data akan ditampung dalam parameter 'ticket'
-			$data['ticket'] = $this->model->myticket($id_user)->result();
+			//Daftar semua incident yang di input
+			$data['ticket'] = $this->model->myIncident($id_user)->result();
 
 			//Load template
 			$this->load->view('template', $data);

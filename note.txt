@@ -1,0 +1,14 @@
+Add table incident
+
+CREATE TABLE tnaportal.incident (
+	id_incident varchar(100) NOT NULL,
+	date_incident DATETIME NULL,
+	target_dept varchar(100) NULL,
+	problem varchar(250) NULL,
+	status varchar(10) NULL,
+	path_photo varchar(300) NULL
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci;
+

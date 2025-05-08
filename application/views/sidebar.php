@@ -152,6 +152,13 @@
 				<span>Tiket Saya</span>
 			</a>
 		</li>
+
+		<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('incident') ?>">
+				<i class="fas fa-fw fa-medkit"></i>
+				<span>Incident</span>
+			</a>
+		</li>
 		<!-- Menu Untuk Spv Dept-->
 	<?php 
 	} else if ($this->session->userdata('level') == "SPV") { ?>

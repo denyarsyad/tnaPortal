@@ -54,16 +54,16 @@ class Incident extends CI_Controller
 		}
 	}
 
-	//Buat Ticket
+	//Buat Incident
 	public function buat()
 	{
 		//User harus User, tidak boleh role user lain
 		if ($this->session->userdata('level') == "User") {
 			//Menyusun template Buat ticket
-			$data['title'] 	  = "Buat Tiket";
+			$data['title'] 	  = "Input Incident";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "ticketUser/buatticket";
+			$data['body']     = "incident/buatIncident";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');

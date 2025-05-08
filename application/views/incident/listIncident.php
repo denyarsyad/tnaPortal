@@ -4,6 +4,13 @@
 
 	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status')?>"></div>
 
+	<a href="<?= site_url('ticket_user/buat') ?>" class="nav-link"  style="padding-left: 0px;">
+		<div class="btn btn-success btn-lg shadow-sm btn-left">
+			<i class="fas fa-plus text-white" style="font-size: 15px"></i>
+			<span class="text" style="font-size: 15px">Input Incident</span>
+		</div>
+	</a>
+
 	<!-- Datatable -->
 	<div class="card shadow mb-4">
 		<div class="card-body">

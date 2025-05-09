@@ -21,7 +21,7 @@
 	<script src="<?= base_url() ?>assets/js/vendor/modernizr-3.3.1.min.js"></script>
 </head>
 
-<body class="bg-primary" style="background: url('<?= base_url('assets/img/') . $this->settings->info['background']; ?>') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+<body class="bg-primary" style="background: url('<?= base_url('assets/img/') . $this->settings->info['background']; ?>') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover; ">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-5">

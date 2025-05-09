@@ -75,9 +75,9 @@ class Incident extends CI_Controller
 			//Mengambil semua data profile user yang sedang login menggunakan model (profile)
 			$data['profile'] = $this->model->profile($id_user)->row_array();
 
-			//Dropdown pilih kategori, menggunakan model (dropdown_kategori), nama kategori ditampung pada 'dd_kategori', data yang akan di simpan adalah id_kategori dan akan ditampung pada 'id_kategori'
-			$data['dd_kategori'] = $this->model->dropdown_kategori();
-			$data['id_kategori'] = "";
+			//Dropdown pilih target, menggunakan model (dropdown_target), nama target ditampung pada 'dd_target', data yang akan di simpan adalah id_target dan akan ditampung pada 'id_target'
+			$data['dd_dept'] = $this->model->dropdown_target();
+			$data['id_dept'] = "";
 
 			//Dropdown pilih sub kategori, menggunakan model (dropdown_sub_kategori), nama kategori ditampung pada 'dd_sub_kategori', data yang akan di simpan adalah id_sub_kategori dan akan ditampung pada 'id_sub_kategori'
 			$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');

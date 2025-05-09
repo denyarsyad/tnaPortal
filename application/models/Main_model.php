@@ -2481,4 +2481,20 @@ class Main_model extends CI_Model
     return $query;
   }
 
+   public function dropdown_target()
+  {
+    //Query untuk mengambil data dept dan diurutkan berdasarkan nama dept
+    //$sql = "SELECT * FROM departemen d WHERE id_dept IN ('2', '8', '3') ORDER BY 1"; //-->tentukan id dept IT/HSE/GA
+    $sql = "SELECT * FROM departemen d ORDER BY 1";
+    $query = $this->db->query($sql);
+
+    //Value default pada dropdown
+    $value[''] = '-- Pilih --';
+    //Menaruh data dept ke dalam dropdown, value yang akan diambil adalah value id_dept
+    foreach ($query->result() as $row) {
+      $value[$row->id_dept] = $row->nama_dept;
+    }
+    return $value;
+  }
+
 }

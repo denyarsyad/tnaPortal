@@ -37,48 +37,13 @@
 					<div class="col-sm-4">
 						<div class="form-group">
 							<label class="mb-1 font-weight-bold">Target <span class="text-danger small">*Required</span></label>
-							<?= form_dropdown('id_kategori', $dd_kategori, set_value('id_kategori'), 'id="id_kategori" class="form-control ' . (form_error('id_kategori') ? "is-invalid" : "") . ' "'); ?>
+							<?= form_dropdown('id_dept', $dd_dept, set_value('id_dept'), 'id="id_dept" class="form-control ' . (form_error('id_dept') ? "is-invalid" : "") . ' "'); ?>
 							<div class="invalid-feedback">
-								<?= form_error('id_kategori'); ?>
+								<?= form_error('id_dept'); ?>
 							</div>
 						</div>
-					</div>
-					<!-- <div class="col-sm-4">
-						<div class="form-group">
-							<label class="mb-1 font-weight-bold">Sub Kategori <span class="text-danger small">*Required</span></label>
-							<div id="div-order">
-								<?= form_dropdown('id_sub_kategori', $dd_sub_kategori, set_value('id_sub_kategori'), ' class="form-control ' . (form_error('id_sub_kategori') ? "is-invalid" : "") . ' "'); ?>
-								<div class="invalid-feedback">
-									<?= form_error('id_sub_kategori'); ?>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label class="mb-1 font-weight-bold">Lokasi <span class="text-danger small">*Required</span></label>
-							<?= form_dropdown('id_lokasi', $dd_lokasi, set_value('id_lokasi'), ' class="form-control ' . (form_error('id_lokasi') ? "is-invalid" : "") . '" '); ?>
-							<div class="invalid-feedback">
-								<?= form_error('id_lokasi'); ?>
-							</div>
-						</div>
-					</div> -->
-				</div>
-				<!-- <div class="col-sm-5">
-					<label class="mb-1 font-weight-bold">Due date <span class="text-danger small">*Required</span></label>
-					<input class="form-control <?= (form_error('due_date') ? "is-invalid" : "") ?>" name="due_date" placeholder="Due date" value="<?= set_value('due_date'); ?>">
-					<p class="small mb-6">contoh : 1 jam/1hari/ '0' jika tidak ada target pengerjaan</p>
-					<div class="invalid-feedback">
-						<?= form_error('due_date'); ?>	
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="mb-1 font-weight-bold">Subjek <span class="text-danger small">*Required</span></label>
-					<input class="form-control <?= (form_error('problem_summary') ? "is-invalid" : "") ?>" name="problem_summary" placeholder="Judul" value="<?= set_value('problem_summary'); ?>">
-					<div class="invalid-feedback">
-						<?= form_error('problem_summary'); ?>
-					</div>
-				</div> -->
 				
 				<div class="form-group">
 					<label class="mb-1 font-weight-bold">Problem <span class="text-danger small">*Required</span></label>

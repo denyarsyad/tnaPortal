@@ -2481,7 +2481,7 @@ class Main_model extends CI_Model
     return $query;
   }
 
-   public function dropdown_target()
+  public function dropdown_target()
   {
     //Query untuk mengambil data dept dan diurutkan berdasarkan nama dept
     //$sql = "SELECT * FROM departemen d WHERE id_dept IN ('2', '8', '3') ORDER BY 1"; //-->tentukan id dept IT/HSE/GA
@@ -2495,6 +2495,41 @@ class Main_model extends CI_Model
       $value[$row->id_dept] = $row->nama_dept;
     }
     return $value;
+  }
+
+  public function getkodeIncident()
+  {
+    //Query untuk mengembalikan value terbesar yang ada di kolom id_ticket
+    $query = $this->db->query("SELECT max(id_ticket) AS max_code FROM ticket");
+
+    //Menampung fungsi yang akan mengembalikan hasil 1 baris dari query ke dalam variabel $row
+    $row = $query->row_array();
+
+    //Menampung hasil kode ticket terbesar dari query
+    $max_id = $row['max_code'];
+    //Mengambil kode ticket pada database posisi 9 dan panjang kode 4
+    $max_fix = (int) substr($max_id, 9, 4);
+
+    //Hasil dari kode terbesar yang sudah didapatkan ditambah dengan 1, hasil dari penjumlahan ini akan digunakan sebagai kode ticket terbaru
+    $max_ticket = $max_fix + 1;
+
+    //Mengambil tanggal sekarang
+    $tanggal = date("d");
+    //Mengambil bulan sekarang
+    $bulan = date("m");
+    //Mengambil tahun sekarang
+    $tahun = date("Y");
+
+    //Membuat id_ticket dengan format T + tahun + bulan + tanggal + kode user terbaru (%04s merupakan fungsi untuk menentukan lebar minimum yang dimiliki nilai variable serta mengubah int menjadi string, %04s menandakan lebar minimum dari tiket yaitu 4 dengan padding berupa angka 0)
+    $ticket = "T" . $tahun . $bulan . $tanggal . sprintf("%04s", $max_ticket);
+    return $ticket;
+  }
+
+  public function getkodeIncidentNew()
+  {
+    $this->load->helper('string');
+    $ticket = random_string('alnum', 9);
+    return $ticket;
   }
 
 }

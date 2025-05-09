@@ -79,14 +79,6 @@ class Incident extends CI_Controller
 			$data['dd_dept'] = $this->model->dropdown_target();
 			$data['id_dept'] = "";
 
-			//Dropdown pilih sub kategori, menggunakan model (dropdown_sub_kategori), nama kategori ditampung pada 'dd_sub_kategori', data yang akan di simpan adalah id_sub_kategori dan akan ditampung pada 'id_sub_kategori'
-			$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
-			$data['id_sub_kategori'] = "";
-
-			//Dropdown pilih lokasi, menggunakan model (dropdown_lokasi), nama kondisi ditampung pada 'dd_lokasi', data yang akan di simpan adalah id_lokasi dan akan ditampung pada 'id_lokasi'
-			$data['dd_lokasi'] = $this->model->dropdown_lokasi();
-			$data['id_lokasi'] = "";
-
 			$data['error'] = "";
 
 			//Load template
@@ -101,110 +93,56 @@ class Incident extends CI_Controller
 	public function submit()
 	{
 		//Form validasi untuk ketgori dengan nama validasi = id_kategori
-		$this->form_validation->set_rules(
-			'id_kategori',
-			'Id_kategori',
-			'required',
-			array(
-				'required' => '<strong>Failed!</strong> Kategori Harus dipilih.'
-			)
-		);
+		// $this->form_validation->set_rules(
+		// 	'id_incident',
+		// 	'Id_incident',
+		// 	'required',
+		// 	array(
+		// 		'required' => '<strong>Failed!</strong> Incident Harus dipilih.'
+		// 	)
+		// );
 
-		//Form validasi untuk sub kategori dengan nama validasi = id_sub_kategori
-		$this->form_validation->set_rules(
-			'id_sub_kategori',
-			'id_sub_kategori',
-			'required',
-			array(
-				'required' => '<strong>Failed!</strong> Sub Kategori Harus dipilih.'
-			)
-		);
-
-		//Form validasi untuk lokasi dengan nama validasi = lokasi
-		$this->form_validation->set_rules(
-			'id_lokasi',
-			'Id_lokasi',
-			'required',
-			array(
-				'required' => '<strong>Failed!</strong> Lokasi Harus dipilih.'
-			)
-		);
-		//Form validasi untuk subject dengan nama validasi = due_date
-		$this->form_validation->set_rules(
-	'due_date',
-	'due_date',
-	'required',
-	array(
-		'required' => '<strong>Failed!</strong> Field Harus diisi.'
-	)
-		);
-		//Form validasi untuk subject dengan nama validasi = due_date
-		$this->form_validation->set_rules(
-			'due_date',
-			'due_date',
-			'required',
-			array(
-				'required' => '<strong>Failed!</strong> Field Harus diisi.'
-			)
-		);
 		//Form validasi untuk subject dengan nama validasi = problem_summary
 		$this->form_validation->set_rules(
-			'problem_summary',
-			'Problem_summary',
+			'problem',
+			'problem',
 			'required',
 			array(
 				'required' => '<strong>Failed!</strong> Field Harus diisi.'
 			)
 		);
 
-		//Form validasi untuk deskripsi dengan nama validasi = problem_detail
+		//Form validasi untuk deskripsi dengan nama validasi = path_photo
 		$this->form_validation->set_rules(
-			'problem_detail',
-			'Problem_detail',
-			'required',
-			array(
-				'required' => '<strong>Failed!</strong> Field Harus diisi.'
-			)
-		);
-
-		//Form validasi untuk deskripsi dengan nama validasi = filefoto
-		$this->form_validation->set_rules(
-			'filefoto',
-			'File_foto',
+			'path_photo',
+			'Path_photo',
 			'callback_file_upload'
 		);
 
-		//Kondisi jika proses buat tiket tidak memenuhi syarat validasi akan dikembalikan ke form buat tiket
+
+		//Kondisi jika proses buat incident tidak memenuhi syarat validasi akan dikembalikan ke form buat incident
 		if ($this->form_validation->run() == FALSE) {
 			//User harus User, tidak boleh role user lain
 			if ($this->session->userdata('level') == "User") {
-				//Menyusun template Buat ticket
-				$data['title'] 	  = "Buat Tiket";
+				//Menyusun template Buat incident
+				$data['title'] 	  = "Buat Incidentxxx";
 				$data['navbar']   = "navbar";
 				$data['sidebar']  = "sidebar";
-				$data['body']     = "ticketUser/buatticket";
+				$data['body']     = "incident/buatIncident";
 
 				//Session
 				$id_dept 	= $this->session->userdata('id_dept');
 				$id_user 	= $this->session->userdata('id_user');
 
-				//Get kode ticket yang akan digunakan sebagai id_ticket menggunakan model(getkodeticket)
-				$data['ticket'] = $this->model->getkodeticket();
+				//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeIncident)
+				$data['incident'] = $this->model->getkodeIncident();
 
 				//Mengambil semua data profile user yang sedang login menggunakan model (profile)
 				$data['profile'] = $this->model->profile($id_user)->row_array();
 
-				//Dropdown pilih kategori, menggunakan model (dropdown_kategori), nama kategori ditampung pada 'dd_kategori', data yang akan di simpan adalah id_kategori dan akan ditampung pada 'id_kategori'
-				$data['dd_kategori'] = $this->model->dropdown_kategori();
-				$data['id_kategori'] = "";
-
-				//Dropdown pilih sub kategori, menggunakan model (dropdown_sub_kategori), nama kategori ditampung pada 'dd_sub_kategori', data yang akan di simpan adalah id_sub_kategori dan akan ditampung pada 'id_sub_kategori'
-				$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
-				$data['id_sub_kategori'] = "";
-
-				//Dropdown pilih lokasi, menggunakan model (dropdown_lokasi), nama kondisi ditampung pada 'dd_lokasi', data yang akan di simpan adalah id_lokasi dan akan ditampung pada 'id_lokasi'
-				$data['dd_lokasi'] = $this->model->dropdown_lokasi();
-				$data['id_lokasi'] = "";
+				//Dropdown pilih dept, menggunakan model (dropdown_dept), nama dept ditampung pada 'dd_dept', data yang akan di simpan adalah id_dept dan akan ditampung pada 'id_dept'
+				$data['dd_dept'] = $this->model->dropdown_target();
+				$data['id_dept'] = "";
 
 				$data['error'] = "";
 
@@ -216,102 +154,90 @@ class Incident extends CI_Controller
 				redirect('Errorpage');
 			}
 		} else {
-			//Bagian ini jika validasi dipenuhi untuk membuat ticket
+			//Bagian ini jika validasi dipenuhi untuk membuat incident
 			//Session
 			$id_user 	= $this->session->userdata('id_user');
 
-			//Get kode ticket yang akan digunakan sebagai id_ticket menggunakan model(getkodeticketnew)
-			$ticket 	= $this->model->getkodeticketnew();
+			//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeIncidentNew)
+			$ticket 	= $this->model->getkodeIncidentNew();
+
 			$date       = date("Y-m-d  H:i:s");
 
 			//Konfigurasi Upload Gambar
 			$config['upload_path'] 		= './uploads/';		//Folder untuk menyimpan gambar
-			$config['allowed_types'] 	= 'gif|jpg|jpeg|png|pdf';	//Tipe file yang diizinkan
+			$config['allowed_types'] 	= 'gif|jpg|jpeg|png|pdf'; //Tipe file yang diizinkan
 			$config['max_size'] 		= '25600';			//Ukuran maksimum file gambar yang diizinkan
 			$config['max_width']        = '0';				//Ukuran lebar maks. 0 menandakan ga ada batas
 			$config['max_height']       = '0';				//Ukuran tinggi maks. 0 menandakan ga ada batas
 
 			//Memanggil library upload pada codeigniter dan menyimpan konfirguasi
 			$this->load->library('upload', $config);
-			//Jika upload gambar tidak sesuai dengan konfigurasi di atas, maka upload gambar gagal, dan kembali ke halaman Create ticket
-			if (!$this->upload->do_upload('filefoto')) {
-				//$this->session->set_flashdata('status', 'Error');
-				//redirect('ticket_user/buat');
+			//Jika upload gambar tidak sesuai dengan konfigurasi di atas, maka upload gambar gagal, dan kembali ke halaman Create incident
+			if (!$this->upload->do_upload('path_photo')) {
 
-				if ($_FILES['filefoto']['error'] != 4) {
-					//Menyusun template Buat ticket
-					$data['title'] 	  = "Buat Tiket";
+				if ($_FILES['path_photo']['error'] != 4) {
+					//Menyusun template Buat incident
+					$data['title'] 	  = "Buat Incident";
 					$data['navbar']   = "navbar";
 					$data['sidebar']  = "sidebar";
-					$data['body']     = "ticketUser/buatticket";
+					$data['body']     = "incident/buatIncident";
 					//Session
 					$id_dept 	= $this->session->userdata('id_dept');
 					$id_user 	= $this->session->userdata('id_user');
 
-					//Get kode ticket yang akan digunakan sebagai id_ticket menggunakan model(getkodeticket)
-					$data['ticket'] = $this->model->getkodeticket();
+					//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeincident)
+					$data['incident'] = $this->model->getkodeIncident();
 
 					//Mengambil semua data profile user yang sedang login menggunakan model (profile)
 					$data['profile'] = $this->model->profile($id_user)->row_array();
 
-					//Dropdown pilih kategori, menggunakan model (dropdown_kategori), nama kategori ditampung pada 'dd_kategori', data yang akan di simpan adalah id_kategori dan akan ditampung pada 'id_kategori'
-					$data['dd_kategori'] = $this->model->dropdown_kategori();
-					$data['id_kategori'] = "";
-
-					//Dropdown pilih sub kategori, menggunakan model (dropdown_sub_kategori), nama kategori ditampung pada 'dd_sub_kategori', data yang akan di simpan adalah id_sub_kategori dan akan ditampung pada 'id_sub_kategori'
-					$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
-					$data['id_sub_kategori'] = "";
-
-					//Dropdown pilih lokasi, menggunakan model (dropdown_lokasi), nama kondisi ditampung pada 'dd_lokasi', data yang akan di simpan adalah id_lokasi dan akan ditampung pada 'id_lokasi'
-					$data['dd_lokasi'] = $this->model->dropdown_lokasi();
-					$data['id_lokasi'] = "";
+					//Dropdown pilih dept, menggunakan model (dropdown_dept), nama dept ditampung pada 'dd_dept', data yang akan di simpan adalah id_dept dan akan ditampung pada 'id_dept'
+					$data['dd_dept'] = $this->model->dropdown_target();
+					$data['id_dept'] = "";
 
 					$data['error'] = $this->upload->display_errors();
 
 					$this->load->view('template', $data);
 				} else {
 					$data = array(
-						'id_ticket'			=> $ticket,
-						'tanggal'			=> $date,
-						'last_update'		=> date("Y-m-d H:i:s"),
-						'reported'			=> $id_user,
-						'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
-						'due_date'			=> ucfirst($this->input->post('due_date')),
-						'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
-						'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
-						'status'    		=> 1,
-						'progress'			=> 0,
-						'filefoto'			=> 'no-image.jpg',
-						'id_lokasi'			=> $this->input->post('id_lokasi')
+						'id_incident'			=> $ticket,
+						'date_incident'			=> $date,
+						'target_dept'			=> $this->input->post('id_dept'),
+						'problem'				=> ucfirst($this->input->post('problem_summary')),
+						'status'    			=> 'R',
+						'path_photo'			=> 'no-image.jpg',
+						'id_input'				=> $id_user,
+						'add_id'				=> $id_user,
+						'add_date'				=> $date
 					);
 
-					$kat      = $this->input->post('id_kategori');
-					$subkat   = $this->input->post('id_sub_kategori');
-					$row      = $this->model->getkategori($kat)->row();
-					$key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
+					// $kat      = $this->input->post('id_kategori');
+					// $subkat   = $this->input->post('id_sub_kategori');
+					// $row      = $this->model->getkategori($kat)->row();
+					// $key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
 
 					//Data tracking ditampung dalam bentuk array
-					$datatracking = array(
-						'id_ticket'  => $ticket,
-						'tanggal'    => date("Y-m-d H:i:s"),
-						'status'     => "Ticket Submited. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
-						'deskripsi'  => ucfirst($this->input->post('problem_detail')),
-						'id_user'    => $id_user
-					);
+					// $datatracking = array(
+					// 	'id_ticket'  => $ticket,
+					// 	'tanggal'    => date("Y-m-d H:i:s"),
+					// 	'status'     => "Ticket Submited. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
+					// 	'deskripsi'  => ucfirst($this->input->post('problem_detail')),
+					// 	'id_user'    => $id_user
+					// );
 
 					//Query insert data ticket yang ditampung ke dalam database. tersimpan ditabel ticket
-					$this->db->insert('ticket', $data);
+					$this->db->insert('incident', $data);
 					//Query insert data tarcking yang ditampung ke dalam database. tersimpan ditabel tracking
-					$this->db->insert('tracking', $datatracking);
+					// $this->db->insert('tracking', $datatracking);
 
 					//Memanggil fungsi kirim email dari user ke admin
-					$this->model->emailbuatticket($ticket);
+					// $this->model->emailbuatticket($ticket);
 
 					//Set pemberitahuan bahwa data tiket berhasil dibuat
 					$this->session->set_flashdata('status', 'Dikirim');
 
 					//Dialihkan ke halaman my ticket
-					redirect('ticket_user');
+					redirect('incident');
 				}
 			} else {
 				//Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
@@ -319,47 +245,44 @@ class Incident extends CI_Controller
 				$gambar = $this->upload->data();
 				//Data ticket ditampung dalam bentuk array
 				$data = array(
-					'id_ticket'			=> $ticket,
-					'tanggal'			=> $date,
-					'last_update'		=> date("Y-m-d H:i:s"),
-					'reported'			=> $id_user,
-					'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
-					'due_date'			=> ucfirst($this->input->post('due_date')),
-					'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
-					'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
-					'status'    		=> 1,
-					'progress'			=> 0,
-					'filefoto'			=> $gambar['file_name'],
-					'id_lokasi'			=> $this->input->post('id_lokasi')
+					'id_incident'			=> $ticket,
+					'date_incident'			=> $date,
+					'target_dept'			=> $this->input->post('id_dept'),
+					'problem'				=> ucfirst($this->input->post('problem_summary')),
+					'status'    			=> 'R',
+					'path_photo'			=> $gambar['file_name'],
+					'id_input'				=> $id_user,
+					'add_id'				=> $id_user,
+					'add_date'				=> $date
 				);
 
-				$kat      = $this->input->post('id_kategori');
-				$subkat   = $this->input->post('id_sub_kategori');
-				$row      = $this->model->getkategori($kat)->row();
-				$key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
+				// $kat      = $this->input->post('id_kategori');
+				// $subkat   = $this->input->post('id_sub_kategori');
+				// $row      = $this->model->getkategori($kat)->row();
+				// $key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
 
 				//Data tracking ditampung dalam bentuk array
-				$datatracking = array(
-					'id_ticket'  => $ticket,
-					'tanggal'    => date("Y-m-d H:i:s"),
-					'status'     => "Ticket Submited. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
-					'deskripsi'  => ucfirst($this->input->post('problem_detail')),
-					'id_user'    => $id_user
-				);
+				// $datatracking = array(
+				// 	'id_ticket'  => $ticket,
+				// 	'tanggal'    => date("Y-m-d H:i:s"),
+				// 	'status'     => "Ticket Submited. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
+				// 	'deskripsi'  => ucfirst($this->input->post('problem_detail')),
+				// 	'id_user'    => $id_user
+				// );
 
 				//Query insert data ticket yang ditampung ke dalam database. tersimpan ditabel ticket
-				$this->db->insert('ticket', $data);
+				$this->db->insert('incident', $data);
 				//Query insert data tarcking yang ditampung ke dalam database. tersimpan ditabel tracking
-				$this->db->insert('tracking', $datatracking);
+				// $this->db->insert('tracking', $datatracking);
 
 				//Memanggil fungsi kirim email dari user ke admin
-				$this->model->emailbuatticket($ticket);
+				// $this->model->emailbuatticket($ticket);
 
 				//Set pemberitahuan bahwa data tiket berhasil dibuat
 				$this->session->set_flashdata('status', 'Dikirim');
 
 				//Dialihkan ke halaman my ticket
-				redirect('ticket_user');
+				redirect('incident');
 			}
 		}
 	}

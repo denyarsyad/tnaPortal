@@ -34,7 +34,7 @@
 								<td><?= $no ?></td>
 								<td><a href="<?= site_url('ticket_user/detail/'.$row->id_incident)?>" class="font-weight-bold" title="Detail"><?= $row->id_incident?></a></td>
 								<td><?= $row->date_incident?></td>
-								<td><?= $row->target_dept?></td>
+								<td><?= $row->nama_dept?></td>
 								<td><?= $row->problem?></td>
 								<td style="text-align: center">
 								    <?php if($row->status == 0) {

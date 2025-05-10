@@ -2475,8 +2475,10 @@ class Main_model extends CI_Model
   public function myIncident($id)
   {
     //Query untuk mengambil semua incident yang di input user dengan parameter id_user
-    $query = $this->db->query("SELECT id_incident, date_incident, target_dept, problem, status
-    FROM INCIDENT
+    $query = $this->db->query("SELECT id_incident, date_incident, target_dept, nama_dept, problem, status
+    FROM INCIDENT i
+    INNER JOIN departemen d 
+    ON i.target_dept = d.id_dept
     WHERE id_input = '$id'");
     return $query;
   }

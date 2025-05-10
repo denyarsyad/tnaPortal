@@ -36,17 +36,6 @@
 								<td><?= $row->date_incident?></td>
 								<td><?= $row->nama_dept?></td>
 								<td><?= $row->problem?></td>
-								<td style="text-align: center">
-								    <?php if($row->status == 0) {
-								    	echo "Ditolak";
-								    } else {
-								    	if($row->teknisi == null){
-								    		echo "Akan ditentukan";
-								    	} else {
-								    		echo "$row->nama_teknisi";
-								    	}
-								    } ?>
-								</td>
 								<?php if ($row->status == 0) {?>
 									<td>
 										<strong style="color: #F36F13;">Ticket Rejected</strong>
@@ -85,7 +74,7 @@
 									</td>
 								<?php } ?>
 								<td>
-									<a href="<?= site_url('ticket_user/detail/'.$row->id_ticket)?>" class="btn btn-primary btn-circle btn-sm" title="Detail">
+									<a href="<?= site_url('incident/detail/'.$row->id_incident)?>" class="btn btn-primary btn-circle btn-sm" title="Detail">
 										<i class="fas fa-search"></i>
 									</a>
 								</td>

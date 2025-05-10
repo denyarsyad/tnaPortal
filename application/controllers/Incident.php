@@ -295,17 +295,17 @@ class Incident extends CI_Controller
 			$data['title'] 	  = "Detail Tiket";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "ticketUser/detail";
+			$data['body']     = "incident/detail";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
-			//Detail setiap tiket, get dari model (detail_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
-			$data['detail'] = $this->model->detail_ticket($id)->row_array();
+			//Detail setiap tiket, get dari model (detail_incident) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
+			$data['detail'] = $this->model->detail_incident($id)->row_array();
 
 			//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
-			$data['tracking'] = $this->model->tracking_ticket($id)->result();
+			//$data['tracking'] = $this->model->tracking_ticket($id)->result();
 
 			//Message setiap tiket, get dari model (ticket_message) berdasarkan id_ticket, data akan ditampung dalam parameter 'message'
 			$data['message'] = $this->model->message_ticket($id)->result();

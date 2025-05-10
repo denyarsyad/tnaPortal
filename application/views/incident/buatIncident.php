@@ -54,7 +54,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="mb-1 font-weight-bold">Lampiran (Media) <span class="text-info small">*Opsional</span></label> </br>
+					<label class="mb-1 font-weight-bold">Lampiran (Media) <span class="text-info small">*Optional</span></label> </br>
 					<p class="small mb-3">Maksimal ukuran 25MB. Format file: gif, jpg, png, or pdf.</p>
 					<input type="file" name="path_photo" size="20" class="<?= (form_error('path_photo') ? "is-invalid" : "") ?>">
 					<div class="invalid-feedback">

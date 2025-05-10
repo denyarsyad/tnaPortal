@@ -32,7 +32,7 @@
 						<?php $no = 1; foreach ($ticket as $row){?>
 							<tr>
 								<td><?= $no ?></td>
-								<td><a href="<?= site_url('ticket_user/detail/'.$row->id_incident)?>" class="font-weight-bold" title="Detail"><?= $row->id_incident?></a></td>
+								<td><a href="<?= site_url('incident/detail/'.$row->id_incident)?>" class="font-weight-bold" title="Detail"><?= $row->id_incident?></a></td>
 								<td><?= $row->date_incident?></td>
 								<td><?= $row->nama_dept?></td>
 								<td><?= $row->problem?></td>

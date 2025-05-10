@@ -2535,4 +2535,21 @@ class Main_model extends CI_Model
     return $ticket;
   }
 
+  public function detail_incident($id)
+  {
+    //Query untuk mendapatkan data detail dari setiap incident
+    $query = $this->db->query("SELECT id_incident, nama, email, telp, CONCAT(nama_dept, ' - ', nama_bagian_dept) AS nama_dept,  date_incident, 
+    (SELECT MAX(dd.NAMA_DEPT) FROM departemen dd WHERE dd.id_dept = I.target_dept) AS target_dept, problem, path_photo AS filefoto
+    FROM INCIDENT I
+    INNER JOIN PEGAWAI P
+    ON I.id_input = P.nik
+    INNER JOIN departemen_bagian db 
+    ON P.id_bagian_dept = DB.id_bagian_dept
+    INNER JOIN departemen d 
+    ON DB.id_dept = D.id_dept
+    WHERE I.id_incident = '$id'");
+    return $query;
+  }
+
+
 }

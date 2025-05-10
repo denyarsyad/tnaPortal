@@ -159,7 +159,7 @@ class Incident extends CI_Controller
 			$id_user 	= $this->session->userdata('id_user');
 
 			//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeIncidentNew)
-			$ticket 	= $this->model->getkodeIncidentNew();
+			$ticket 	= $this->model->getkodeIncidentNew($id_user);
 
 			$date       = date("Y-m-d  H:i:s");
 
@@ -203,7 +203,7 @@ class Incident extends CI_Controller
 						'id_incident'			=> $ticket,
 						'date_incident'			=> $date,
 						'target_dept'			=> $this->input->post('id_dept'),
-						'problem'				=> ucfirst($this->input->post('problem_summary')),
+						'problem'				=> ucfirst($this->input->post('problem')),
 						'status'    			=> 'R',
 						'path_photo'			=> 'no-image.jpg',
 						'id_input'				=> $id_user,
@@ -248,7 +248,7 @@ class Incident extends CI_Controller
 					'id_incident'			=> $ticket,
 					'date_incident'			=> $date,
 					'target_dept'			=> $this->input->post('id_dept'),
-					'problem'				=> ucfirst($this->input->post('problem_summary')),
+					'problem'				=> ucfirst($this->input->post('problem')),
 					'status'    			=> 'R',
 					'path_photo'			=> $gambar['file_name'],
 					'id_input'				=> $id_user,

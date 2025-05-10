@@ -2525,10 +2525,11 @@ class Main_model extends CI_Model
     return $ticket;
   }
 
-  public function getkodeIncidentNew()
+  public function getkodeIncidentNew($id)
   {
-    $this->load->helper('string');
-    $ticket = random_string('alnum', 9);
+    //$this->load->helper('string');
+    //$ticket = random_string('alnum', 9);
+    $ticket = "INCIDENT-" . date("YmdHis") . "-" . $id;
     return $ticket;
   }
 

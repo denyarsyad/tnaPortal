@@ -20,7 +20,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>No Ticket</th>
+							<th>No Incident</th>
 							<th>Tanggal</th>
 							<th>Target Dept</th>
 							<th>Problem</th>
@@ -51,9 +51,9 @@
 									<td>
 										<strong style="color: #F36F13;">Ticket Rejected</strong>
 									</td>
-								<?php } else if ($row->status == 1) {?>
+								<?php } else if ($row->status == "R") {?>
 									<td>
-										<strong style="color: #946038;">Ticket Submited</strong>
+										<strong style="color:rgb(19, 133, 8);">Incident Submited</strong>
 									</td>
 								<?php } else if ($row->status == 2) {?>
 									<td>

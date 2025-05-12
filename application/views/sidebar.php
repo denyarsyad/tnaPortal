@@ -160,7 +160,7 @@
 			</a>
 		</li>
 		<!-- Menu Untuk Spv Dept-->
-	<?php 
+	<?php
 	} else if ($this->session->userdata('level') == "SPV") { ?>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
@@ -175,6 +175,13 @@
 			<a class="nav-link" href="<?= site_url('ticket_spv/index_tugas') ?>">
 				<i class="fas fa-fw fa-ticket-alt"></i>
 				<span>Daftar Tiket</span>
+			</a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('incident_spv') ?>">
+				<i class="fas fa-fw fa-medkit"></i>
+				<span>Incident</span>
 			</a>
 		</li>
 	<?php } else if ($this->session->userdata('level') == "MGR") { ?>

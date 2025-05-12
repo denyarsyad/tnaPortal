@@ -2,7 +2,7 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Incident extends CI_Controller
+class Incident_spv extends CI_Controller
 {
 	public function __construct()
 	{
@@ -32,12 +32,12 @@ class Incident extends CI_Controller
 	{
 		//User harus User, tidak boleh role user lain
 		//$level = ["User", "SPV"];
-		if ($this->session->userdata('level') == "User") {
+		if ($this->session->userdata('level') == "SPV") {
 			//Menyusun template Incident
 			$data['title'] 	  = "Daftar Incident";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "incident/listIncident";
+			$data['body']     = "incidentSpv/listIncident";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');
@@ -59,12 +59,12 @@ class Incident extends CI_Controller
 	public function buat()
 	{
 		//User harus User, tidak boleh role user lain
-		if ($this->session->userdata('level') == "User") {
+		if ($this->session->userdata('level') == "SPV") {
 			//Menyusun template Buat ticket
 			$data['title'] 	  = "Input Incident";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "incident/buatIncident";
+			$data['body']     = "incidentSpv/buatIncident";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');
@@ -124,12 +124,12 @@ class Incident extends CI_Controller
 		//Kondisi jika proses buat incident tidak memenuhi syarat validasi akan dikembalikan ke form buat incident
 		if ($this->form_validation->run() == FALSE) {
 			//User harus User, tidak boleh role user lain
-			if ($this->session->userdata('level') == "User") {
+			if ($this->session->userdata('level') == "SPV") {
 				//Menyusun template Buat incident
 				$data['title'] 	  = "Buat Incidentxxx";
 				$data['navbar']   = "navbar";
 				$data['sidebar']  = "sidebar";
-				$data['body']     = "incident/buatIncident";
+				$data['body']     = "incidentSpv/buatIncident";
 
 				//Session
 				$id_dept 	= $this->session->userdata('id_dept');

@@ -2131,7 +2131,7 @@ class Main_model extends CI_Model
   }
 
   //Method untuk mendapatkan ticket reject (0) dari user dept masing-masing berdasarkan id dept
-  public function getRejectTicketSpvDept($id) 
+  public function getRejectTicketSpvDept($id)
   {
     $query = $this->db->query("SELECT count(*) AS total
     FROM ticket t 
@@ -2268,22 +2268,22 @@ class Main_model extends CI_Model
     return $query;
   }
 
- //Method untuk menaruh data user spv tech sesuai dengan kategori yang dipilih pada dropdown
- function dropdown_spv_tech()
- {
-   //Query untuk mengambil data user yang memiliki level 'MGR'
-   $query = $this->db->query("SELECT 'SPVU' AS username, 'Supervisor Utility' AS nama FROM dual
+  //Method untuk menaruh data user spv tech sesuai dengan kategori yang dipilih pada dropdown
+  function dropdown_spv_tech()
+  {
+    //Query untuk mengambil data user yang memiliki level 'MGR'
+    $query = $this->db->query("SELECT 'SPVU' AS username, 'Supervisor Utility' AS nama FROM dual
                               UNION ALL
                               SELECT 'SPVM' AS username, 'Supervisor Maintenance' AS nama FROM dual");
 
-   //Value default pada dropdown
-   $value[''] = '-- Pilih --';
-   //Menaruh data user spvu dan spvm ke dalam dropdown, value yang akan diambil adalah value id_user yang memiliki level 'Technician'
-   foreach ($query->result() as $row) {
-     $value[$row->username] = $row->nama;
-   }
-   return $value;
- }
+    //Value default pada dropdown
+    $value[''] = '-- Pilih --';
+    //Menaruh data user spvu dan spvm ke dalam dropdown, value yang akan diambil adalah value id_user yang memiliki level 'Technician'
+    foreach ($query->result() as $row) {
+      $value[$row->username] = $row->nama;
+    }
+    return $value;
+  }
 
 
   //Method yang digunakan untuk proses approve ticket dengan parameter (id_ticket)
@@ -2441,37 +2441,37 @@ class Main_model extends CI_Model
     return $query;
   }
 
-   //Method yang digunakan untuk proses noted ticket dengan parameter id_ticket
-   public function noted($id, $alasan = null)
-   {
-     //Mengambil session MGR
-     $id_user    = $this->session->userdata('id_user');
- 
-     //Melakukan update data ticket dengan mengubah status ticket menjadi 1, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
-     $data = array(
-       'status'     => 10,
-       'last_update' => date("Y-m-d  H:i:s")
-     );
- 
-     //Melakukan insert data tracking ticket bahwa ticket di-noted oleh MGR, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
-     $datatracking = array(
-       'id_ticket'  => $id,
-       'tanggal'    => date("Y-m-d  H:i:s"),
-       'status'     => "Ticket Returned",
-       'deskripsi'  => $alasan,
-       'id_user'    => $id_user
-     );
- 
-     //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
-     $this->db->where('id_ticket', $id);
-     $this->db->update('ticket', $data);
- 
-     //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
-     $this->db->insert('tracking', $datatracking);
-   }
+  //Method yang digunakan untuk proses noted ticket dengan parameter id_ticket
+  public function noted($id, $alasan = null)
+  {
+    //Mengambil session MGR
+    $id_user    = $this->session->userdata('id_user');
+
+    //Melakukan update data ticket dengan mengubah status ticket menjadi 1, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
+    $data = array(
+      'status'     => 10,
+      'last_update' => date("Y-m-d  H:i:s")
+    );
+
+    //Melakukan insert data tracking ticket bahwa ticket di-noted oleh MGR, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
+    $datatracking = array(
+      'id_ticket'  => $id,
+      'tanggal'    => date("Y-m-d  H:i:s"),
+      'status'     => "Ticket Returned",
+      'deskripsi'  => $alasan,
+      'id_user'    => $id_user
+    );
+
+    //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
+    $this->db->where('id_ticket', $id);
+    $this->db->update('ticket', $data);
+
+    //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+    $this->db->insert('tracking', $datatracking);
+  }
 
 
-   //Incident
+  //Incident
   public function myIncident($id)
   {
     //Query untuk mengambil semua incident yang di input user dengan parameter id_user
@@ -2552,4 +2552,21 @@ class Main_model extends CI_Model
   }
 
 
+  //SPV Incident
+  public function spvIncident($dept)
+  {
+    //Query untuk mengambil semua incident yang di input user dengan parameter id_user
+    $query = $this->db->query("SELECT i.id_incident , i.date_incident , i.target_dept , d.nama_dept , i.problem , i.status 
+    FROM INCIDENT i
+    INNER JOIN departemen d 
+    ON i.target_dept = d.id_dept
+    INNER JOIN pegawai p 
+    ON i.id_input = p.nik 
+    INNER JOIN departemen_bagian db 
+    ON p.id_bagian_dept = db.id_bagian_dept 
+    INNER JOIN departemen d2
+    ON db.id_dept = d2.id_dept 
+    WHERE d2.id_dept = '$dept'");
+    return $query;
+  }
 }

@@ -44,7 +44,7 @@ class Incident_spv extends CI_Controller
 			$id_user 	= $this->session->userdata('id_user');
 
 			//Daftar semua incident yang di input
-			$data['ticket'] = $this->model->myIncident($id_user)->result();
+			$data['ticket'] = $this->model->spvIncident($id_dept)->result();
 
 			//Load template
 			$this->load->view('template', $data);

@@ -30,7 +30,7 @@ class Incident_spv extends CI_Controller
 	//Incident
 	public function index()
 	{
-		//User harus User, tidak boleh role user lain
+		//User harus SPV, tidak boleh role user lain
 		//$level = ["User", "SPV"];
 		if ($this->session->userdata('level') == "SPV") {
 			//Menyusun template Incident
@@ -49,7 +49,7 @@ class Incident_spv extends CI_Controller
 			//Load template
 			$this->load->view('template', $data);
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan User
+			//Bagian ini jika role yang mengakses tidak sama dengan SPV
 			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}
@@ -58,9 +58,9 @@ class Incident_spv extends CI_Controller
 	//Buat Incident
 	public function buat()
 	{
-		//User harus User, tidak boleh role user lain
+		//User harus SPV, tidak boleh role user lain
 		if ($this->session->userdata('level') == "SPV") {
-			//Menyusun template Buat ticket
+			//Menyusun template Buat incident
 			$data['title'] 	  = "Input Incident";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
@@ -70,7 +70,7 @@ class Incident_spv extends CI_Controller
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
-			//Get kode ticket yang akan digunakan sebagai id_ticket menggunakan model(getkodeticket)
+			//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeincident)
 			$data['ticket'] = $this->model->getkodeticket();
 
 			//Mengambil semua data profile user yang sedang login menggunakan model (profile)
@@ -85,7 +85,7 @@ class Incident_spv extends CI_Controller
 			//Load template
 			$this->load->view('template', $data);
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan User
+			//Bagian ini jika role yang mengakses tidak sama dengan SPV
 			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}
@@ -290,31 +290,31 @@ class Incident_spv extends CI_Controller
 
 	public function detail($id)
 	{
-		//User harus User, tidak boleh role user lain
-		if ($this->session->userdata('level') == "User") {
-			//Menyusun template Detail Ticket
-			$data['title'] 	  = "Detail Tiket";
+		//User harus SPV, tidak boleh role user lain
+		if ($this->session->userdata('level') == "SPV") {
+			//Menyusun template Detail Incident
+			$data['title'] 	  = "Detail Incident";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "incident/detail";
+			$data['body']     = "incidentSpv/detail";
 
 			//Session
 			$id_dept 	= $this->session->userdata('id_dept');
 			$id_user 	= $this->session->userdata('id_user');
 
-			//Detail setiap tiket, get dari model (detail_incident) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
-			$data['detail'] = $this->model->detail_incident($id)->row_array();
+			//Detail setiap incident, get dari model (detail_incident) berdasarkan id_incident, data akan ditampung dalam parameter 'detail'
+			$data['detail'] = $this->model->detail_incident_spv($id)->row_array();
 
-			//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
-			//$data['tracking'] = $this->model->tracking_ticket($id)->result();
+			//Tracking setiap incident, get dari model (tracking_incident) berdasarkan id_incident, data akan ditampung dalam parameter 'tracking'
+			//$data['tracking'] = $this->model->tracking_incident($id)->result();
 
-			//Message setiap tiket, get dari model (ticket_message) berdasarkan id_ticket, data akan ditampung dalam parameter 'message'
+			//Message setiap incident, get dari model (incident_message) berdasarkan id_incident, data akan ditampung dalam parameter 'message'
 			$data['message'] = $this->model->message_ticket($id)->result();
 
 			//Load template
 			$this->load->view('template', $data);
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan User
+			//Bagian ini jika role yang mengakses tidak sama dengan SPV
 			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}

@@ -2487,7 +2487,7 @@ class Main_model extends CI_Model
   {
     //Query untuk mengambil data dept dan diurutkan berdasarkan nama dept
     //$sql = "SELECT * FROM departemen d WHERE id_dept IN ('2', '8', '3') ORDER BY 1"; //-->tentukan id dept IT/HSE/GA
-    $sql = "SELECT * FROM departemen d ORDER BY 1";
+    $sql = "SELECT * FROM departemen d WHERE id_dept IN ('2','8','11') ORDER BY 1";
     $query = $this->db->query($sql);
 
     //Value default pada dropdown
@@ -2647,6 +2647,4 @@ class Main_model extends CI_Model
     // //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
     // $this->db->insert('tracking', $datatracking);
   }
-
-
 }

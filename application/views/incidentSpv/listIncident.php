@@ -69,13 +69,13 @@
 									<td>
 										<strong style="color: #C13018;">Late Finished</strong>
 									</td>
-								<?php } else if ($row->status == 8) { ?>
+								<?php } else if ($row->status == "S") { ?>
 									<td>
-										<strong style="color: #36454F;">Approved Supervisor</strong>
+										<strong style="color:rgb(22, 5, 175);">Approved Supervisor</strong>
 									</td>
 								<?php } ?>
 								<td>
-									<a href="<?= site_url('incident/detail/' . $row->id_incident) ?>" class="btn btn-primary btn-circle btn-sm" title="Detail">
+									<a href="<?= site_url('incident_spv/detail/' . $row->id_incident) ?>" class="btn btn-primary btn-circle btn-sm" title="Detail">
 										<i class="fas fa-search"></i>
 									</a>
 								</td>

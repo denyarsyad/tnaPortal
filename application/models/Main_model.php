@@ -2573,7 +2573,7 @@ class Main_model extends CI_Model
   {
     //Query untuk mendapatkan data detail dari setiap incident
     $query = $this->db->query("SELECT id_incident, nama, email, telp, CONCAT(nama_dept, ' - ', nama_bagian_dept) AS nama_dept,  date_incident, 
-    (SELECT MAX(dd.NAMA_DEPT) FROM departemen dd WHERE dd.id_dept = I.target_dept) AS target_dept, problem, path_photo AS filefoto
+    (SELECT MAX(dd.NAMA_DEPT) FROM departemen dd WHERE dd.id_dept = I.target_dept) AS target_dept, problem, path_photo AS filefoto, status, (SELECT MAX(nama) FROM pegawai WHERE nik = i.upd_id) AS upd_id, upd_date
     FROM INCIDENT I
     INNER JOIN PEGAWAI P
     ON I.id_input = P.nik
@@ -2583,5 +2583,34 @@ class Main_model extends CI_Model
     ON DB.id_dept = D.id_dept
     WHERE I.id_incident = '$id'");
     return $query;
+  }
+
+  public function approveIncidentSpv($id)
+  {
+    //Mengambil session SPV
+    $id_user    = $this->session->userdata('id_user');
+
+    //Melakukan update data incident dengan mengubah status incident menjadi S (Setuju), data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
+    $data = array(
+      'status'     => "S",
+      'upd_id'     => $id_user,
+      'upd_date'   => date("Y-m-d  H:i:s"),
+    );
+
+    // //Melakukan insert data tracking ticket bahwa ticket di-approve oleh SPV, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
+    // $datatracking = array(
+    //   'id_ticket'  => $id,
+    //   'tanggal'    => date("Y-m-d  H:i:s"),
+    //   'status'     => "Ticket Approved",
+    //   'deskripsi'  => "Approved by Supervisor Dept",
+    //   'id_user'    => $id_user
+    // );
+
+    //Query untuk melakukan update data incident sesuai dengan array '$data' ke tabel incident
+    $this->db->where('id_incident', $id);
+    $this->db->update('incident', $data);
+
+    // //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+    // $this->db->insert('tracking', $datatracking);
   }
 }

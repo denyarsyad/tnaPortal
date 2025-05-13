@@ -13,6 +13,25 @@
 								Incident Information
 							</h5>
 							<div class="card">
+								<div class="card-header font-weight-bold">
+										Aksi:
+										<?php if ($detail['status'] == "") { ?>
+											No Action 
+										<?php } else if (in_array($detail['status'], ["R"])) { ?>
+											<!-- Form untuk Approve -->
+											<form method="post" action="<?= site_url('incident_spv/approveSpv/' . $detail['id_incident']) ?>" enctype="multipart/form-data" style="display:inline;">
+												<input type="hidden" name="id_incident" value="<?= $detail['id_incident'] ?>">
+												<button type="submit" class="btn btn-success approve" title="Approve">
+													<i class="fas fa-check"></i> Terima
+												</button>
+											</form>
+											<a href="<?= site_url('incident_spv/detail_reject/' . $detail['id_incident']) ?>" class="btn btn-danger reject" title="Reject">
+												<i class="fas fa-times"></i> Tolak
+											</a>
+										<?php } else if ($detail['status'] == "S") { ?>
+											 <u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['upd_id'] . " (" .  $detail['upd_date'] . ")" ?> </u>
+										<?php } ?>
+									</div>
 								<div class="card-body">
 									<h6 class="m-0 text-primary">Pemohon</h6>
 									<div class="font-weight-bold">
@@ -29,7 +48,7 @@
 										<?= $detail['telp'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Departemen</h6>
+									<h6 class="m-0 text-primary">Departemen - Sub Departemen</h6>
 									<div class="font-weight-bold">
 										<?= $detail['nama_dept'] ?>
 									</div>

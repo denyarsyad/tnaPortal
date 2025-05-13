@@ -305,6 +305,9 @@ class Incident_spv extends CI_Controller
 			//Detail setiap incident, get dari model (detail_incident) berdasarkan id_incident, data akan ditampung dalam parameter 'detail'
 			$data['detail'] = $this->model->detail_incident_spv($id)->row_array();
 
+			////GET STATUS
+			//$data['status'] = $this->model->getStatus($id)->result();
+
 			//Tracking setiap incident, get dari model (tracking_incident) berdasarkan id_incident, data akan ditampung dalam parameter 'tracking'
 			//$data['tracking'] = $this->model->tracking_incident($id)->result();
 
@@ -445,4 +448,50 @@ class Incident_spv extends CI_Controller
 			}
 		}
 	}
+
+	//approve and reject
+	public function approveSpv($id)
+    {
+        //User harus SPV, tidak boleh role user lain
+		if ($this->session->userdata('level') == "SPV") {
+			//Proses me-approve ticket, menggunakan model (approve) dengan parameter id_incident yang akan di-approve
+			$this->model->approveIncidentSpv($id);
+            //Set pemberitahuan bahwa tiket berhasil ditugaskan ke teknisi
+            $this->session->set_flashdata('status', 'Ditugaskan');
+			//Kembali ke halaman List approvel incident (list_approve)
+			redirect('incident_spv/index');
+		} else {
+			//Bagian ini jika role yang mengakses tidak sama dengan SPV
+			//Akan dibawa ke Controller Errorpage
+			redirect('Errorpage');
+		}
+    }
+
+
+    public function detail_reject($id)
+    {
+        //User harus SPV, tidak boleh role user lain
+        if ($this->session->userdata('level') == "SPV") {
+            //Menyusun template Detail Incident yang akan di-reject
+            $data['title']    = "Tolak Incdident";
+            $data['navbar']   = "navbar";
+            $data['sidebar']  = "sidebar";
+            $data['body']     = "incident_spv/detailreject";
+
+            //Session
+            $id_dept = $this->session->userdata('id_dept');
+            $id_user = $this->session->userdata('id_user');
+
+            //Detail setiap tiket yang akan di-reject, get dari model (detail_incident) dengan parameter id_incident, data akan ditampung dalam parameter 'detail'
+            $data['detail'] = $this->model->detail_incident($id)->row_array();
+
+            //Load template
+            $this->load->view('template', $data);
+        } else {
+            //Bagian ini jika role yang mengakses tidak sama dengan SPV
+            //Akan dibawa ke Controller Errorpage
+            redirect('Errorpage');
+        }
+    }
+
 }

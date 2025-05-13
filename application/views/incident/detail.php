@@ -13,6 +13,16 @@
 								Incident Information
 							</h5>
 							<div class="card">
+								<div class="card-header font-weight-bold">
+										Aksi:
+										<?php if ($detail['status'] == "R") { ?>
+											No Action 
+										<?php } else if ($detail['status'] == "S") { ?>
+											 <u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
+										<?php } else if ($detail['status'] == "T") { ?>
+											 <u style="color:#800000; padding-left:5px;"> Rejected by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
+										<?php } ?>
+								</div>
 								<div class="card-body">
 									<h6 class="m-0 text-primary">Pemohon</h6>
 									<div class="font-weight-bold">
@@ -71,6 +81,11 @@
 									<h6 class="m-0 text-primary">Problem</h6>
 									<div class="font-weight-bold">
 										<?= $detail['problem'] ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Alasan Reject <span class="text-info small">(Jika di reject)</span></h6>
+									<div class="font-weight-bold">
+										<?= $detail['reason_reject'] ?><br>
 									</div>
 									<hr>
 								</div>

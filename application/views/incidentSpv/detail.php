@@ -33,7 +33,7 @@
 										<?php } else if ($detail['status'] == "T") { ?>
 											 <u style="color:#800000; padding-left:5px;"> Rejected by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
 										<?php } ?>
-									</div>
+								</div>
 								<div class="card-body">
 									<h6 class="m-0 text-primary">Pemohon</h6>
 									<div class="font-weight-bold">

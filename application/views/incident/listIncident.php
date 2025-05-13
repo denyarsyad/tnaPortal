@@ -37,9 +37,9 @@
 								<td><?= $row->date_incident ?></td>
 								<td><?= $row->nama_dept ?></td>
 								<td><?= $row->problem ?></td>
-								<?php if ($row->status == 0) { ?>
+								<?php if ($row->status == "T") { ?>
 									<td>
-										<strong style="color: #F36F13;">Ticket Rejected</strong>
+										<strong style="color: #F36F13;">Incident Rejected</strong>
 									</td>
 								<?php } else if ($row->status == "R") { ?>
 									<td>
@@ -69,9 +69,9 @@
 									<td>
 										<strong style="color: #C13018;">Late Finished</strong>
 									</td>
-								<?php } else if ($row->status == 8) { ?>
+								<?php } else if ($row->status == "S") { ?>
 									<td>
-										<strong style="color: #36454F;">Approved Supervisor</strong>
+										<strong style="color:rgb(22, 5, 175);">Approved Supervisor</strong>
 									</td>
 								<?php } ?>
 								<td>

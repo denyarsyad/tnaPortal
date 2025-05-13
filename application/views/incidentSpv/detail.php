@@ -29,7 +29,9 @@
 												<i class="fas fa-times"></i> Tolak
 											</a>
 										<?php } else if ($detail['status'] == "S") { ?>
-											 <u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['upd_id'] . " (" .  $detail['upd_date'] . ")" ?> </u>
+											 <u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
+										<?php } else if ($detail['status'] == "T") { ?>
+											 <u style="color:#800000; padding-left:5px;"> Rejected by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
 										<?php } ?>
 									</div>
 								<div class="card-body">

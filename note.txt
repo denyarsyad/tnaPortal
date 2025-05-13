@@ -11,7 +11,10 @@ CREATE TABLE tnaportal.incident (
 	add_id varchar(100) NULL,
 	add_date DATETIME NULL,
 	upd_id varchar(100) NULL,
-	upd_date DATETIME NULL
+	upd_date DATETIME NULL,
+	id_action varchar(100) NULL,
+	date_action DATETIME NULL,
+	reason_reject varchar(500) NULL
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8

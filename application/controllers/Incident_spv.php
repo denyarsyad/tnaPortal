@@ -476,7 +476,7 @@ class Incident_spv extends CI_Controller
             $data['title']    = "Tolak Incdident";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "incident_spv/detailreject";
+            $data['body']     = "incidentSpv/detailreject";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -491,6 +491,61 @@ class Incident_spv extends CI_Controller
             //Bagian ini jika role yang mengakses tidak sama dengan SPV
             //Akan dibawa ke Controller Errorpage
             redirect('Errorpage');
+        }
+    }
+
+	public function reject($id)
+    {
+        $alasan  = $this->input->post('message');
+        //Form validasi untuk message yang akan di kirim ke email user
+        $this->form_validation->set_rules(
+            'message',
+            'Message',
+            'required',
+            array(
+                'required' => '<strong>Failed!</strong> Alasan Harus diisi.'
+            )
+        );
+
+        if ($this->form_validation->run() == FALSE) {
+            //User harus SPV, tidak boleh role user lain
+            if ($this->session->userdata('level') == "SPV") {
+                //Menyusun template Detail Ticket yang akan di-reject
+                $data['title']    = "Tolak Incident";
+                $data['navbar']   = "navbar";
+                $data['sidebar']  = "sidebar";
+                $data['body']     = "incidentSpv/detailreject";
+
+                //Session
+                $id_dept = $this->session->userdata('id_dept');
+                $id_user = $this->session->userdata('id_user');
+
+                //Detail setiap incident yang akan di-reject, get dari model (detail_incident) dengan parameter id_incident, data akan ditampung dalam parameter 'detail'
+                $data['detail'] = $this->model->detail_incident($id)->row_array();
+
+                //Load template
+                $this->load->view('template', $data);
+            } else {
+                //Bagian ini jika role yang mengakses tidak sama dengan SPV
+                //Akan dibawa ke Controller Errorpage
+                redirect('Errorpage');
+            }
+        } else {
+            //User harus SPV, tidak boleh role user lain
+            if ($this->session->userdata('level') == "SPV") {
+                //Proses me-reject ticket, menggunakan model (reject) dengan parameter id_incident yang akan di-reject
+                $this->model->rejectIncident($id, $alasan);
+                //Memanggil fungsi kirim email dari SPV ke user
+                //$this->model->emailreject($id);
+                //Set pemberitahuan bahwa ticket berhasil di-reject
+                $this->session->set_flashdata('status', 'Ditolak');
+                //Kembali ke halaman List approvel ticket (list_approve)
+                redirect('incident_spv/index');
+            } else {
+                //Bagian ini jika role yang mengakses tidak sama dengan SPV
+                //Akan dibawa ke Controller Errorpage
+                redirect('Errorpage');
+            }
         }
     }
 

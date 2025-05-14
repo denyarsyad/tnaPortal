@@ -2647,4 +2647,19 @@ class Main_model extends CI_Model
     // //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
     // $this->db->insert('tracking', $datatracking);
   }
+
+  //PIC Incident
+  public function picIncident($dept)
+  {
+    //Query untuk mengambil semua incident yang di input user dengan parameter target_dept
+    $query = $this->db->query("SELECT id_incident, date_incident, target_dept, nama_dept, problem, status
+    FROM INCIDENT i
+    INNER JOIN departemen d 
+    ON i.target_dept = d.id_dept
+    WHERE target_dept = '$dept'
+    AND status = 'S'");
+    return $query;
+  }
+
+
 }

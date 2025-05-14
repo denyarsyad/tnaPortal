@@ -70,6 +70,19 @@
 
 		<!-- Heading -->
 		<div class="sidebar-heading pl-2">
+			Incident
+		</div>
+		
+		<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('incident') ?>">
+				<i class="fas fa-fw fa-medkit"></i>
+				<span>Incident</span>
+			</a>
+		</li>
+
+
+		<!-- Heading -->
+		<div class="sidebar-heading pl-2">
 			Master
 		</div>
 
@@ -97,7 +110,38 @@
 			</a>
 		</li>
 
-		<!--Menu Untuk Teknisi-->
+	<!--Menu Untuk User But Dept IT/GA/HSE-->
+	<?php
+	} else if ($this->session->userdata('level') == "User" && in_array($this->session->userdata('id_dept'), ["2", "8", "11"]) ) { ?>
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item">
+			<a href="<?= site_url('ticket_user/buat') ?>" class="nav-link">
+				<div class="btn btn-success btn-lg shadow-sm btn-block">
+					<i class="fas fa-plus text-white"></i>
+					<span class="text">Buat Tiket</span>
+				</div>
+			</a>
+		</li>
+
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link " href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_user' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_user') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Tiket Saya</span>
+			</a>
+		</li>
+
+
+	<!--Menu Untuk Teknisi-->
 	<?php
 	} else if ($this->session->userdata('level') == "Technician") { ?>
 		<!-- Divider -->
@@ -123,8 +167,8 @@
 			</a>
 		</li>
 
-		<!--Menu Untuk User-->
-	<?php
+	<!--Menu Untuk User-->
+	<?php 
 	} else if ($this->session->userdata('level') == "User") { ?>
 		<hr class="sidebar-divider my-0">
 		<!-- Nav Item - Dashboard -->
@@ -159,7 +203,8 @@
 				<span>Incident</span>
 			</a>
 		</li>
-		<!-- Menu Untuk Spv Dept-->
+
+	<!-- Menu Untuk Spv Dept-->
 	<?php
 	} else if ($this->session->userdata('level') == "SPV") { ?>
 		<!-- Divider -->
@@ -207,6 +252,7 @@
 				<span>Laporan</span>
 			</a>
 		</li>
+
 	<?php } else if ($this->session->userdata('level') == "SPVU") { ?>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
@@ -230,6 +276,7 @@
 				<span>Laporan</span>
 			</a>
 		</li>
+
 	<?php } else if ($this->session->userdata('level') == "SPVM") { ?>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
@@ -253,5 +300,5 @@
 				<span>Laporan</span>
 			</a>
 		</li>
-	<?php }  ?>
+	<?php } ?>
 </ul>

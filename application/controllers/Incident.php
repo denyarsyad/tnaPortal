@@ -31,7 +31,7 @@ class Incident extends CI_Controller
 	public function index()
 	{
 		//User harus User, tidak boleh role user lain
-		//$level = ["User", "SPV"];
+		//$dept = ["2", "8", "11"]; //IT, HRGA, HSE
 		if ($this->session->userdata('level') == "User") {
 			//Menyusun template Incident
 			$data['title'] 	  = "Daftar Incident";

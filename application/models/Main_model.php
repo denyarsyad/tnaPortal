@@ -2702,7 +2702,6 @@ class Main_model extends CI_Model
       $file = $folderPath . $fileName;
       file_put_contents($file, $image_base64);
 
-      //prioritas jika progress yang sudah selesai, maka status ticket pada system tracking ticket menjadi ticket closed dengan keterangan progress ticketnya juga
       if ($progress == 100) {
 
         $data = array(
@@ -2716,8 +2715,6 @@ class Main_model extends CI_Model
           );
 
       } else {
-        //Bagian ini jika prioritasnya progress ticket belum selesai dikerjakan, maka data yang diupdate hanya status dan progress
-        //Melakukan update data ticket dengan mengubah status ticket menjadi 4, dan memasukkan progress dari ticket, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
         $data = array(
           'status'            => "X", //belum ok
           'id_pic'            => $id_user,
@@ -2728,24 +2725,11 @@ class Main_model extends CI_Model
           'path_signature'    => $fileName
         );
 
-        // //Melakukan insert data tracking ticket progress oleh teknisi, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
-        // $datatracking = array(
-        //   'id_ticket'  => $id,
-        //   'tanggal'    => date("Y-m-d  H:i:s"),
-        //   'status'     => "Progress: " . $progress . " %",
-        //   'deskripsi'  => ucfirst($this->input->post('desk')),
-        //   'id_user'    => $id_user,
-        //   'filefoto'   => $gambar['file_name'],
-        //   'signature'  => $fileName
-        // );
       }
 
       //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
       $this->db->where('id_incident', $id);
       $this->db->update('incident', $data);
-
-      ////Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
-      //$this->db->insert('tracking', $datatracking);
     }
   }
 

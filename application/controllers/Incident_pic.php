@@ -147,6 +147,7 @@ class Incident_pic extends CI_Controller
 
 				//Load template
 				$this->load->view('template', $data);
+				//redirect('Errorpage');
 			} else {
 				//Bagian ini jika role yang mengakses tidak sama dengan Teknisi
 				//Akan dibawa ke Controller Errorpage
@@ -155,9 +156,11 @@ class Incident_pic extends CI_Controller
 		} else {
 			//Bagian ini jika validasi terpenuhi
 			//User harus dari dept IT/HSE/GA
-			if (in_array($this->session->userdata('id_dept'), $dept)) {
+			$id_dept = ["2", "8", "11"]; //IT/GA/HSE
+			if (in_array($this->session->userdata('id_dept'), $id_dept)) {
 				//Proses update incident, menggunakan model (update) dengan parameter id_incident yang akan di-update
 				$this->model->update_progress_incident($id);
+				//redirect('Errorpage');
 
 				//$this->model->emailselesai($id);
 				//Set pemberitahuan bahwa incident berhasil di-update

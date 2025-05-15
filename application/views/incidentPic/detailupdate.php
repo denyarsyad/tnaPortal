@@ -11,7 +11,7 @@
 	});
 </script>
 
-<script language="javascript" type="text/javascript">
+<!-- <script language="javascript" type="text/javascript">
 	$(document).ready(function() {
 		$("#id_kategori").change(function() {
 			var data = {
@@ -28,7 +28,7 @@
 		});
 
 	});
-</script>
+</script> -->
 
 <div class="container-fluid">
 	<!-- <div class="d-sm-flex align-items-center justify-content-between">
@@ -65,7 +65,7 @@
 					<h5 class="mb-3 font-weight-bold text-dark">
 						Form Update Progress
 					</h5>
-					<form method="post" action="<?= site_url('ticket_teknisi/update_progress/' . $detail['id_incident']) ?>" enctype="multipart/form-data">
+					<form method="post" action="<?= site_url('incident_pic/update_progress/' . $detail['id_incident']) ?>" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="mb-2 font-weight-bold text-primary">Deskripsi Pekerjaan <span class="text-danger small">*Required</span></label>
 							<textarea name="desk" class="form-control <?= (form_error('desk') ? "is-invalid" : "") ?>" rows="8" id="desk"><?= set_value('desk'); ?></textarea>
@@ -122,7 +122,7 @@
 						</div>
 						<br />
 						<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-						<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket_teknisi/index_tugas') ?>'">Batal</button>
+						<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('incident_pic/index') ?>'">Batal</button>
 					</form>
 				</div>
 			</div>

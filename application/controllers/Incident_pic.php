@@ -87,202 +87,90 @@ class Incident_pic extends CI_Controller
 		}
 	}
 
-	public function submit()
+	public function update_progress($id)
 	{
-		//Form validasi untuk ketgori dengan nama validasi = id_kategori
-		// $this->form_validation->set_rules(
-		// 	'id_incident',
-		// 	'Id_incident',
-		// 	'required',
-		// 	array(
-		// 		'required' => '<strong>Failed!</strong> Incident Harus dipilih.'
-		// 	)
-		// );
-
-		//Form validasi untuk subject dengan nama validasi = problem_summary
+		//Form validasi untuk deskripsi dengan nama validasi = desk
 		$this->form_validation->set_rules(
-			'problem',
-			'problem',
+			'desk',
+			'Desk',
 			'required',
 			array(
-				'required' => '<strong>Failed!</strong> Field Harus diisi.'
+				'required' => '<strong>Failed!</strong> Deskripsikan Progress Pekerjaan Anda.'
 			)
 		);
 
-		//Form validasi untuk deskripsi dengan nama validasi = path_photo
 		$this->form_validation->set_rules(
-			'path_photo',
-			'Path_photo',
+			'progress',
+			'Progress',
+			'required|greater_than[0]',
+			array(
+				'required' => '<strong>Failed!</strong> Progress harus dipilih.'
+			)
+		);
+
+		$this->form_validation->set_rules(
+			'signed',
+			'Signature',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Tanda Tangan harus dibuat.'
+			)
+		);
+
+		//Form validasi untuk deskripsi dengan nama validasi = fileupdate
+		$this->form_validation->set_rules(
+			'fileupdate',
+			'File_update',
 			'callback_file_upload'
 		);
 
-
-		//Kondisi jika proses buat incident tidak memenuhi syarat validasi akan dikembalikan ke form buat incident
+		//Kondisi jika saat proses update tidak memenuhi syarat validasi akan dikembalikan ke halaman update progress
 		if ($this->form_validation->run() == FALSE) {
-			//User harus User, tidak boleh role user lain
-			if ($this->session->userdata('level') == "SPV") {
-				//Menyusun template Buat incident
-				$data['title'] 	  = "Buat Incidentxxx";
+			//Validasi dept
+			$dept = ["2", "8", "11"]; //IT/GA/HSE
+			if (in_array($this->session->userdata('id_dept'), $dept)) {
+				//Menyusun template Detail ticket
+				$data['title']    = "Update Progress";
 				$data['navbar']   = "navbar";
 				$data['sidebar']  = "sidebar";
-				$data['body']     = "incidentSpv/buatIncident";
+				$data['body']     = "incidentPic/detailupdate";
 
 				//Session
-				$id_dept 	= $this->session->userdata('id_dept');
-				$id_user 	= $this->session->userdata('id_user');
+				$id_dept = $this->session->userdata('id_dept');
+				$id_user = $this->session->userdata('id_user');
 
-				//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeIncident)
-				$data['incident'] = $this->model->getkodeIncident();
+				//Detail setiap tiket yang dikerjakan, get dari model (detail_incident_spv) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
+				$data['detail'] = $this->model->detail_incident_spv($id)->row_array();
 
-				//Mengambil semua data profile user yang sedang login menggunakan model (profile)
-				$data['profile'] = $this->model->profile($id_user)->row_array();
-
-				//Dropdown pilih dept, menggunakan model (dropdown_dept), nama dept ditampung pada 'dd_dept', data yang akan di simpan adalah id_dept dan akan ditampung pada 'id_dept'
-				$data['dd_dept'] = $this->model->dropdown_target();
-				$data['id_dept'] = "";
-
-				$data['error'] = "";
+				//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
+				//$data['tracking'] = $this->model->tracking_ticket($id)->result();
 
 				//Load template
 				$this->load->view('template', $data);
 			} else {
-				//Bagian ini jika role yang mengakses tidak sama dengan User
+				//Bagian ini jika role yang mengakses tidak sama dengan Teknisi
 				//Akan dibawa ke Controller Errorpage
 				redirect('Errorpage');
 			}
 		} else {
-			//Bagian ini jika validasi dipenuhi untuk membuat incident
-			//Session
-			$id_user 	= $this->session->userdata('id_user');
+			//Bagian ini jika validasi terpenuhi
+			//User harus dari dept IT/HSE/GA
+			if (in_array($this->session->userdata('id_dept'), $dept)) {
+				//Proses update incident, menggunakan model (update) dengan parameter id_incident yang akan di-update
+				$this->model->update_progress_incident($id);
 
-			//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeIncidentNew)
-			$ticket 	= $this->model->getkodeIncidentNew($id_user);
-
-			$date       = date("Y-m-d  H:i:s");
-
-			//Konfigurasi Upload Gambar
-			$config['upload_path'] 		= './uploads/';		//Folder untuk menyimpan gambar
-			$config['allowed_types'] 	= 'gif|jpg|jpeg|png|pdf'; //Tipe file yang diizinkan
-			$config['max_size'] 		= '25600';			//Ukuran maksimum file gambar yang diizinkan
-			$config['max_width']        = '0';				//Ukuran lebar maks. 0 menandakan ga ada batas
-			$config['max_height']       = '0';				//Ukuran tinggi maks. 0 menandakan ga ada batas
-
-			//Memanggil library upload pada codeigniter dan menyimpan konfirguasi
-			$this->load->library('upload', $config);
-			//Jika upload gambar tidak sesuai dengan konfigurasi di atas, maka upload gambar gagal, dan kembali ke halaman Create incident
-			if (!$this->upload->do_upload('path_photo')) {
-
-				if ($_FILES['path_photo']['error'] != 4) {
-					//Menyusun template Buat incident
-					$data['title'] 	  = "Buat Incident";
-					$data['navbar']   = "navbar";
-					$data['sidebar']  = "sidebar";
-					$data['body']     = "incident/buatIncident";
-					//Session
-					$id_dept 	= $this->session->userdata('id_dept');
-					$id_user 	= $this->session->userdata('id_user');
-
-					//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeincident)
-					$data['incident'] = $this->model->getkodeIncident();
-
-					//Mengambil semua data profile user yang sedang login menggunakan model (profile)
-					$data['profile'] = $this->model->profile($id_user)->row_array();
-
-					//Dropdown pilih dept, menggunakan model (dropdown_dept), nama dept ditampung pada 'dd_dept', data yang akan di simpan adalah id_dept dan akan ditampung pada 'id_dept'
-					$data['dd_dept'] = $this->model->dropdown_target();
-					$data['id_dept'] = "";
-
-					$data['error'] = $this->upload->display_errors();
-
-					$this->load->view('template', $data);
-				} else {
-					$data = array(
-						'id_incident'			=> $ticket,
-						'date_incident'			=> $date,
-						'target_dept'			=> $this->input->post('id_dept'),
-						'problem'				=> ucfirst($this->input->post('problem')),
-						'status'    			=> 'R',
-						'path_photo'			=> 'no-image.jpg',
-						'id_input'				=> $id_user,
-						'add_id'				=> $id_user,
-						'add_date'				=> $date
-					);
-
-					// $kat      = $this->input->post('id_kategori');
-					// $subkat   = $this->input->post('id_sub_kategori');
-					// $row      = $this->model->getkategori($kat)->row();
-					// $key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
-
-					//Data tracking ditampung dalam bentuk array
-					// $datatracking = array(
-					// 	'id_ticket'  => $ticket,
-					// 	'tanggal'    => date("Y-m-d H:i:s"),
-					// 	'status'     => "Ticket Submited. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
-					// 	'deskripsi'  => ucfirst($this->input->post('problem_detail')),
-					// 	'id_user'    => $id_user
-					// );
-
-					//Query insert data ticket yang ditampung ke dalam database. tersimpan ditabel ticket
-					$this->db->insert('incident', $data);
-					//Query insert data tarcking yang ditampung ke dalam database. tersimpan ditabel tracking
-					// $this->db->insert('tracking', $datatracking);
-
-					//Memanggil fungsi kirim email dari user ke admin
-					// $this->model->emailbuatticket($ticket);
-
-					//Set pemberitahuan bahwa data tiket berhasil dibuat
-					$this->session->set_flashdata('status', 'Dikirim');
-
-					//Dialihkan ke halaman my ticket
-					redirect('incident');
-				}
+				//$this->model->emailselesai($id);
+				//Set pemberitahuan bahwa incident berhasil di-update
+				$this->session->set_flashdata('status', 'Diperbarui');
+				//Kembali ke halaman List incident (Assignment Incident)
+				redirect('incident_pic/index');
 			} else {
-				//Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
-				//Menampung file gambar ke variable 'gambar'
-				$gambar = $this->upload->data();
-				//Data ticket ditampung dalam bentuk array
-				$data = array(
-					'id_incident'			=> $ticket,
-					'date_incident'			=> $date,
-					'target_dept'			=> $this->input->post('id_dept'),
-					'problem'				=> ucfirst($this->input->post('problem')),
-					'status'    			=> 'R',
-					'path_photo'			=> $gambar['file_name'],
-					'id_input'				=> $id_user,
-					'add_id'				=> $id_user,
-					'add_date'				=> $date
-				);
-
-				// $kat      = $this->input->post('id_kategori');
-				// $subkat   = $this->input->post('id_sub_kategori');
-				// $row      = $this->model->getkategori($kat)->row();
-				// $key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
-
-				//Data tracking ditampung dalam bentuk array
-				// $datatracking = array(
-				// 	'id_ticket'  => $ticket,
-				// 	'tanggal'    => date("Y-m-d H:i:s"),
-				// 	'status'     => "Ticket Submited. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
-				// 	'deskripsi'  => ucfirst($this->input->post('problem_detail')),
-				// 	'id_user'    => $id_user
-				// );
-
-				//Query insert data ticket yang ditampung ke dalam database. tersimpan ditabel ticket
-				$this->db->insert('incident', $data);
-				//Query insert data tarcking yang ditampung ke dalam database. tersimpan ditabel tracking
-				// $this->db->insert('tracking', $datatracking);
-
-				//Memanggil fungsi kirim email dari user ke admin
-				// $this->model->emailbuatticket($ticket);
-
-				//Set pemberitahuan bahwa data tiket berhasil dibuat
-				$this->session->set_flashdata('status', 'Dikirim');
-
-				//Dialihkan ke halaman my ticket
-				redirect('incident');
+				//Akan dibawa ke Controller Errorpage
+				redirect('Errorpage');
 			}
 		}
 	}
+
 
 	public function submitMessage($id)
 	{

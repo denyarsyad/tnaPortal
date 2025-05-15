@@ -2662,5 +2662,92 @@ class Main_model extends CI_Model
     return $query;
   }
 
+  //Update Incident
+  public function update_progress_incident($id)
+  {
+    //Mengambil session user id
+    $id_user  = $this->session->userdata('id_user');
+
+    //Mengambil data progress dan deskripsi untuk update system tracking ticket
+    $progress = $this->input->post('progress');
+    $date     = date("Y-m-d  H:i:s");
+    //$sql      = $this->db->query("SELECT deadline FROM ticket WHERE id_ticket='$id'")->row();
+
+    //Konfigurasi Upload Gambar
+    $config['upload_path']    = './files/teknisi/';   //Folder untuk menyimpan gambar
+    $config['allowed_types']  = 'gif|jpg|jpeg|png|pdf'; //Tipe file yang diizinkan
+    $config['max_size']       = '25600';     //Ukuran maksimum file gambar yang diizinkan
+    $config['max_width']      = '0';        //Ukuran lebar maks. 0 menandakan ga ada batas
+    $config['max_height']     = '0';        //Ukuran tinggi maks. 0 menandakan ga ada batas
+
+    //Memanggil library upload pada codeigniter dan menyimpan konfirguasi
+    $this->load->library('upload', $config);
+
+    //Jika upload gambar tidak sesuai dengan konfigurasi di atas, maka upload gambar gagal, dan kembali ke halaman Create ticket
+    if (!$this->upload->do_upload('fileupdate')) {
+      $this->session->set_flashdata('status', 'Something went wrong! File lampiran lebih dari 25MB atau format tidak didukung.');
+      redirect('incident_pic/detail_update/' . $id);
+    } else {
+      //Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
+      //Menampung file gambar ke variable 'gambar'
+      $gambar   = $this->upload->data();
+
+      //Signature pad
+      $folderPath = './files/teknisi/signature/';
+      $image_parts = explode(";base64,", $this->input->post('signed'));
+      $image_type_aux = explode("image/", $image_parts[0]);
+      $image_type = $image_type_aux[1];
+      $image_base64 = base64_decode($image_parts[1]);
+      $fileName = uniqid() . '.' . $image_type;
+      $file = $folderPath . $fileName;
+      file_put_contents($file, $image_base64);
+
+      //prioritas jika progress yang sudah selesai, maka status ticket pada system tracking ticket menjadi ticket closed dengan keterangan progress ticketnya juga
+      if ($progress == 100) {
+
+        $data = array(
+            'status'            => "O", //ok
+            'id_pic'            => $id_user,
+            'date_pic'          => $date,
+            'progress'          => $progress,
+            'message'           => ucfirst($this->input->post('desk')),
+            'path_solve_photo'  => $gambar['file_name'],
+            'path_signature'    => $fileName
+          );
+
+      } else {
+        //Bagian ini jika prioritasnya progress ticket belum selesai dikerjakan, maka data yang diupdate hanya status dan progress
+        //Melakukan update data ticket dengan mengubah status ticket menjadi 4, dan memasukkan progress dari ticket, data ditampung ke dalam array '$data' yang nanti akan diupdate dengan query
+        $data = array(
+          'status'            => "X", //belum ok
+          'id_pic'            => $id_user,
+          'date_pic'          => $date,
+          'progress'          => $progress,
+          'message'           => ucfirst($this->input->post('desk')),
+          'path_solve_photo'  => $gambar['file_name'],
+          'path_signature'    => $fileName
+        );
+
+        // //Melakukan insert data tracking ticket progress oleh teknisi, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
+        // $datatracking = array(
+        //   'id_ticket'  => $id,
+        //   'tanggal'    => date("Y-m-d  H:i:s"),
+        //   'status'     => "Progress: " . $progress . " %",
+        //   'deskripsi'  => ucfirst($this->input->post('desk')),
+        //   'id_user'    => $id_user,
+        //   'filefoto'   => $gambar['file_name'],
+        //   'signature'  => $fileName
+        // );
+      }
+
+      //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
+      $this->db->where('id_incident', $id);
+      $this->db->update('incident', $data);
+
+      ////Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+      //$this->db->insert('tracking', $datatracking);
+    }
+  }
+
 
 }

@@ -56,38 +56,33 @@ class Incident_pic extends CI_Controller
 		}
 	}
 
-	//Buat Incident
-	public function buat()
+
+	public function detail_update($id)
 	{
-		//User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
-			//Menyusun template Buat incident
-			$data['title'] 	  = "Input Incident";
+		$level = ["User", "SPV"];
+		if (in_array($this->session->userdata('level'), $level)) {
+			//Menyusun template Detail ticket
+			$data['title']    = "Update Progress";
 			$data['navbar']   = "navbar";
 			$data['sidebar']  = "sidebar";
-			$data['body']     = "incidentSpv/buatIncident";
+			$data['body']     = "incidentPic/detailupdate";
 
 			//Session
-			$id_dept 	= $this->session->userdata('id_dept');
-			$id_user 	= $this->session->userdata('id_user');
+			$id_dept = $this->session->userdata('id_dept');
+			$id_user = $this->session->userdata('id_user');
 
-			//Get kode incident yang akan digunakan sebagai id_incident menggunakan model(getkodeincident)
-			$data['ticket'] = $this->model->getkodeticket();
+			//Detail setiap tiket yang dikerjakan, get dari model (detail_incident_spv) berdasarkan id_incident, data akan ditampung dalam parameter 'detail'
+			$data['detail'] = $this->model->detail_incident_spv($id)->row_array();
 
-			//Mengambil semua data profile user yang sedang login menggunakan model (profile)
-			$data['profile'] = $this->model->profile($id_user)->row_array();
+			//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_incident, data akan ditampung dalam parameter 'tracking'
+			//$data['tracking'] = $this->model->tracking_ticket($id)->result();
 
-			//Dropdown pilih target, menggunakan model (dropdown_target), nama target ditampung pada 'dd_target', data yang akan di simpan adalah id_target dan akan ditampung pada 'id_target'
-			$data['dd_dept'] = $this->model->dropdown_target();
-			$data['id_dept'] = "";
-
-			$data['error'] = "";
+			//Message setiap tiket, get dari model (ticket_message) berdasarkan id_incident, data akan ditampung dalam parameter 'message'
+			$data['message'] = $this->model->message_ticket($id)->result();
 
 			//Load template
 			$this->load->view('template', $data);
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
-			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}
 	}
@@ -289,41 +284,6 @@ class Incident_pic extends CI_Controller
 		}
 	}
 
-	public function detail($id)
-	{
-		//User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
-			//Menyusun template Detail Incident
-			$data['title'] 	  = "Detail Incident";
-			$data['navbar']   = "navbar";
-			$data['sidebar']  = "sidebar";
-			$data['body']     = "incidentSpv/detail";
-
-			//Session
-			$id_dept 	= $this->session->userdata('id_dept');
-			$id_user 	= $this->session->userdata('id_user');
-
-			//Detail setiap incident, get dari model (detail_incident) berdasarkan id_incident, data akan ditampung dalam parameter 'detail'
-			$data['detail'] = $this->model->detail_incident_spv($id)->row_array();
-
-			////GET STATUS
-			//$data['status'] = $this->model->getStatus($id)->result();
-
-			//Tracking setiap incident, get dari model (tracking_incident) berdasarkan id_incident, data akan ditampung dalam parameter 'tracking'
-			//$data['tracking'] = $this->model->tracking_incident($id)->result();
-
-			//Message setiap incident, get dari model (incident_message) berdasarkan id_incident, data akan ditampung dalam parameter 'message'
-			$data['message'] = $this->model->message_ticket($id)->result();
-
-			//Load template
-			$this->load->view('template', $data);
-		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
-			//Akan dibawa ke Controller Errorpage
-			redirect('Errorpage');
-		}
-	}
-
 	public function submitMessage($id)
 	{
 		//Form validasi untuk deskripsi dengan nama validasi = problem_detail
@@ -449,105 +409,5 @@ class Incident_pic extends CI_Controller
 			}
 		}
 	}
-
-	//approve and reject
-	public function approveSpv($id)
-    {
-        //User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
-			//Proses me-approve ticket, menggunakan model (approve) dengan parameter id_incident yang akan di-approve
-			$this->model->approveIncidentSpv($id);
-            //Set pemberitahuan bahwa tiket berhasil ditugaskan ke teknisi
-            $this->session->set_flashdata('status', 'Ditugaskan');
-			//Kembali ke halaman List approvel incident (list_approve)
-			redirect('incident_spv/index');
-		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
-			//Akan dibawa ke Controller Errorpage
-			redirect('Errorpage');
-		}
-    }
-
-
-    public function detail_reject($id)
-    {
-        //User harus SPV, tidak boleh role user lain
-        if ($this->session->userdata('level') == "SPV") {
-            //Menyusun template Detail Incident yang akan di-reject
-            $data['title']    = "Tolak Incdident";
-            $data['navbar']   = "navbar";
-            $data['sidebar']  = "sidebar";
-            $data['body']     = "incidentSpv/detailreject";
-
-            //Session
-            $id_dept = $this->session->userdata('id_dept');
-            $id_user = $this->session->userdata('id_user');
-
-            //Detail setiap tiket yang akan di-reject, get dari model (detail_incident) dengan parameter id_incident, data akan ditampung dalam parameter 'detail'
-            $data['detail'] = $this->model->detail_incident($id)->row_array();
-
-            //Load template
-            $this->load->view('template', $data);
-        } else {
-            //Bagian ini jika role yang mengakses tidak sama dengan SPV
-            //Akan dibawa ke Controller Errorpage
-            redirect('Errorpage');
-        }
-    }
-
-	public function reject($id)
-    {
-        $alasan  = $this->input->post('message');
-        //Form validasi untuk message yang akan di kirim ke email user
-        $this->form_validation->set_rules(
-            'message',
-            'Message',
-            'required',
-            array(
-                'required' => '<strong>Failed!</strong> Alasan Harus diisi.'
-            )
-        );
-
-        if ($this->form_validation->run() == FALSE) {
-            //User harus SPV, tidak boleh role user lain
-            if ($this->session->userdata('level') == "SPV") {
-                //Menyusun template Detail Ticket yang akan di-reject
-                $data['title']    = "Tolak Incident";
-                $data['navbar']   = "navbar";
-                $data['sidebar']  = "sidebar";
-                $data['body']     = "incidentSpv/detailreject";
-
-                //Session
-                $id_dept = $this->session->userdata('id_dept');
-                $id_user = $this->session->userdata('id_user');
-
-                //Detail setiap incident yang akan di-reject, get dari model (detail_incident) dengan parameter id_incident, data akan ditampung dalam parameter 'detail'
-                $data['detail'] = $this->model->detail_incident($id)->row_array();
-
-                //Load template
-                $this->load->view('template', $data);
-            } else {
-                //Bagian ini jika role yang mengakses tidak sama dengan SPV
-                //Akan dibawa ke Controller Errorpage
-                redirect('Errorpage');
-            }
-        } else {
-            //User harus SPV, tidak boleh role user lain
-            if ($this->session->userdata('level') == "SPV") {
-                //Proses me-reject ticket, menggunakan model (reject) dengan parameter id_incident yang akan di-reject
-                $this->model->rejectIncident($id, $alasan);
-                //Memanggil fungsi kirim email dari SPV ke user
-                //$this->model->emailreject($id);
-                //Set pemberitahuan bahwa ticket berhasil di-reject
-                $this->session->set_flashdata('status', 'Ditolak');
-                //Kembali ke halaman List approvel ticket (list_approve)
-                redirect('incident_spv/index');
-            } else {
-                //Bagian ini jika role yang mengakses tidak sama dengan SPV
-                //Akan dibawa ke Controller Errorpage
-                redirect('Errorpage');
-            }
-        }
-    }
 
 }

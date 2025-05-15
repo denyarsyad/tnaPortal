@@ -2658,7 +2658,7 @@ class Main_model extends CI_Model
     INNER JOIN departemen d 
     ON i.target_dept = d.id_dept
     WHERE target_dept = '$dept'
-    AND status = 'S'");
+    AND status IN ('S', 'O', 'X')");
     return $query;
   }
 
@@ -2705,15 +2705,14 @@ class Main_model extends CI_Model
       if ($progress == 100) {
 
         $data = array(
-            'status'            => "O", //ok
-            'id_pic'            => $id_user,
-            'date_pic'          => $date,
-            'progress'          => $progress,
-            'message'           => ucfirst($this->input->post('desk')),
-            'path_solve_photo'  => $gambar['file_name'],
-            'path_signature'    => $fileName
-          );
-
+          'status'            => "O", //ok
+          'id_pic'            => $id_user,
+          'date_pic'          => $date,
+          'progress'          => $progress,
+          'message'           => ucfirst($this->input->post('desk')),
+          'path_solve_photo'  => $gambar['file_name'],
+          'path_signature'    => $fileName
+        );
       } else {
         $data = array(
           'status'            => "X", //belum ok
@@ -2724,7 +2723,6 @@ class Main_model extends CI_Model
           'path_solve_photo'  => $gambar['file_name'],
           'path_signature'    => $fileName
         );
-
       }
 
       //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
@@ -2732,6 +2730,4 @@ class Main_model extends CI_Model
       $this->db->update('incident', $data);
     }
   }
-
-
 }

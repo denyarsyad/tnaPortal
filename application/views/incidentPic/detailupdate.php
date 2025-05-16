@@ -197,8 +197,57 @@
 								Click image to zoom <i class="fas fa-search-plus"></i>
 							<?php } ?>
 						</div>
-						<div class="col-md-8">
-						<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
+
+						<!-- 2025.05.16-->
+						<div class="col-md-4">
+							<h5 class="mb-3 font-weight-bold text-dark">
+								Incident Answer
+							</h5>
+							<div class="card">
+								<div class="card-body">
+									<h6 class="m-0 text-primary">PIC</h6>
+									<div class="font-weight-bold">
+										<?= $detail['id_pic'] ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Deskripsi</h6>
+									<div class="font-weight-bold">
+										<?= $detail['message'] ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Tanggal</h6>
+									<div class="font-weight-bold">
+										<?= $detail['date_pic'] ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Progress</h6>
+									<div class="font-weight-bold">
+										<?= $detail['progress'] . "%" ?><br>
+									</div>
+									<hr>
+								</div>
+							</div>
+
+							<br />
+
+							<h6 class="mb-2 font-weight-bold text-primary">Attachment</h6>
+							<?php if (pathinfo($detail['path_solve_photo'], PATHINFO_EXTENSION) == 'pdf') { ?>
+								<a href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" class="btn btn-light btn-icon-split">
+									<span class="icon text-gray-600">
+										<i class="fas fa-file-pdf"></i>
+									</span>
+									<span class="text"><?= $detail['path_solve_photo'] ?></span>
+								</a>
+							<?php } else { ?>
+								<a data-fancybox="gallery" href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>">
+									<img src="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" style="width:100%;max-width:300px">
+								</a><br>
+								Click image to zoom <i class="fas fa-search-plus"></i>
+							<?php } ?>
+						</div>
+
+						<div class="col-md-4">
+							<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
 							<div class="accordion mb-3" id="accordionReply">
 								<div class="card">
 									<div class="card-header" id="headingOne">

@@ -70,13 +70,13 @@ class Incident_pic extends CI_Controller
 			$id_dept = $this->session->userdata('id_dept');
 			$id_user = $this->session->userdata('id_user');
 
-			//Detail setiap tiket yang dikerjakan, get dari model (detail_incident_spv) berdasarkan id_incident, data akan ditampung dalam parameter 'detail'
+			//Detail setiap incident yang dikerjakan, get dari model (detail_incident_spv) berdasarkan id_incident, data akan ditampung dalam parameter 'detail'
 			$data['detail'] = $this->model->detail_incident_spv($id)->row_array();
 
-			//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_incident, data akan ditampung dalam parameter 'tracking'
+			//Tracking setiap incident, get dari model (tracking_ticket) berdasarkan id_incident, data akan ditampung dalam parameter 'tracking'
 			//$data['tracking'] = $this->model->tracking_ticket($id)->result();
 
-			//Message setiap tiket, get dari model (ticket_message) berdasarkan id_incident, data akan ditampung dalam parameter 'message'
+			//Message setiap incident, get dari model (ticket_message) berdasarkan id_incident, data akan ditampung dalam parameter 'message'
 			$data['message'] = $this->model->message_ticket($id)->result();
 
 			//Load template

@@ -2236,7 +2236,7 @@ class Main_model extends CI_Model
     INNER JOIN pegawai p ON t.reported = p.nik 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
     INNER JOIN departemen d ON db.id_dept = d.id_dept
-    WHERE t.status IN (8, 9)");
+    WHERE t.status IN (10, 9)"); /*8 akan di ganti menjadi kode baru yaitu 10 karena harus approved mgr dept dulu*/
     return $query->row();
   }
 
@@ -2247,7 +2247,7 @@ class Main_model extends CI_Model
     INNER JOIN pegawai p ON t.reported = p.nik 
     INNER JOIN departemen_bagian db ON p.id_bagian_dept = db.id_bagian_dept
     INNER JOIN departemen d ON db.id_dept = d.id_dept
-    WHERE t.status = 8");
+    WHERE t.status = 10"); /*8 akan di ganti menjadi kode baru yaitu 10 karena harus approved mgr dept dulu*/
     return $query->row();
   }
 
@@ -2263,7 +2263,7 @@ class Main_model extends CI_Model
     LEFT JOIN prioritas G ON G.id_prioritas = A.id_prioritas
     LEFT JOIN lokasi H ON H.id_lokasi = A.id_lokasi
     LEFT JOIN jabatan I ON I.id_jabatan = D.id_jabatan
-    WHERE A.status IN (0, 8, 9, 3)
+    WHERE A.status IN (0, 10, 9, 3) /*8: diganti jadi 10 karena harus approved by mgr dept*/
     ORDER BY A.tanggal DESC");
     return $query;
   }

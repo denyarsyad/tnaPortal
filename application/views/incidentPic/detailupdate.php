@@ -203,16 +203,11 @@
 							<h5 class="mb-3 font-weight-bold text-dark">
 								Incident Answer
 							</h5>
-							<div class="card">
+							<div class="card" style="height: 650px;">
 								<div class="card-body">
 									<h6 class="m-0 text-primary">PIC</h6>
 									<div class="font-weight-bold">
 										<?= $detail['id_pic'] ?><br>
-									</div>
-									<hr>
-									<h6 class="m-0 text-primary">Deskripsi</h6>
-									<div class="font-weight-bold">
-										<?= $detail['message'] ?><br>
 									</div>
 									<hr>
 									<h6 class="m-0 text-primary">Tanggal</h6>
@@ -223,6 +218,11 @@
 									<h6 class="m-0 text-primary">Progress</h6>
 									<div class="font-weight-bold">
 										<?= $detail['progress'] . "%" ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Deskripsi</h6>
+									<div class="font-weight-bold">
+										<?= $detail['message'] ?><br>
 									</div>
 									<hr>
 								</div>

@@ -14,14 +14,18 @@
 							</h5>
 							<div class="card">
 								<div class="card-header font-weight-bold">
-										Aksi:
-										<?php if ($detail['status'] == "R") { ?>
-											No Action 
-										<?php } else if ($detail['status'] == "S") { ?>
-											 <u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
-										<?php } else if ($detail['status'] == "T") { ?>
-											 <u style="color:#800000; padding-left:5px;"> Rejected by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
-										<?php } ?>
+									Aksi:
+									<?php if ($detail['status'] == "R") { ?>
+										No Action
+									<?php } else if ($detail['status'] == "S") { ?>
+										<u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
+									<?php } else if ($detail['status'] == "T") { ?>
+										<u style="color:#800000; padding-left:5px;"> Rejected by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
+									<?php } else if ($detail['status'] == "X") { ?>
+										<u style="color:#00008B; padding-left:5px;"> On Progress by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
+									<?php } else if ($detail['status'] == "O") { ?>
+										<u style="color:#00A36C; padding-left:5px;"> Solved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
+									<?php }  ?>
 								</div>
 								<div class="card-body">
 									<h6 class="m-0 text-primary">Pemohon</h6>
@@ -84,7 +88,7 @@
 								Click image to zoom <i class="fas fa-search-plus"></i>
 							<?php } ?>
 						</div>
-						
+
 						<div class="col-md-4">
 							<h5 class="mb-3 font-weight-bold text-dark">
 								Incident Answer
@@ -131,7 +135,7 @@
 								Click image to zoom <i class="fas fa-search-plus"></i>
 							<?php } ?>
 
-						</div>	
+						</div>
 
 						<div class="col-md-4" style="margin-top:40px">
 							<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>

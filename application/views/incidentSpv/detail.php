@@ -32,6 +32,10 @@
 											 <u style="color:#000000; padding-left:5px;"> Approved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>
 										<?php } else if ($detail['status'] == "T") { ?>
 											 <u style="color:#800000; padding-left:5px;"> Rejected by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
+										<?php } else if ($detail['status'] == "X") { ?>
+											 <u style="color:#00008B; padding-left:5px;"> On Progress by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
+										<?php } else if ($detail['status'] == "O") { ?>
+											 <u style="color:#00A36C; padding-left:5px;"> Solved by <?php echo $detail['id_action'] . " (" .  $detail['date_action'] . ")" ?> </u>	 
 										<?php } ?>
 								</div>
 								<div class="card-body">
@@ -60,6 +64,16 @@
 										<?= $detail['date_incident'] ?><br>
 									</div>
 									<hr>
+									<h6 class="m-0 text-primary">Target Dept</h6>
+									<div class="font-weight-bold">
+										<?= $detail['target_dept'] ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Problem</h6>
+									<div class="font-weight-bold">
+										<?= $detail['problem'] ?><br>
+									</div>
+									<hr>
 								</div>
 							</div>
 
@@ -82,20 +96,50 @@
 						</div>
 						
 						<div class="col-md-4">
-							<div class="card" style="margin-top:40px; height: 455px;">
+							<h5 class="mb-3 font-weight-bold text-dark">
+								Incident Answer
+							</h5>
+							<div class="card" style="margin-top:0px; height: 625px;">
 								<div class="card-body">
-									<h6 class="m-0 text-primary">Target Dept</h6>
+									<h6 class="m-0 text-primary">PIC</h6>
 									<div class="font-weight-bold">
-										<?= $detail['target_dept'] ?><br>
+										<?= $detail['id_pic'] ?><br>
 									</div>
 									<hr>
-									<h6 class="m-0 text-primary">Problem</h6>
+									<h6 class="m-0 text-primary">Tanggal</h6>
 									<div class="font-weight-bold">
-										<?= $detail['problem'] ?><br>
+										<?= $detail['date_pic'] ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Progress</h6>
+									<div class="font-weight-bold">
+										<?= $detail['progress'] . "%" ?><br>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Deskripsi</h6>
+									<div class="font-weight-bold">
+										<?= $detail['message'] ?><br>
 									</div>
 									<hr>
 								</div>
 							</div>
+
+							<br />
+
+							<h6 class="mb-2 font-weight-bold text-primary">Evidence Attachment</h6>
+							<?php if (pathinfo($detail['path_solve_photo'], PATHINFO_EXTENSION) == 'pdf') { ?>
+								<a href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" class="btn btn-light btn-icon-split">
+									<span class="icon text-gray-600">
+										<i class="fas fa-file-pdf"></i>
+									</span>
+									<span class="text"><?= $detail['path_solve_photo'] ?></span>
+								</a>
+							<?php } else { ?>
+								<a data-fancybox="gallery" href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>">
+									<img src="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" style="width:100%;max-width:300px">
+								</a><br>
+								Click image to zoom <i class="fas fa-search-plus"></i>
+							<?php } ?>
 						</div>	
 
 						<div class="col-md-4" style="margin-top:40px">

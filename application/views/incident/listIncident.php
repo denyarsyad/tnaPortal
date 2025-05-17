@@ -53,7 +53,7 @@
 									<td>
 										<strong style="color: #A2B969;">Assigned to Technician</strong>
 									</td>
-								<?php } else if ($row->status == 4) { ?>
+								<?php } else if ($row->status == "X") { ?>
 									<td>
 										<strong style="color: #0D95BC;">On Process</strong>
 									</td>
@@ -61,7 +61,7 @@
 									<td>
 										<strong style="color: #023047;">Pending</strong>
 									</td>
-								<?php } else if ($row->status == 6) { ?>
+								<?php } else if ($row->status == "O") { ?>
 									<td>
 										<strong style="color: #2E6095;">Solve</strong>
 									</td>

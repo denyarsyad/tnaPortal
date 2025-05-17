@@ -230,7 +230,7 @@
 
 							<br />
 
-							<h6 class="mb-2 font-weight-bold text-primary">Attachment</h6>
+							<h6 class="mb-2 font-weight-bold text-primary">Evidence Attachment</h6>
 							<?php if (pathinfo($detail['path_solve_photo'], PATHINFO_EXTENSION) == 'pdf') { ?>
 								<a href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" class="btn btn-light btn-icon-split">
 									<span class="icon text-gray-600">

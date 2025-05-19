@@ -17,15 +17,15 @@
 										Aksi:
 										<?php if ($detail['status'] == 0) { ?>
 											No Action
-										<?php } else if (in_array($detail['status'], [1, 10])) { ?>
+										<?php } else if (in_array($detail['status'], [8])) { ?>
 											<!-- Form untuk Approve -->
-											<form method="post" action="<?= site_url('ticket_spv/approveSpv/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
+											<form method="post" action="<?= site_url('ticket_mgrd/approveMgrd/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
 												<input type="hidden" name="id_ticket" value="<?= $detail['id_ticket'] ?>">
 												<button type="submit" class="btn btn-success approve" title="Approve">
 													<i class="fas fa-check"></i> Terima
 												</button>
 											</form>
-											<a href="<?= site_url('ticket_spv/detail_reject/' . $detail['id_ticket']) ?>" class="btn btn-danger reject" title="Reject">
+											<a href="<?= site_url('ticket_mgrd/detail_reject/' . $detail['id_ticket']) ?>" class="btn btn-danger reject" title="Reject">
 												<i class="fas fa-times"></i> Tolak
 											</a>
 										<?php } else if ($detail['status'] == 2) { ?>

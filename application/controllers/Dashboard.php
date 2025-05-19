@@ -207,7 +207,7 @@ class Dashboard extends CI_Controller
         $data['dept']               = ($resultDept) ? $resultDept->nama_dept : "Error";
 
         //Resume ticket Baru MGRD
-        $data['ticket_mgrd']        = $this->model->deptTicket($id_user)->result();
+        $data['ticket_mgrd']        = $this->model->deptTicketMgrd($id_user)->result();
 
         $this->load->view('template', $data);
     }

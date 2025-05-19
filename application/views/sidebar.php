@@ -307,5 +307,22 @@
 				<span>Laporan</span>
 			</a>
 		</li>
+	<?php } else if ($this->session->userdata('level') == "MGRD") { ?>
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('dashboard') ?>">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span></a>
+		</li>
+
+		<li class="nav-item <?= (uri_string() == 'ticket_mgrd/index_tugas' ? 'active' : ''); ?>">
+			<a class="nav-link" href="<?= site_url('ticket_mgrd/index_tugas') ?>">
+				<i class="fas fa-fw fa-ticket-alt"></i>
+				<span>Daftar Tiket</span>
+			</a>
+		</li>
+
 	<?php } ?>
 </ul>

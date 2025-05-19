@@ -46,6 +46,8 @@ class Dashboard extends CI_Controller
         //Dashboard SPVM    
         } else if ($this->session->userdata('level') == "SPVM") {
             $data['body']         = "dashboard/dashboard_spvm";
+        } else if ($this->session->userdata('level') == "MGRD") {
+            $data['body']         = "dashboard/dashboard_mgr_dept";
         } else {
             show_error("Unauthorized access", 403);
             return;
@@ -188,6 +190,24 @@ class Dashboard extends CI_Controller
 
         //Resume ticket Baru SPVM
         $data['ticket_spvm']         = $this->model->spvmTicket($id_user)->result(); 
+
+
+        //Dashboard MGR Dept
+        //Jumlah Tiket 
+        $resultAllTicket            = $this->model->getTicketMgrDept($id_user);
+        $data['jml_ticket_mgrd']    = ($resultAllTicket) ? $resultAllTicket->total : 0;
+        //Jumlah tiket yang ditolak MGRD
+        $resultReject = $this->model->getRejectTicketMgrDept($id_user);
+        $data['jml_reject_mgrd']    = ($resultReject) ? $resultReject->total : 0;
+        //Jumlah tiket yang butuh persetujuan MGR Dept
+        $resultNewTicket            = $this->model->getNewTicketMgrDept($id_user);
+        $data['jml_new_mgrd']       = ($resultNewTicket) ? $resultNewTicket->total : 0;
+        //Dept pada dashboard
+        $resultDept                 = $this->model->getDept($id_user);
+        $data['dept']               = ($resultDept) ? $resultDept->nama_dept : "Error";
+
+        //Resume ticket Baru MGRD
+        $data['ticket_mgrd']        = $this->model->deptTicket($id_user)->result();
 
         $this->load->view('template', $data);
     }

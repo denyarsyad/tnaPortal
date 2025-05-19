@@ -17,7 +17,7 @@
 										Aksi:
 										<?php if ($detail['status'] == 0) { ?>
 											No Action
-										<?php } else if ($detail['status'] == 8) { ?>
+										<?php } else if ($detail['status'] == 11) { ?>
 											<!-- Form untuk Approve -->
 											<form method="post" action="<?= site_url('ticket_mgr/assign_to_mgr/' . $detail['id_ticket']) ?>" enctype="multipart/form-data" style="display:inline;">
 												<input type="hidden" name="id_ticket" value="<?= $detail['id_ticket'] ?>">

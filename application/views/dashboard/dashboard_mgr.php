@@ -117,6 +117,14 @@
 											<td>
 												<strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
 											</td>
+										<?php } else if ($row->status == 10) { ?>
+											<td>
+												<strong style="color:rgb(106, 3, 99);">Ticket Returned</strong>
+											</td>
+										<?php } else if ($row->status == 11) { ?>
+											<td>
+												<strong style="color:rgb(6, 71, 23);">Approved Manager</strong>
+											</td>
 										<?php } ?>
 									</tr>
 								<?php $no++;
@@ -206,6 +214,12 @@ foreach ($lbl_status as $data) {
 	} else if ($data->status == 9) {
 		$stat = "Assign by Manager";
 		$bg = "rgb(11, 167, 57)";
+	} else if ($data->status == 10) {
+		$stat = "Ticket Returned";
+		$bg = "rgb(106, 3, 99)";
+	} else if ($data->status == 11) {
+		$stat = "Approved Manager";
+		$bg = "rgb(6, 71, 23)";
 	} 
 	$Tstat  .= "'$stat'" . ", ";
 	$BGstat .= "'$bg'" . ", ";

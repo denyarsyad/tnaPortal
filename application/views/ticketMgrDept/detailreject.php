@@ -3,7 +3,7 @@
 
 	<div class="card shadow mb-4">
 		<div class="card-body">
-			<form method="post" action="<?= site_url('ticket_spv/reject/' . $detail['id_ticket']) ?>" enctype="multipart/form-data">
+			<form method="post" action="<?= site_url('ticket_mgrd/reject/' . $detail['id_ticket']) ?>" enctype="multipart/form-data">
 				<div class="form-group">
 					<label class="mb-1 font-weight-bold text-gray-800">Penerima</label>
 					<input class="form-control" name="reciepent" readonly value="<?= $detail['email'] ?>">
@@ -28,7 +28,7 @@
 				</div>
 
 				<button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim</button>
-				<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket/list_approve') ?>'">Batal</button>
+				<button type="button" class="btn btn-danger" onclick="window.location='<?= site_url('ticket_mgrd/index_tugas') ?>'">Batal</button>
 			</form>
 		</div>
 	</div>

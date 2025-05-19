@@ -92,6 +92,18 @@
 									<td>
 										<strong style="color: #36454F;">Approved Supervisor</strong>
 									</td>
+								<?php } else if ($row->status == 9) { ?>
+									<td>
+										<strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
+									</td>
+								<?php } else if ($row->status == 10) { ?>
+									<td>
+										<strong style="color:rgb(106, 3, 99);">Ticket Returned</strong>
+									</td>
+								<?php } else if ($row->status == 11) { ?>
+									<td>
+										<strong style="color:rgb(6, 71, 23);">Approved Manager</strong>
+									</td>
 								<?php } ?>
 								<td>
 									<a href="<?= site_url('ticket_user/detail/'.$row->id_ticket)?>" class="btn btn-primary btn-circle btn-sm" title="Detail">

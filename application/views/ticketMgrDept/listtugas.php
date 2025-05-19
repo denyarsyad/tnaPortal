@@ -87,6 +87,10 @@
 											<td>
 												<strong style="color:rgb(106, 3, 99);">Ticket Returned</strong>
 											</td>
+										<?php } else if ($row->status == 11) { ?>
+											<td>
+												<strong style="color:rgb(6, 71, 23);">Approved Manager</strong>
+											</td>
 										<?php } ?>
 									</tr>
 								<?php $no++;

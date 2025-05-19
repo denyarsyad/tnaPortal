@@ -2787,8 +2787,7 @@ class Main_model extends CI_Model
 
 
 
-
-  //list daftar ticket spv dept
+  //list daftar ticket mgr dept
   public function list_ticket_mgrd($id)
   {
     $query = $this->db->query("SELECT A.id_ticket, A.status, A.tanggal, A.id_prioritas, A.deadline, A.problem_detail, A.due_date, A.problem_summary, A.filefoto, B.nama_sub_kategori, C.nama_kategori, D.nama, D.email, D.telp, F.nama_dept, G.nama_prioritas, G.warna, H.lokasi, I.nama_jabatan FROM ticket A 
@@ -2806,7 +2805,7 @@ class Main_model extends CI_Model
                 INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
                 INNER JOIN departemen d ON DB.id_dept = D.id_dept 
                 WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
-    WHERE A.status = '8'            
+    WHERE A.status IN ('8', '0', '11')            
     ORDER BY A.tanggal DESC");
     return $query;
   }
@@ -2829,10 +2828,38 @@ class Main_model extends CI_Model
                 INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
                 INNER JOIN departemen d ON DB.id_dept = D.id_dept 
                 WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
-    WHERE A.status IN ('8')
+    WHERE A.status ='8'
     ORDER BY A.tanggal DESC");
     // $query = $this->db->query($sql, array($id));
     return $query;
+  }
+
+
+  public function approveMgrd($id)
+  {
+    //Mengambil session MGRD
+    $id_user    = $this->session->userdata('id_user');
+
+    $data = array(
+      'status'      => 11,
+      'last_update' => date("Y-m-d  H:i:s"),
+    );
+
+    //Melakukan insert data tracking ticket bahwa ticket di-approve oleh MGRD, data tracking ke dalam array '$datatracking' yang nanti akan di-insert dengan query
+    $datatracking = array(
+      'id_ticket'  => $id,
+      'tanggal'    => date("Y-m-d  H:i:s"),
+      'status'     => "Ticket Approved",
+      'deskripsi'  => "Approved by Manager Dept",
+      'id_user'    => $id_user
+    );
+
+    //Query untuk melakukan update data ticket sesuai dengan array '$data' ke tabel ticket
+    $this->db->where('id_ticket', $id);
+    $this->db->update('ticket', $data);
+
+    //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
+    $this->db->insert('tracking', $datatracking);
   }
 
 

@@ -79,12 +79,12 @@ class Ticket_mgrd extends CI_Controller
 
 	public function set_prioritas($id)
     {
-        if ($this->session->userdata('level') == "SPV") {
+        if ($this->session->userdata('level') == "MGRD") {
             //Menyusun template Detail Ticket yang belum di-approve
             $data['title']    = "Set Prioritas Pengajuan";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketSpvDept/setprioritas";
+            $data['body']     = "ticketMgrDept/setprioritas";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -117,18 +117,18 @@ class Ticket_mgrd extends CI_Controller
         }
     }
 
-	public function approveSpv($id)
+	public function approveMgrd($id)
     {
-        //User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
+        //User harus MGRD, tidak boleh role user lain
+		if ($this->session->userdata('level') == "MGRD") {
 			//Proses me-approve ticket, menggunakan model (approve) dengan parameter id_ticket yang akan di-approve
-			$this->model->approveSpv($id);
+			$this->model->approveMgrd($id);
             //Set pemberitahuan bahwa tiket berhasil ditugaskan ke teknisi
             $this->session->set_flashdata('status', 'Ditugaskan');
 			//Kembali ke halaman List approvel ticket (list_approve)
-			redirect('ticket_spv/index_tugas');
+			redirect('ticket_mgrd/index_tugas');
 		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
+			//Bagian ini jika role yang mengakses tidak sama dengan MGRD
 			//Akan dibawa ke Controller Errorpage
 			redirect('Errorpage');
 		}
@@ -137,13 +137,13 @@ class Ticket_mgrd extends CI_Controller
 
     public function detail_reject($id)
     {
-        //User harus SPV, tidak boleh role user lain
-        if ($this->session->userdata('level') == "SPV") {
+        //User harus MGRD, tidak boleh role user lain
+        if ($this->session->userdata('level') == "MGRD") {
             //Menyusun template Detail Ticket yang akan di-reject
             $data['title']    = "Tolak Tiket";
             $data['navbar']   = "navbar";
             $data['sidebar']  = "sidebar";
-            $data['body']     = "ticketSpvDept/detailreject";
+            $data['body']     = "ticketMgrDept/detailreject";
 
             //Session
             $id_dept = $this->session->userdata('id_dept');
@@ -175,13 +175,13 @@ class Ticket_mgrd extends CI_Controller
         );
 
         if ($this->form_validation->run() == FALSE) {
-            //User harus SPV, tidak boleh role user lain
-            if ($this->session->userdata('level') == "SPV") {
+            //User harus MGRD, tidak boleh role user lain
+            if ($this->session->userdata('level') == "MGRD") {
                 //Menyusun template Detail Ticket yang akan di-reject
                 $data['title']    = "Tolak Tiket";
                 $data['navbar']   = "navbar";
                 $data['sidebar']  = "sidebar";
-                $data['body']     = "ticketSpvDept/detailreject";
+                $data['body']     = "ticketMgrDept/detailreject";
 
                 //Session
                 $id_dept = $this->session->userdata('id_dept');
@@ -198,16 +198,16 @@ class Ticket_mgrd extends CI_Controller
                 redirect('Errorpage');
             }
         } else {
-            //User harus SPV, tidak boleh role user lain
-            if ($this->session->userdata('level') == "SPV") {
+            //User harus MGRD, tidak boleh role user lain
+            if ($this->session->userdata('level') == "MGRD") {
                 //Proses me-reject ticket, menggunakan model (reject) dengan parameter id_ticket yang akan di-reject
                 $this->model->reject($id, $alasan);
-                //Memanggil fungsi kirim email dari SPV ke user
+                //Memanggil fungsi kirim email dari MGRD ke user
                 //$this->model->emailreject($id);
                 //Set pemberitahuan bahwa ticket berhasil di-reject
                 $this->session->set_flashdata('status', 'Ditolak');
                 //Kembali ke halaman List approvel ticket (list_approve)
-                redirect('ticket_spv/index_tugas');
+                redirect('ticket_mgrd/index_tugas');
             } else {
                 //Bagian ini jika role yang mengakses tidak sama dengan SPV
                 //Akan dibawa ke Controller Errorpage

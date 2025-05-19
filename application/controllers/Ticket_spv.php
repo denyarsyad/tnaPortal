@@ -3,21 +3,21 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Ticket_spv extends CI_Controller
 {
-	public function __construct()
-	{
-		parent::__construct();
-		//Meload model
-		$this->load->model('Main_model', 'model');
+    public function __construct()
+    {
+        parent::__construct();
+        //Meload model
+        $this->load->model('Main_model', 'model');
 
-		//Jika session tidak ditemukan
-		if (!$this->session->userdata('id_user')) {
-			//Kembali ke halaman Login
-			$this->session->set_flashdata('status1', 'expired');
-			redirect('login');
-		}
-	}
+        //Jika session tidak ditemukan
+        if (!$this->session->userdata('id_user')) {
+            //Kembali ke halaman Login
+            $this->session->set_flashdata('status1', 'expired');
+            redirect('login');
+        }
+    }
 
-	public function detail_approve($id)
+    public function detail_approve($id)
     {
         //User harus SPV, tidak boleh role user lain
         if ($this->session->userdata('level') == "SPV") {
@@ -49,35 +49,35 @@ class Ticket_spv extends CI_Controller
         }
     }
 
-	//List Approve
-	public function index_tugas()
-	{
-		//User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
-			//Menyusun template List Approve
-			$data['title'] 	  = "Daftar Ticket";
-			$data['desc']     = "Daftar semua tiket yang diajukan untuk Anda.";
-			$data['navbar']   = "navbar";
-			$data['sidebar']  = "sidebar";
-			$data['body']     = "ticketSpvDept/listtugas";
+    //List Approve
+    public function index_tugas()
+    {
+        //User harus SPV, tidak boleh role user lain
+        if ($this->session->userdata('level') == "SPV") {
+            //Menyusun template List Approve
+            $data['title']       = "Daftar Ticket";
+            $data['desc']     = "Daftar semua tiket yang diajukan untuk Anda.";
+            $data['navbar']   = "navbar";
+            $data['sidebar']  = "sidebar";
+            $data['body']     = "ticketSpvDept/listtugas";
 
-			//Session
-			$id_dept 	= $this->session->userdata('id_dept');
-			$id_user 	= $this->session->userdata('id_user');
+            //Session
+            $id_dept     = $this->session->userdata('id_dept');
+            $id_user     = $this->session->userdata('id_user');
 
-			//get data
-			$data['tugas'] = $this->model->list_ticket_spv($id_user)->result();
+            //get data
+            $data['tugas'] = $this->model->list_ticket_spv($id_user)->result();
 
-			//Load template
-			$this->load->view('template', $data);
-		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
-			//Akan dibawa ke Controller Errorpage
-			redirect('Errorpage');
-		}
-	}
+            //Load template
+            $this->load->view('template', $data);
+        } else {
+            //Bagian ini jika role yang mengakses tidak sama dengan SPV
+            //Akan dibawa ke Controller Errorpage
+            redirect('Errorpage');
+        }
+    }
 
-	public function set_prioritas($id)
+    public function set_prioritas($id)
     {
         if ($this->session->userdata('level') == "SPV") {
             //Menyusun template Detail Ticket yang belum di-approve
@@ -117,21 +117,21 @@ class Ticket_spv extends CI_Controller
         }
     }
 
-	public function approveSpv($id)
+    public function approveSpv($id)
     {
         //User harus SPV, tidak boleh role user lain
-		if ($this->session->userdata('level') == "SPV") {
-			//Proses me-approve ticket, menggunakan model (approve) dengan parameter id_ticket yang akan di-approve
-			$this->model->approveSpv($id);
+        if ($this->session->userdata('level') == "SPV") {
+            //Proses me-approve ticket, menggunakan model (approve) dengan parameter id_ticket yang akan di-approve
+            $this->model->approveSpv($id);
             //Set pemberitahuan bahwa tiket berhasil ditugaskan ke teknisi
-            $this->session->set_flashdata('status', 'Ditugaskan');
-			//Kembali ke halaman List approvel ticket (list_approve)
-			redirect('ticket_spv/index_tugas');
-		} else {
-			//Bagian ini jika role yang mengakses tidak sama dengan SPV
-			//Akan dibawa ke Controller Errorpage
-			redirect('Errorpage');
-		}
+            $this->session->set_flashdata('status', 'Di Approve');
+            //Kembali ke halaman List approvel ticket (list_approve)
+            redirect('ticket_spv/index_tugas');
+        } else {
+            //Bagian ini jika role yang mengakses tidak sama dengan SPV
+            //Akan dibawa ke Controller Errorpage
+            redirect('Errorpage');
+        }
     }
 
 
@@ -215,6 +215,4 @@ class Ticket_spv extends CI_Controller
             }
         }
     }
-
-	
 }

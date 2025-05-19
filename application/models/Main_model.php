@@ -2828,7 +2828,7 @@ class Main_model extends CI_Model
                 INNER JOIN departemen_bagian db ON P.id_bagian_dept = DB.id_bagian_dept 
                 INNER JOIN departemen d ON DB.id_dept = D.id_dept 
                 WHERE nik  = '$id') as Z ON F.id_dept = Z.id_dept
-    WHERE A.status ='8'
+    WHERE A.status IN (8,10)
     ORDER BY A.tanggal DESC");
     // $query = $this->db->query($sql, array($id));
     return $query;
@@ -2861,6 +2861,4 @@ class Main_model extends CI_Model
     //Query untuk melakukan insert data tracking ticket sesuai dengan array '$datatracking' ke tabel tracking
     $this->db->insert('tracking', $datatracking);
   }
-
-
 }

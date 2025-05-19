@@ -67,7 +67,7 @@
 								foreach ($ticket_mgrd as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
-										<td><a href="<?= site_url('ticket_mgrd/detail_approve/'.$row->id_ticket)?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
+										<td><a href="<?= site_url('ticket_mgrd/detail_approve/' . $row->id_ticket) ?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>
@@ -122,7 +122,11 @@
 											<td>
 												<strong style="color:rgb(106, 3, 99);">Ticket Returned</strong>
 											</td>
-										<?php } ?>
+										<?php } else if ($row->status == 11) { ?>
+											<td>
+												<strong style="color:rgb(6, 71, 23);">Approved Manager</strong>
+											</td>
+										<?php }  ?>
 									</tr>
 								<?php $no++;
 								} ?>
@@ -133,7 +137,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
 
 <?php
@@ -214,6 +218,9 @@ foreach ($lbl_status as $data) {
 	} else if ($data->status == 10) {
 		$stat = "Ticket Returned";
 		$bg = "rgb(106, 3, 99)";
+	} else if ($data->status == 11) {
+		$stat = "Approved Manager";
+		$bg = "rgb(6, 71, 23)";
 	}
 	$Tstat  .= "'$stat'" . ", ";
 	$BGstat .= "'$bg'" . ", ";

@@ -122,8 +122,8 @@
                                     <th>Tanggal</th>
                                     <th>Nama</th>
                                     <th>Sub Kategori</th>
-									<th><i class="fas fa-exclamation-triangle"></i><strong style="color: #C13018;">due date</th>
-									<th>lokasi</th>
+                                    <th><i class="fas fa-exclamation-triangle"></i><strong style="color: #C13018;">due date</th>
+                                    <th>lokasi</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -132,12 +132,12 @@
                                 foreach ($dataticketuser as $row) { ?>
                                     <tr>
                                         <td><?= $no ?></td>
-                                        <td><a href="<?= site_url('ticket_user/detail/'.$row->id_ticket)?>" class="font-weight-bold" title="Detail"><?= $row->id_ticket ?></a></td>
+                                        <td><a href="<?= site_url('ticket_user/detail/' . $row->id_ticket) ?>" class="font-weight-bold" title="Detail"><?= $row->id_ticket ?></a></td>
                                         <td><?= $row->tanggal ?></td>
                                         <td><?= $row->nama ?></td>
                                         <td><?= $row->nama_sub_kategori ?></td>
-										<td><strong style="color: #C13018;"><?= $row->due_date ?></strong></td>
-										<td><?= $row->lokasi ?></td>
+                                        <td><strong style="color: #C13018;"><?= $row->due_date ?></strong></td>
+                                        <td><?= $row->lokasi ?></td>
                                         <?php if ($row->status == 0) { ?>
                                             <td>
                                                 <strong style="color: #F36F13;">Ticket Rejected</strong>
@@ -171,10 +171,22 @@
                                                 <strong style="color: #C13018;">Late Finished</strong>
                                             </td>
                                         <?php } else if ($row->status == 8) { ?>
-											<td>
-												<strong style="color: #36454F;">Approved Supervisor</strong>
-											</td>
-										<?php } ?>
+                                            <td>
+                                                <strong style="color: #36454F;">Approved Supervisor</strong>
+                                            </td>
+                                        <?php } else if ($row->status == 9) { ?>
+                                            <td>
+                                                <strong style="color:rgb(11, 167, 57);">Assign by Manager</strong>
+                                            </td>
+                                        <?php } else if ($row->status == 10) { ?>
+                                            <td>
+                                                <strong style="color:rgb(106, 3, 99);">Ticket Returned</strong>
+                                            </td>
+                                        <?php } else if ($row->status == 11) { ?>
+                                            <td>
+                                                <strong style="color:rgb(6, 71, 23);">Approved Manager</strong>
+                                            </td>
+                                        <?php }  ?>
                                     </tr>
                                 <?php $no++;
                                 } ?>

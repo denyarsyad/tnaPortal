@@ -28,7 +28,7 @@
 			<h6 class="m-0 font-weight-bold text-primary">Form Pengajuan Work Order's</h6>
 		</div>
 		<div class="card-body">
-			<form method="post" action="<?= site_url('ticket_user/submit') ?>" enctype="multipart/form-data">
+			<form method="post" action="<?= site_url('ticket_spv/submit') ?>" enctype="multipart/form-data">
 
 				<input class="form-control" name="nama" value="<?= $profile['nama'] ?>" hidden>
 				<input class="form-control" name="email" value="<?= $profile['email'] ?>" hidden>

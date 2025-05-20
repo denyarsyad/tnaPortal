@@ -217,6 +217,16 @@
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
 		<!-- Nav Item - Dashboard -->
+		<!-- 2025.05.20 adding button "Buat Tiket" -->
+		<li class="nav-item">
+			<a href="<?= site_url('ticket_spv/buat') ?>" class="nav-link">
+				<div class="btn btn-success btn-lg shadow-sm btn-block">
+					<i class="fas fa-plus text-white"></i>
+					<span class="text">Buat Tiket</span>
+				</div>
+			</a>
+		</li>
+
 		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
 			<a class="nav-link" href="<?= site_url('dashboard') ?>">
 				<i class="fas fa-fw fa-tachometer-alt"></i>
@@ -311,6 +321,15 @@
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
 		<!-- Nav Item - Dashboard -->
+		<!-- 2025.05.20 adding button "Buat Tiket" -->
+		<li class="nav-item">
+			<a href="<?= site_url('ticket_mgrd/buat') ?>" class="nav-link">
+				<div class="btn btn-success btn-lg shadow-sm btn-block">
+					<i class="fas fa-plus text-white"></i>
+					<span class="text">Buat Tiket</span>
+				</div>
+			</a>
+		</li>
 		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
 			<a class="nav-link" href="<?= site_url('dashboard') ?>">
 				<i class="fas fa-fw fa-tachometer-alt"></i>

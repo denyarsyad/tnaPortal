@@ -477,7 +477,7 @@ class Ticket_spv extends CI_Controller
 					$this->db->insert('tracking', $datatracking);
 
 					//Memanggil fungsi kirim email dari user ke admin
-					$this->model->emailbuatticket($ticket);
+					//$this->model->emailbuatticket($ticket);
 
 					//Set pemberitahuan bahwa data tiket berhasil dibuat
 					$this->session->set_flashdata('status', 'Dikirim');
@@ -525,7 +525,7 @@ class Ticket_spv extends CI_Controller
 				$this->db->insert('tracking', $datatracking);
 
 				//Memanggil fungsi kirim email dari user ke admin
-				$this->model->emailbuatticket($ticket);
+				//$this->model->emailbuatticket($ticket);
 
 				//Set pemberitahuan bahwa data tiket berhasil dibuat
 				$this->session->set_flashdata('status', 'Dikirim');

@@ -110,44 +110,6 @@
 			</a>
 		</li>
 
-	<!--Menu Untuk User But Dept IT/GA/HSE-->
-	<?php
-	} else if ($this->session->userdata('level') == "User" && in_array($this->session->userdata('id_dept'), ["2", "8", "11"]) ) { ?>
-		<hr class="sidebar-divider my-0">
-		<!-- Nav Item - Dashboard -->
-		<li class="nav-item">
-			<a href="<?= site_url('ticket_user/buat') ?>" class="nav-link">
-				<div class="btn btn-success btn-lg shadow-sm btn-block">
-					<i class="fas fa-plus text-white"></i>
-					<span class="text">Buat Tiket</span>
-				</div>
-			</a>
-		</li>
-
-		<!-- Divider -->
-		<hr class="sidebar-divider my-0">
-		<!-- Nav Item - Dashboard -->
-		<li class="nav-item <?= (uri_string() == 'dashboard' ? 'active' : ''); ?>">
-			<a class="nav-link " href="<?= site_url('dashboard') ?>">
-				<i class="fas fa-fw fa-tachometer-alt"></i>
-				<span>Dashboard</span></a>
-		</li>
-
-		<li class="nav-item <?= (uri_string() == 'ticket_user' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('ticket_user') ?>">
-				<i class="fas fa-fw fa-ticket-alt"></i>
-				<span>Tiket Saya</span>
-			</a>
-		</li>
-
-		<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('incident_pic') ?>">
-				<i class="fas fa-fw fa-ticket-alt"></i>
-				<span>Incident</span>
-			</a>
-		</li>
-
-
 	<!--Menu Untuk Teknisi-->
 	<?php
 	} else if ($this->session->userdata('level') == "Technician") { ?>
@@ -204,12 +166,39 @@
 			</a>
 		</li>
 
-		<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('incident') ?>">
-				<i class="fas fa-fw fa-medkit"></i>
-				<span>Incident</span>
-			</a>
-		</li>
+		<!-- Heading -->
+		<div class="sidebar-heading pl-2">
+			Incident
+		</div>
+
+		<!--Menu Untuk User Buat Dept IT/GA/HSE-->
+		<?php if (in_array($this->session->userdata('id_dept'), ["2", "8", "11"]) ) { ?>
+
+			<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
+				<a class="nav-link" href="<?= site_url('incident') ?>">
+					<i class="fas fa-fw fa-medkit"></i>
+					<span>Input Incident</span>
+				</a>
+			</li>
+
+			<li class="nav-item <?= (uri_string() == 'incident_pic' ? 'active' : ''); ?>">
+				<a class="nav-link" href="<?= site_url('incident_pic') ?>">
+					<i class="fas fa-fw fa-ambulance"></i>
+					<span>Incident</span>
+				</a>
+			</li>
+			
+		<!--Menu Untuk User Selain Dept IT/GA/HSE-->
+		<?php } else { ?>
+
+			<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
+				<a class="nav-link" href="<?= site_url('incident') ?>">
+					<i class="fas fa-fw fa-medkit"></i>
+					<span>Input Incident</span>
+				</a>
+			</li>
+
+		<?php } ?>
 
 	<!-- Menu Untuk Spv Dept-->
 	<?php
@@ -240,12 +229,40 @@
 			</a>
 		</li>
 
-		<li class="nav-item <?= (uri_string() == 'incident' ? 'active' : ''); ?>">
-			<a class="nav-link" href="<?= site_url('incident_spv') ?>">
-				<i class="fas fa-fw fa-medkit"></i>
-				<span>Incident</span>
-			</a>
-		</li>
+		<!-- Heading -->
+		<div class="sidebar-heading pl-2">
+			Incident
+		</div>
+
+		<!--Menu Untuk User Buat Dept IT/GA/HSE-->
+		<?php if (in_array($this->session->userdata('id_dept'), ["2", "8", "11"]) ) { ?>
+
+			<li class="nav-item <?= (uri_string() == 'incident_spv' ? 'active' : ''); ?>">
+				<a class="nav-link" href="<?= site_url('incident_spv') ?>">
+					<i class="fas fa-fw fa-medkit"></i>
+					<span>Input Incident</span>
+				</a>
+			</li>
+
+			<li class="nav-item <?= (uri_string() == 'incident_pic' ? 'active' : ''); ?>">
+				<a class="nav-link" href="<?= site_url('incident_pic') ?>">
+					<i class="fas fa-fw fa-ambulance"></i>
+					<span>Incident</span>
+				</a>
+			</li>
+			
+		<!--Menu Untuk User Selain Dept IT/GA/HSE-->
+		<?php } else { ?>
+
+			<li class="nav-item <?= (uri_string() == 'incident_spv' ? 'active' : ''); ?>">
+				<a class="nav-link" href="<?= site_url('incident_spv') ?>">
+					<i class="fas fa-fw fa-medkit"></i>
+					<span>Input Incident</span>
+				</a>
+			</li>
+
+		<?php } ?>
+
 	<?php } else if ($this->session->userdata('level') == "MGR") { ?>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">

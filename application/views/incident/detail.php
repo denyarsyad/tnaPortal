@@ -139,8 +139,8 @@
 									<span class="text"><?= $detail['path_solve_photo'] ?></span>
 								</a>
 							<?php } else { ?>
-								<a data-fancybox="gallery" href="<?= base_url('uploads/' . $detail['filefoto']) ?>">
-									<img src="<?= base_url('uploads/' . $detail['filefoto']) ?>" style="width:100%;max-width:300px">
+								<a data-fancybox="gallery" href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>">
+									<img src="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" style="width:100%;max-width:300px">
 								</a><br>
 								Click image to zoom <i class="fas fa-search-plus"></i>
 							<?php } ?>

@@ -2480,7 +2480,8 @@ class Main_model extends CI_Model
     FROM INCIDENT i
     INNER JOIN departemen d 
     ON i.target_dept = d.id_dept
-    WHERE id_input = '$id'");
+    WHERE id_input = '$id'
+    ORDER BY date_incident DESC");
     return $query;
   }
 
@@ -2542,7 +2543,8 @@ class Main_model extends CI_Model
     $query = $this->db->query("SELECT id_incident, nama, email, telp, CONCAT(nama_dept, ' - ', nama_bagian_dept) AS nama_dept,  date_incident, 
     (SELECT MAX(dd.NAMA_DEPT) FROM departemen dd WHERE dd.id_dept = I.target_dept) AS target_dept, problem, path_photo AS filefoto, status, 
     (SELECT MAX(nama) FROM pegawai WHERE nik = i.id_action) AS id_action, date_action, reason_reject,
-    (SELECT MAX(nama) FROM pegawai WHERE nik = i.id_pic) AS id_pic, date_pic, i.message, i.progress, i.path_solve_photo
+    (SELECT MAX(nama) FROM pegawai WHERE nik = i.id_pic) AS id_pic, date_pic, i.message, i.progress, i.path_solve_photo,
+    CONCAT(k.nama_kategori, ' - ', ks.nama_sub_kategori) AS kategori, l.lokasi
     FROM INCIDENT I
     INNER JOIN PEGAWAI P
     ON I.id_input = P.nik
@@ -2550,6 +2552,12 @@ class Main_model extends CI_Model
     ON P.id_bagian_dept = DB.id_bagian_dept
     INNER JOIN departemen d 
     ON DB.id_dept = D.id_dept
+    INNER JOIN lokasi l 
+    ON I.id_lokasi  = l.id_lokasi
+    INNER JOIN kategori_sub ks 
+    ON I.id_sub_kategori = ks.id_sub_kategori
+    INNER JOIN kategori k 
+    ON ks.id_kategori = k.id_kategori
     WHERE I.id_incident = '$id'");
     return $query;
   }

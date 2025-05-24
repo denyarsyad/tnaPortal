@@ -80,6 +80,18 @@ class Incident extends CI_Controller
 			$data['dd_dept'] = $this->model->dropdown_target();
 			$data['id_dept'] = "";
 
+			//Dropdown pilih kategori
+			$data['dd_kategori'] = $this->model->dropdown_kategori();
+			$data['id_kategori'] = "";
+
+			//Dropdown pilih sub kategori
+			$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
+			$data['id_sub_kategori'] = "";
+
+			//Dropdown pilih lokasi
+			$data['dd_lokasi'] = $this->model->dropdown_lokasi();
+			$data['id_lokasi'] = "";
+
 			$data['error'] = "";
 
 			//Load template
@@ -145,6 +157,18 @@ class Incident extends CI_Controller
 				$data['dd_dept'] = $this->model->dropdown_target();
 				$data['id_dept'] = "";
 
+				//Dropdown pilih kategori
+				$data['dd_kategori'] = $this->model->dropdown_kategori();
+				$data['id_kategori'] = "";
+
+				//Dropdown pilih sub kategori
+				$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
+				$data['id_sub_kategori'] = "";
+
+				//Dropdown pilih lokasi
+				$data['dd_lokasi'] = $this->model->dropdown_lokasi();
+				$data['id_lokasi'] = "";				
+
 				$data['error'] = "";
 
 				//Load template
@@ -196,6 +220,18 @@ class Incident extends CI_Controller
 					$data['dd_dept'] = $this->model->dropdown_target();
 					$data['id_dept'] = "";
 
+					//Dropdown pilih kategori
+					$data['dd_kategori'] = $this->model->dropdown_kategori();
+					$data['id_kategori'] = "";
+
+					//Dropdown pilih sub kategori
+					$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
+					$data['id_sub_kategori'] = "";
+
+					//Dropdown pilih lokasi
+					$data['dd_lokasi'] = $this->model->dropdown_lokasi();
+					$data['id_lokasi'] = "";						
+
 					$data['error'] = $this->upload->display_errors();
 
 					$this->load->view('template', $data);
@@ -209,7 +245,9 @@ class Incident extends CI_Controller
 						'path_photo'			=> 'no-image.jpg',
 						'id_input'				=> $id_user,
 						'add_id'				=> $id_user,
-						'add_date'				=> $date
+						'add_date'				=> $date,
+						'id_sub_kategori'		=> $this->input->post('id_sub_kategori'),
+						'id_lokasi'				=> $this->input->post('id_lokasi')
 					);
 
 					// $kat      = $this->input->post('id_kategori');
@@ -254,7 +292,9 @@ class Incident extends CI_Controller
 					'path_photo'			=> $gambar['file_name'],
 					'id_input'				=> $id_user,
 					'add_id'				=> $id_user,
-					'add_date'				=> $date
+					'add_date'				=> $date,
+					'id_sub_kategori'		=> $this->input->post('id_sub_kategori'),
+					'id_lokasi'				=> $this->input->post('id_lokasi')
 				);
 
 				// $kat      = $this->input->post('id_kategori');
@@ -320,129 +360,129 @@ class Incident extends CI_Controller
 		}
 	}
 
-	public function submitMessage($id)
-	{
-		//Form validasi untuk deskripsi dengan nama validasi = problem_detail
-		$this->form_validation->set_rules(
-			'message',
-			'Message',
-			'required',
-			array(
-				'required' => '<strong>Failed!</strong> Field Harus diisi.'
-			)
-		);
+	// public function submitMessage($id)
+	// {
+	// 	//Form validasi untuk deskripsi dengan nama validasi = problem_detail
+	// 	$this->form_validation->set_rules(
+	// 		'message',
+	// 		'Message',
+	// 		'required',
+	// 		array(
+	// 			'required' => '<strong>Failed!</strong> Field Harus diisi.'
+	// 		)
+	// 	);
 
-		//Form validasi untuk deskripsi dengan nama validasi = problem_detail
-		$this->form_validation->set_rules(
-			'filefoto',
-			'File_foto',
-			''
-		);
+	// 	//Form validasi untuk deskripsi dengan nama validasi = problem_detail
+	// 	$this->form_validation->set_rules(
+	// 		'filefoto',
+	// 		'File_foto',
+	// 		''
+	// 	);
 
-		//Kondisi jika proses buat tiket tidak memenuhi syarat validasi akan dikembalikan ke form buat tiket
-		if ($this->form_validation->run() == FALSE) {
-			//User harus User, tidak boleh role user lain
-			if ($this->session->userdata('level') == "User") {
-				//Menyusun template Buat ticket
-				$data['title'] 	  = "Detail Tiket";
-				$data['navbar']   = "navbar";
-				$data['sidebar']  = "sidebar";
-				$data['body']     = "ticketUser/detail";
+	// 	//Kondisi jika proses buat tiket tidak memenuhi syarat validasi akan dikembalikan ke form buat tiket
+	// 	if ($this->form_validation->run() == FALSE) {
+	// 		//User harus User, tidak boleh role user lain
+	// 		if ($this->session->userdata('level') == "User") {
+	// 			//Menyusun template Buat ticket
+	// 			$data['title'] 	  = "Detail Tiket";
+	// 			$data['navbar']   = "navbar";
+	// 			$data['sidebar']  = "sidebar";
+	// 			$data['body']     = "ticketUser/detail";
 
-				//Session
-				$id_dept 	= $this->session->userdata('id_dept');
-				$id_user 	= $this->session->userdata('id_user');
+	// 			//Session
+	// 			$id_dept 	= $this->session->userdata('id_dept');
+	// 			$id_user 	= $this->session->userdata('id_user');
 
-				//Detail setiap tiket, get dari model (detail_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
-				$data['detail'] = $this->model->detail_ticket($id)->row_array();
+	// 			//Detail setiap tiket, get dari model (detail_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'detail'
+	// 			$data['detail'] = $this->model->detail_ticket($id)->row_array();
 
-				//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
-				$data['tracking'] = $this->model->tracking_ticket($id)->result();
+	// 			//Tracking setiap tiket, get dari model (tracking_ticket) berdasarkan id_ticket, data akan ditampung dalam parameter 'tracking'
+	// 			$data['tracking'] = $this->model->tracking_ticket($id)->result();
 
-				//Message setiap tiket, get dari model (ticket_message) berdasarkan id_ticket, data akan ditampung dalam parameter 'message'
-				$data['message'] = $this->model->message_ticket($id)->result();
+	// 			//Message setiap tiket, get dari model (ticket_message) berdasarkan id_ticket, data akan ditampung dalam parameter 'message'
+	// 			$data['message'] = $this->model->message_ticket($id)->result();
 
-				//Load template
-				$this->load->view('template', $data);
-			} else {
-				//Bagian ini jika role yang mengakses tidak sama dengan User
-				//Akan dibawa ke Controller Errorpage
-				redirect('Errorpage');
-			}
-		} else {
-			//Bagian ini jika validasi dipenuhi untuk membuat ticket
-			//Session
-			$id_user 	= $this->session->userdata('id_user');
+	// 			//Load template
+	// 			$this->load->view('template', $data);
+	// 		} else {
+	// 			//Bagian ini jika role yang mengakses tidak sama dengan User
+	// 			//Akan dibawa ke Controller Errorpage
+	// 			redirect('Errorpage');
+	// 		}
+	// 	} else {
+	// 		//Bagian ini jika validasi dipenuhi untuk membuat ticket
+	// 		//Session
+	// 		$id_user 	= $this->session->userdata('id_user');
 
-			//Tanggal
-			$date       = date("Y-m-d H:i:s");
+	// 		//Tanggal
+	// 		$date       = date("Y-m-d H:i:s");
 
-			//Konfigurasi Upload Gambar
-			$config['upload_path'] 		= './uploads/';		//Folder untuk menyimpan gambar
-			$config['allowed_types'] 	= 'gif|jpg|jpeg|png';	//Tipe file yang diizinkan
-			$config['max_size'] 		= '25600';			//Ukuran maksimum file gambar yang diizinkan
-			$config['max_width']        = '0';				//Ukuran lebar maks. 0 menandakan ga ada batas
-			$config['max_height']       = '0';				//Ukuran tinggi maks. 0 menandakan ga ada batas
+	// 		//Konfigurasi Upload Gambar
+	// 		$config['upload_path'] 		= './uploads/';		//Folder untuk menyimpan gambar
+	// 		$config['allowed_types'] 	= 'gif|jpg|jpeg|png';	//Tipe file yang diizinkan
+	// 		$config['max_size'] 		= '25600';			//Ukuran maksimum file gambar yang diizinkan
+	// 		$config['max_width']        = '0';				//Ukuran lebar maks. 0 menandakan ga ada batas
+	// 		$config['max_height']       = '0';				//Ukuran tinggi maks. 0 menandakan ga ada batas
 
-			//Memanggil library upload pada codeigniter dan menyimpan konfirguasi
-			$this->load->library('upload', $config);
+	// 		//Memanggil library upload pada codeigniter dan menyimpan konfirguasi
+	// 		$this->load->library('upload', $config);
 
-			if ($_FILES['filefoto']['name'] != "") {
-				//Jika upload gambar tidak sesuai dengan konfigurasi di atas, maka upload gambar gagal, dan kembali ke halaman Create ticket
-				if (!$this->upload->do_upload('filefoto')) {
-					$this->session->set_flashdata('status', 'Error');
-					redirect('ticket_user/detail/' . $id);
-				} else {
-					//Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
-					//Menampung file gambar ke variable 'gambar'
-					$gambar = $this->upload->data();
+	// 		if ($_FILES['filefoto']['name'] != "") {
+	// 			//Jika upload gambar tidak sesuai dengan konfigurasi di atas, maka upload gambar gagal, dan kembali ke halaman Create ticket
+	// 			if (!$this->upload->do_upload('filefoto')) {
+	// 				$this->session->set_flashdata('status', 'Error');
+	// 				redirect('ticket_user/detail/' . $id);
+	// 			} else {
+	// 				//Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
+	// 				//Menampung file gambar ke variable 'gambar'
+	// 				$gambar = $this->upload->data();
 
-					//Data message ditampung dalam bentuk array
-					$datamessage = array(
-						'id_ticket'  => $id,
-						'tanggal'    => $date,
-						'status'     => 1,
-						'message'  	 => htmlspecialchars($this->input->post('message')),
-						'id_user'    => $id_user,
-						'filefoto'	 => $gambar['file_name'],
-					);
+	// 				//Data message ditampung dalam bentuk array
+	// 				$datamessage = array(
+	// 					'id_ticket'  => $id,
+	// 					'tanggal'    => $date,
+	// 					'status'     => 1,
+	// 					'message'  	 => htmlspecialchars($this->input->post('message')),
+	// 					'id_user'    => $id_user,
+	// 					'filefoto'	 => $gambar['file_name'],
+	// 				);
 
-					//Query insert data ticket_message yang ditampung ke dalam database. tersimpan ditabel ticket_message
-					$this->db->insert('ticket_message', $datamessage);
+	// 				//Query insert data ticket_message yang ditampung ke dalam database. tersimpan ditabel ticket_message
+	// 				$this->db->insert('ticket_message', $datamessage);
 
-					//Memanggil fungsi kirim email dari user ke admin
-					$this->model->emailmessageticket($id);
+	// 				//Memanggil fungsi kirim email dari user ke admin
+	// 				$this->model->emailmessageticket($id);
 
-					//Set pemberitahuan bahwa data tiket berhasil dibuat
-					$this->session->set_flashdata('status', 'Success');
-					//Dialihkan ke halaman my ticket
-					redirect('ticket_user/detail/' . $id);
-				}
-			} else {
-				//Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
-				//Menampung file gambar ke variable 'gambar'
-				$gambar = $this->upload->data();
+	// 				//Set pemberitahuan bahwa data tiket berhasil dibuat
+	// 				$this->session->set_flashdata('status', 'Success');
+	// 				//Dialihkan ke halaman my ticket
+	// 				redirect('ticket_user/detail/' . $id);
+	// 			}
+	// 		} else {
+	// 			//Bagian ini jika file gambar sesuai dengan konfirgurasi di atas
+	// 			//Menampung file gambar ke variable 'gambar'
+	// 			$gambar = $this->upload->data();
 
-				//Data message ditampung dalam bentuk array
-				$datamessage = array(
-					'id_ticket'  => $id,
-					'tanggal'    => $date,
-					'status'     => 1,
-					'message'  	 => htmlspecialchars($this->input->post('message')),
-					'id_user'    => $id_user,
-				);
+	// 			//Data message ditampung dalam bentuk array
+	// 			$datamessage = array(
+	// 				'id_ticket'  => $id,
+	// 				'tanggal'    => $date,
+	// 				'status'     => 1,
+	// 				'message'  	 => htmlspecialchars($this->input->post('message')),
+	// 				'id_user'    => $id_user,
+	// 			);
 
-				//Query insert data ticket_message yang ditampung ke dalam database. tersimpan ditabel ticket_message
-				$this->db->insert('ticket_message', $datamessage);
+	// 			//Query insert data ticket_message yang ditampung ke dalam database. tersimpan ditabel ticket_message
+	// 			$this->db->insert('ticket_message', $datamessage);
 
-				//Memanggil fungsi kirim email dari user ke admin
-				$this->model->emailmessageticket($id);
+	// 			//Memanggil fungsi kirim email dari user ke admin
+	// 			$this->model->emailmessageticket($id);
 
-				//Set pemberitahuan bahwa data tiket berhasil dibuat
-				$this->session->set_flashdata('status', 'Success');
-				//Dialihkan ke halaman my ticket
-				redirect('ticket_user/detail/' . $id);
-			}
-		}
-	}
+	// 			//Set pemberitahuan bahwa data tiket berhasil dibuat
+	// 			$this->session->set_flashdata('status', 'Success');
+	// 			//Dialihkan ke halaman my ticket
+	// 			redirect('ticket_user/detail/' . $id);
+	// 		}
+	// 	}
+	// }
 }

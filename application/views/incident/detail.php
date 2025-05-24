@@ -48,6 +48,16 @@
 										<?= $detail['nama_dept'] ?>
 									</div>
 									<hr>
+									<h6 class="m-0 text-primary">Kategori</h6>
+									<div class="font-weight-bold">
+										<?= $detail['kategori'] ?>
+									</div>
+									<hr>
+									<h6 class="m-0 text-primary">Lokasi</h6>
+									<div class="font-weight-bold">
+										<?= $detail['lokasi'] ?>
+									</div>
+									<hr>
 									<h6 class="m-0 text-primary">Tanggal</h6>
 									<div class="font-weight-bold">
 										<?= $detail['date_incident'] ?><br>
@@ -93,7 +103,7 @@
 							<h5 class="mb-3 font-weight-bold text-dark">
 								Incident Answer
 							</h5>
-							<div class="card" style="margin-top:0px; height: 700px;">
+							<div class="card" style="margin-top:0px; height: 850px;">
 								<div class="card-body">
 									<h6 class="m-0 text-primary">PIC</h6>
 									<div class="font-weight-bold">
@@ -129,8 +139,8 @@
 									<span class="text"><?= $detail['path_solve_photo'] ?></span>
 								</a>
 							<?php } else { ?>
-								<a data-fancybox="gallery" href="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>">
-									<img src="<?= base_url('files/teknisi/' . $detail['path_solve_photo']) ?>" style="width:100%;max-width:300px">
+								<a data-fancybox="gallery" href="<?= base_url('uploads/' . $detail['filefoto']) ?>">
+									<img src="<?= base_url('uploads/' . $detail['filefoto']) ?>" style="width:100%;max-width:300px">
 								</a><br>
 								Click image to zoom <i class="fas fa-search-plus"></i>
 							<?php } ?>

@@ -20,7 +20,9 @@ CREATE TABLE tnaportal.incident (
 	date_pic DATETIME NULL,
 	message varchar(500) NUL,
 	path_solve_photo varchar(500) NULL,
-	path_signature varchar(500) NULL
+	path_signature varchar(500) NULL,
+	id_sub_kategori INT(11) NULL,
+	id_lokasi INT(11) NULL
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8

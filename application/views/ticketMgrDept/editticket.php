@@ -19,7 +19,7 @@
 
 <div class="container-fluid">
 	<h1 class="h3 mb-0 text-gray-800 font-weight-bold"><?= $title; ?></h1>
-	<p class="mb-3">Perbaiki dan kirim ulang masalah Anda kepada team Maintenance.</p>
+	<p class="mb-3">Perbaiki dan kirim ulang masalah Anda kepada team Maintenance. <?= $detail['id_kategori'] ?></p>
 
 	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
 
@@ -36,8 +36,8 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label class="mb-1 font-weight-bold">Kategori <span class="text-danger small">*Required</span></label>
-							<?= form_dropdown('id_kategori', $dd_kategori, set_value('id_kategori'), 'id="id_kategori" class="form-control ' . (form_error('id_kategori') ? "is-invalid" : "") . ' "'); ?>
+							<label class="mb-1 font-weight-bold">Kategori<span class="text-danger small">*Required</span></label>
+							<?= form_dropdown('id_kategori', $dd_kategori, set_value('id_kategori', $detail['id_kategori']), 'id="id_kategori" class="form-control ' . (form_error('id_kategori') ? "is-invalid" : "") . ' "'); ?>
 							<div class="invalid-feedback">
 								<?= form_error('id_kategori'); ?>
 							</div>
@@ -45,9 +45,9 @@
 					</div>
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label class="mb-1 font-weight-bold">Sub Kategori <span class="text-danger small">*Required</span></label>
+							<label class="mb-1 font-weight-bold">Sub Kategori <?= $detail['id_sub_kategori'] ?><span class="text-danger small">*Required</span></label>
 							<div id="div-order">
-								<?= form_dropdown('id_sub_kategori', $dd_sub_kategori, set_value('id_sub_kategori'), ' class="form-control ' . (form_error('id_sub_kategori') ? "is-invalid" : "") . ' "'); ?>
+								<?= form_dropdown('id_sub_kategori', $dd_sub_kategori, set_value('id_sub_kategori', $detail['id_sub_kategori']), ' class="form-control ' . (form_error('id_sub_kategori') ? "is-invalid" : "") . ' "'); ?>
 								<div class="invalid-feedback">
 									<?= form_error('id_sub_kategori'); ?>
 								</div>
@@ -57,7 +57,7 @@
 					<div class="col-sm-4">
 						<div class="form-group">
 							<label class="mb-1 font-weight-bold">Lokasi <span class="text-danger small">*Required</span></label>
-							<?= form_dropdown('id_lokasi', $dd_lokasi, set_value('id_lokasi'), ' class="form-control ' . (form_error('id_lokasi') ? "is-invalid" : "") . '" '); ?>
+							<?= form_dropdown('id_lokasi', $dd_lokasi, set_value('id_lokasi', $detail['id_lokasi']), ' class="form-control ' . (form_error('id_lokasi') ? "is-invalid" : "") . '" '); ?>
 							<div class="invalid-feedback">
 								<?= form_error('id_lokasi'); ?>
 							</div>
@@ -66,7 +66,7 @@
 				</div>
 				<div class="col-sm-5" style="padding-left: 0px;">
 					<label class="mb-1 font-weight-bold">Due date <span class="text-danger small">*Required</span></label>
-					<input class="form-control <?= (form_error('due_date') ? "is-invalid" : "") ?>" name="due_date" placeholder="Due date" value="<?= set_value('due_date'); ?>">
+					<input class="form-control <?= (form_error('due_date') ? "is-invalid" : "") ?>" name="due_date" placeholder="Due date" value="<?= set_value('due_date', $detail['due_date']) ?>">
 					<p class="small mb-6">contoh : 1 jam/1hari/ '0' jika tidak ada target pengerjaan</p>
 					<div class="invalid-feedback">
 						<?= form_error('due_date'); ?>	
@@ -74,7 +74,7 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1 font-weight-bold">Subjek <span class="text-danger small">*Required</span></label>
-					<input class="form-control <?= (form_error('problem_summary') ? "is-invalid" : "") ?>" name="problem_summary" placeholder="Judul" value="<?= set_value('problem_summary'); ?>">
+					<input class="form-control <?= (form_error('problem_summary') ? "is-invalid" : "") ?>" name="problem_summary" placeholder="Judul" value="<?= set_value('problem_summary', $detail['problem_summary']); ?>">
 					<div class="invalid-feedback">
 						<?= form_error('problem_summary'); ?>
 					</div>
@@ -82,7 +82,7 @@
 				
 				<div class="form-group">
 					<label class="mb-1 font-weight-bold">Deskripsi <span class="text-danger small">*Required</span></label>
-					<textarea name="problem_detail" placeholder="" class="form-control <?= (form_error('problem_detail') ? "is-invalid" : "") ?>" rows="6"><?= set_value('problem_detail'); ?></textarea>
+					<textarea name="problem_detail" placeholder="" class="form-control <?= (form_error('problem_detail') ? "is-invalid" : "") ?>" rows="6"><?= set_value('problem_detail', $detail['problem_detail']); ?></textarea>
 					<div class="invalid-feedback">
 						<?= form_error('problem_detail'); ?>
 					</div>

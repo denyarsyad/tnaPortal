@@ -848,7 +848,8 @@ class Main_model extends CI_Model
     (SELECT MAX(z.email) FROM pegawai z WHERE z.id_jabatan = 5 AND z.id_bagian_dept = D.id_bagian_dept) AS mail,
     z.deskripsi AS returned_reason,
     z.nama AS manager_name,
-    z.tanggal AS tanggal_reason
+    z.tanggal AS tanggal_reason,
+    A.id_lokasi
     FROM ticket A 
     LEFT JOIN kategori_sub B ON B.id_sub_kategori = A.id_sub_kategori
     LEFT JOIN kategori C ON C.id_kategori = B.id_kategori 

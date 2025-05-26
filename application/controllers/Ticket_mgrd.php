@@ -27,10 +27,10 @@ class Ticket_mgrd extends CI_Controller
 		}
 	}
 
-    public function detail_approve($id)
+    public function detail_approve($id, $status)
     {
         //User harus MGRD, tidak boleh role user lain
-        if ($this->session->userdata('level') == "MGRD") {
+        if ($this->session->userdata('level') == "MGRD" && $status != 10) {
             //Menyusun template Detail Ticket yang belum di-approve
             $data['title']    = "Detail Tiket";
             $data['navbar']   = "navbar";
@@ -52,7 +52,20 @@ class Ticket_mgrd extends CI_Controller
 
             //Load template
             $this->load->view('template', $data);
-        } else {
+        } else if ($this->session->userdata('level') == "MGRD" && $status == 10) {
+				 $data['title']    = "Detail Tiket";
+             $data['navbar']   = "navbar";
+             $data['sidebar']  = "sidebar";
+             $data['body']     = "ticketMgrDept/editticket";
+
+             //Session
+             $id_dept = $this->session->userdata('id_dept');
+             $id_user = $this->session->userdata('id_user');
+
+             //Detail setiap tiket yang belum di-approve, get dari model (detail_ticket) dengan parameter id_ticket, data akan ditampung dalam parameter 'detail'
+             $data['detail'] = $this->model->detail_ticket($id)->row_array();
+				$this->load->view('template', $data);
+		  } else {
             //Bagian ini jika role yang mengakses tidak sama dengan admin
             //Akan dibawa ke Controller Errorpage
             redirect('Errorpage');

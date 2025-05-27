@@ -559,7 +559,7 @@ class Ticket_mgrd extends CI_Controller
 
 
 	//BELUM BERES
-	public function update()
+	public function update($ticket)
 	{
 		//Form validasi untuk ketgori dengan nama validasi = id_kategori
 		$this->form_validation->set_rules(
@@ -668,17 +668,17 @@ class Ticket_mgrd extends CI_Controller
 		} else {
 				//Data ticket ditampung dalam bentuk array
 				$data = array(
-					'id_ticket'			=> $ticket,
-					'tanggal'			=> $date,
+					// 'id_ticket'			=> $ticket,
+					// 'tanggal'			=> $date,
 					'last_update'		=> date("Y-m-d H:i:s"),
-					'reported'			=> $id_user,
+					// 'reported'			=> $id_user,
 					'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
 					'due_date'			=> ucfirst($this->input->post('due_date')),
 					'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
 					'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
 					'status'    		=> 11,
-					'progress'			=> 0,
-					'filefoto'			=> $gambar['file_name'],
+					// 'progress'			=> 0,
+					// 'filefoto'			=> $gambar['file_name'],
 					'id_lokasi'			=> $this->input->post('id_lokasi')
 				);
 
@@ -696,8 +696,9 @@ class Ticket_mgrd extends CI_Controller
 					'id_user'    => $id_user
 				);
 
-				//Query insert data ticket yang ditampung ke dalam database. tersimpan ditabel ticket
-				$this->db->insert('ticket', $data);
+				//Update ke db
+				$this->db->where('id_ticket', $ticket);
+				$this->db->update('ticket', $data);
 				//Query insert data tarcking yang ditampung ke dalam database. tersimpan ditabel tracking
 				$this->db->insert('tracking', $datatracking);
 

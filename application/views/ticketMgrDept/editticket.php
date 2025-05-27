@@ -19,7 +19,7 @@
 
 <div class="container-fluid">
 	<h1 class="h3 mb-0 text-gray-800 font-weight-bold"><?= $title; ?></h1>
-	<p class="mb-3">Perbaiki dan kirim ulang masalah Anda kepada team Maintenance. <?= $detail['id_kategori'] ?></p>
+	<p class="mb-3">Perbaiki dan kirim ulang masalah Anda kepada team Maintenance.</p>
 
 	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('status') ?>"></div>
 
@@ -89,13 +89,38 @@
 				</div>
 
 				<div class="form-group">
-					<label class="mb-1 font-weight-bold">Lampiran (Media) <span class="text-danger small">*Opsional</span></label> </br>
+					<!-- <label class="mb-1 font-weight-bold">Lampiran (Media) <span class="text-danger small">*Opsional</span></label> </br>
 					<p class="small mb-3">Maksimal ukuran 25MB. Format file: gif, jpg, png, or pdf.</p>
 					<input type="file" name="filefoto" size="20" class="<?= (form_error('filefoto') ? "is-invalid" : "") ?>">
 					<div class="invalid-feedback">
 						<?= form_error('filefoto'); ?>
 					</div>
-					<div class="text-danger pt-1"><?= $error; ?></div>
+					<div class="text-danger pt-1"><?= $error; ?></div> -->
+
+					<!-- start lampiran -->
+					<?php if (!empty($detail['filefoto'])): ?>
+						<div class="mt-3">
+							<label class="font-weight-bold">Lampiran sebelumnya:</label><br>
+							<?php
+							$ext = pathinfo($detail['filefoto'], PATHINFO_EXTENSION);
+							$file_url = base_url('uploads/' . $detail['filefoto']); // Sesuaikan path foldernya
+							if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif'])):
+							?>
+								<a data-fancybox="gallery" href="<?= $file_url ?>">
+									<img src="<?= $file_url ?>" alt="Attachment" style="max-width: 300px; border: 1px solid #ccc;">
+								</a><br>
+								<small>Klik gambar untuk memperbesar</small>
+							<?php elseif (strtolower($ext) == 'pdf'): ?>
+								<a href="<?= $file_url ?>" target="_blank" class="btn btn-light btn-sm mt-2">
+									<i class="fas fa-file-pdf"></i> Lihat File PDF
+								</a>
+							<?php else: ?>
+								<p class="text-muted">File tidak bisa ditampilkan.</p>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+					<!-- end lampiran -->
+
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> Submit</button>

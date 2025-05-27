@@ -53,27 +53,28 @@ class Ticket_mgrd extends CI_Controller
             //Load template
             $this->load->view('template', $data);
         } else if ($this->session->userdata('level') == "MGRD" && $status == 10) {
-				 $data['title']    = "Detail Tiket #" . $id;
-             $data['navbar']   = "navbar";
-             $data['sidebar']  = "sidebar";
-             $data['body']     = "ticketMgrDept/editticket";
+			$data['title']    = "Detail Tiket #" . $id;
+            $data['navbar']   = "navbar";
+            $data['sidebar']  = "sidebar";
+            $data['body']     = "ticketMgrDept/editticket";
 
-             //Session
-             $id_dept = $this->session->userdata('id_dept');
-             $id_user = $this->session->userdata('id_user');
+            //Session
+            $id_dept = $this->session->userdata('id_dept');
+            $id_user = $this->session->userdata('id_user');
 
-             //Detail setiap tiket yang belum di-approve, get dari model (detail_ticket) dengan parameter id_ticket, data akan ditampung dalam parameter 'detail'
-             $data['detail'] = $this->model->detail_ticket($id)->row_array();
-				 $data['dd_kategori'] = $this->model->dropdown_kategori();
-				 $data['id_kategori'] = "";
+            //Detail setiap tiket yang belum di-approve, get dari model (detail_ticket) dengan parameter id_ticket, data akan ditampung dalam parameter 'detail'
+            $data['detail'] = $this->model->detail_ticket($id)->row_array();
+			$data['dd_kategori'] = $this->model->dropdown_kategori();
+			$data['id_kategori'] = "";
 
-				 $data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori('');
-				 $data['id_sub_kategori'] = "";
+			//$data['test'] = 'cek test = ' . $data['detail']['id_kategori'];
+			$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori($data['detail']['id_kategori']);
+			$data['id_sub_kategori'] = "";
 
-				 $data['dd_lokasi'] = $this->model->dropdown_lokasi();
-				 $data['id_lokasi'] = "";
+			$data['dd_lokasi'] = $this->model->dropdown_lokasi();
+			$data['id_lokasi'] = "";
 
-				$this->load->view('template', $data);
+			$this->load->view('template', $data);
 		  } else {
             //Bagian ini jika role yang mengakses tidak sama dengan admin
             //Akan dibawa ke Controller Errorpage

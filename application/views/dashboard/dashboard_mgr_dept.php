@@ -67,7 +67,7 @@
 								foreach ($ticket_mgrd as $row) { ?>
 									<tr>
 										<td><?= $no ?></td>
-										<td><a href="<?= site_url('ticket_mgrd/detail_approve/' . $row->id_ticket) ?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
+										<td><a href="<?= site_url('ticket_mgrd/detail_approve/' . $row->id_ticket.'/'.$row->status) ?>" title="Detail Tiket <?= $row->id_ticket; ?>" class="font-weight-bold"><?= $row->id_ticket ?></a></td>
 										<td><?= $row->tanggal ?></td>
 										<td><?= $row->nama ?></td>
 										<td><?= $row->nama_sub_kategori ?></td>

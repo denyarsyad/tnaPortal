@@ -28,7 +28,7 @@
 			<h6 class="m-0 font-weight-bold text-primary">Form Pengajuan Work Order's</h6>
 		</div>
 		<div class="card-body">
-			<form method="post" action="<?= site_url('ticket_mgrd/submit') ?>" enctype="multipart/form-data">
+			<form method="post" action="<?= site_url('ticket_mgrd/update') ?>" enctype="multipart/form-data">
 
 				<input class="form-control" name="nama" value="<?= $profile['nama'] ?>" hidden>
 				<input class="form-control" name="email" value="<?= $profile['email'] ?>" hidden>
@@ -123,7 +123,7 @@
 
 				</div>
 
-				<button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> Submit</button>
+				<button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-check"></i> Update</button>
 
 			</form>
 		</div>

@@ -556,4 +556,156 @@ class Ticket_mgrd extends CI_Controller
 			}
 		}
 	}
+
+
+	//BELUM BERES
+	public function update()
+	{
+		//Form validasi untuk ketgori dengan nama validasi = id_kategori
+		$this->form_validation->set_rules(
+			'id_kategori',
+			'Id_kategori',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Kategori Harus dipilih.'
+			)
+		);
+
+		//Form validasi untuk sub kategori dengan nama validasi = id_sub_kategori
+		$this->form_validation->set_rules(
+			'id_sub_kategori',
+			'id_sub_kategori',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Sub Kategori Harus dipilih.'
+			)
+		);
+
+		//Form validasi untuk lokasi dengan nama validasi = lokasi
+		$this->form_validation->set_rules(
+			'id_lokasi',
+			'Id_lokasi',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Lokasi Harus dipilih.'
+			)
+		);
+		//Form validasi untuk subject dengan nama validasi = due_date
+		$this->form_validation->set_rules(
+            'due_date',
+            'due_date',
+            'required',
+            array(
+                'required' => '<strong>Failed!</strong> Field Harus diisi.'
+            )
+		);
+		//Form validasi untuk subject dengan nama validasi = due_date
+		$this->form_validation->set_rules(
+			'due_date',
+			'due_date',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Field Harus diisi.'
+			)
+		);
+		//Form validasi untuk subject dengan nama validasi = problem_summary
+		$this->form_validation->set_rules(
+			'problem_summary',
+			'Problem_summary',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Field Harus diisi.'
+			)
+		);
+
+		//Form validasi untuk deskripsi dengan nama validasi = problem_detail
+		$this->form_validation->set_rules(
+			'problem_detail',
+			'Problem_detail',
+			'required',
+			array(
+				'required' => '<strong>Failed!</strong> Field Harus diisi.'
+			)
+		);
+
+		//Kondisi jika proses buat tiket tidak memenuhi syarat validasi akan dikembalikan ke form buat tiket
+		if ($this->form_validation->run() == FALSE) {
+			if ($this->session->userdata('level') == "MGRD") {
+				//Menyusun template Buat ticket
+				$data['title'] 	  = "Edit Tiket";
+				$data['navbar']   = "navbar";
+				$data['sidebar']  = "sidebar";
+				$data['body']     = "ticketMgrDept/editticket";
+
+				//Session
+				$id_dept 	= $this->session->userdata('id_dept');
+				$id_user 	= $this->session->userdata('id_user');
+
+				//Mengambil semua data profile user yang sedang login menggunakan model (profile)
+				$data['profile'] = $this->model->profile($id_user)->row_array();
+
+				//Dropdown pilih kategori, menggunakan model (dropdown_kategori), nama kategori ditampung pada 'dd_kategori', data yang akan di simpan adalah id_kategori dan akan ditampung pada 'id_kategori'
+				$data['dd_kategori'] = $this->model->dropdown_kategori();
+				$data['id_kategori'] = "";
+
+				//Dropdown pilih sub kategori, menggunakan model (dropdown_sub_kategori), nama kategori ditampung pada 'dd_sub_kategori', data yang akan di simpan adalah id_sub_kategori dan akan ditampung pada 'id_sub_kategori'
+				$data['dd_sub_kategori'] = $this->model->dropdown_sub_kategori($data['detail']['id_kategori']);
+				$data['id_sub_kategori'] = "";
+
+				//Dropdown pilih lokasi, menggunakan model (dropdown_lokasi), nama kondisi ditampung pada 'dd_lokasi', data yang akan di simpan adalah id_lokasi dan akan ditampung pada 'id_lokasi'
+				$data['dd_lokasi'] = $this->model->dropdown_lokasi();
+				$data['id_lokasi'] = "";
+
+				$data['error'] = "";
+
+				//Load template
+				$this->load->view('template', $data);
+			} else {
+				//Bagian ini jika role yang mengakses tidak sama dengan User
+				//Akan dibawa ke Controller Errorpage
+				redirect('Errorpage');
+			}
+		} else {
+				//Data ticket ditampung dalam bentuk array
+				$data = array(
+					'id_ticket'			=> $ticket,
+					'tanggal'			=> $date,
+					'last_update'		=> date("Y-m-d H:i:s"),
+					'reported'			=> $id_user,
+					'id_sub_kategori' 	=> $this->input->post('id_sub_kategori'),
+					'due_date'			=> ucfirst($this->input->post('due_date')),
+					'problem_summary'	=> ucfirst($this->input->post('problem_summary')),
+					'problem_detail'	=> ucfirst($this->input->post('problem_detail')),
+					'status'    		=> 11,
+					'progress'			=> 0,
+					'filefoto'			=> $gambar['file_name'],
+					'id_lokasi'			=> $this->input->post('id_lokasi')
+				);
+
+				$kat      = $this->input->post('id_kategori');
+				$subkat   = $this->input->post('id_sub_kategori');
+				$row      = $this->model->getkategori($kat)->row();
+				$key      = $this->db->query("SELECT * FROM kategori_sub WHERE id_sub_kategori = '$subkat'")->row();
+
+				//Data tracking ditampung dalam bentuk array
+				$datatracking = array(
+					'id_ticket'  => $ticket,
+					'tanggal'    => date("Y-m-d H:i:s"),
+					'status'     => "Ticket Submited and Approved. Kategori: " . $row->nama_kategori . "(" . $key->nama_sub_kategori . ")",
+					'deskripsi'  => ucfirst($this->input->post('problem_detail')),
+					'id_user'    => $id_user
+				);
+
+				//Query insert data ticket yang ditampung ke dalam database. tersimpan ditabel ticket
+				$this->db->insert('ticket', $data);
+				//Query insert data tarcking yang ditampung ke dalam database. tersimpan ditabel tracking
+				$this->db->insert('tracking', $datatracking);
+
+				//Set pemberitahuan bahwa data tiket berhasil dibuat
+				$this->session->set_flashdata('status', 'Dikirim');
+
+				//Dialihkan ke halaman my ticket
+				redirect('ticket_mgrd/index_tugas');
+		}
+	}
 }
